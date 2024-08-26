@@ -45,7 +45,7 @@ db.connect((err) => {
           userID INT, 
           targetID INT,
           title VARCHAR(30),
-          postText VARCHAR(100),
+          postText VARCHAR(500),
           username VARCHAR(30)
       )`,
       (err) => {
@@ -82,12 +82,13 @@ db.connect((err) => {
     );
   }
   
+  /*Password needs to be long enough to hash password */
   function createUsersTable() {
     db.query(
       `CREATE TABLE IF NOT EXISTS users (
           id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
           username VARCHAR(30),
-          password VARCHAR(255),
+          password VARCHAR(100), 
           email VARCHAR(30)
       )`,
       (err) => {

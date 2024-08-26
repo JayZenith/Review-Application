@@ -18,6 +18,7 @@ function Postings() {
    const [input, setInput] = useState(''); //input in search field
    const [jsonData, setJSON] = useState([])//for users during usr search
    const [suggestions, setSuggestions] = useState([])
+   const [inputSize, setInputSize] = useState(0)
    let navigate = useNavigate();
   
 
@@ -158,6 +159,11 @@ function Postings() {
    }
 
 
+    const handleInputChange = (e)=>{
+      console.log(e.target.value.length)
+      setInputSize(e.target.value.length)
+      setPost(e.target.value);
+    }
 
 
   
@@ -167,13 +173,16 @@ function Postings() {
    <div className="postings">
        <div className="createPostSection">
            <form className="postForm" onSubmit={onSubmit}>
+            {inputSize == 100 ? <p>Character Limit Exceeded</p> : ""}
              <textarea
                  placeholder="Write Here"
                  id = "posting"
                  name = "posting"
-                 onChange={(e)=>setPost(e.target.value)}
+                 onChange={(e)=>handleInputChange(e)}
+                 maxLength={500}
              >
              </textarea>
+             <p>{inputSize}/500</p>
              <button type="submit">Post</button>
            </form>
        </div> {/*END createPostSection*/}
