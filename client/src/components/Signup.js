@@ -5,8 +5,6 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { AuthContext } from '../helpers/AuthContext'
 
 
-
-
 function Signup() {
  const history=useNavigate();
 
@@ -301,15 +299,6 @@ function Signup() {
                                <p>Already have an account? <Link to="/">Login</Link></p>
                        </form>
                </div>
-
-
-
-
-
-
-
-
-
 
                    {/*<Link to="/">Login</Link>*/}
        </div>

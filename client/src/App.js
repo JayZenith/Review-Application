@@ -8,6 +8,15 @@ import { AuthContext } from "./helpers/AuthContext";
 import { SuggestionsContext } from "./helpers/SuggestionsContext";
 import { ScreenContext } from "./helpers/ScreenContext";
 import { DropdownContext } from "./helpers/DropdownContext";
+
+import { ReactComponent as DownIcon } from './icons/down.svg';
+import { ReactComponent as HomeIcon } from './icons/home.svg';
+import { ReactComponent as LogoutIcon } from './icons/logout.svg';
+import { ReactComponent as ProfileIcon } from './icons/profile.svg';
+import { ReactComponent as SettingsIcon } from './icons/settings.svg';
+import { ReactComponent as UndefinedIcon } from './icons/undefined.svg';
+import { ReactComponent as UpIcon } from './icons/up.svg';
+
 import Login from './components/Login';
 import Postings from './components/Postings';
 import Profile from './components/Profile';
@@ -84,8 +93,6 @@ useEffect(() => { //renders on any page load
        aria-label="Loading Spinner"
        data-testid="loader"
        />
-
-
        :
 
 
@@ -101,7 +108,7 @@ useEffect(() => { //renders on any page load
              {/*<NavItem icon={<SearchIcon />} item="Search"/>*/}
              <NavItem icon={<ProfileIcon />} item="Profile" />
              <SearchBar />
-             <NavItem icon={<RightArrowIcon />} item="Arrow">
+             <NavItem icon={<DownIcon />} item="Arrow">
                <DropdownMenu></DropdownMenu>
              </NavItem>
        </Navbar>
@@ -333,15 +340,15 @@ function SearchBar(){
           <DropdownItem >My Profile</DropdownItem>
           */}
           <DropdownItem
-            leftIcon={<CogIcon />}
-            rightIcon={<ChevronIcon />}
+            leftIcon={<SettingsIcon />}
+            rightIcon={<SettingsIcon />}
             goToMenu="settings">
             Settings
           </DropdownItem>
          
           <DropdownItem
-            leftIcon={<ExitIcon />}
-            rightIcon={<ExitIcon />}
+            leftIcon={<LogoutIcon />}
+            rightIcon={<LogoutIcon />}
             goToMenu="animals">
             Logout
           </DropdownItem>
@@ -359,13 +366,13 @@ function SearchBar(){
         unmountOnExit
         onEnter={calcHeight}>
         <div className="menu">
-          <DropdownItem goToMenu="main" leftIcon={<ArrowIcon />}>
+          <DropdownItem goToMenu="main" leftIcon={<DownIcon />}>
             <h2>My Tutorial</h2>
           </DropdownItem>
-          <DropdownItem leftIcon={<BoltIcon />}>HTML</DropdownItem>
-          <DropdownItem leftIcon={<BoltIcon />}>CSS</DropdownItem>
-          <DropdownItem leftIcon={<BoltIcon />}>JavaScript</DropdownItem>
-          <DropdownItem leftIcon={<BoltIcon />}>Awesome!</DropdownItem>
+          <DropdownItem leftIcon={<UndefinedIcon />}>HTML</DropdownItem>
+          <DropdownItem leftIcon={<UndefinedIcon />}>CSS</DropdownItem>
+          <DropdownItem leftIcon={<UndefinedIcon />}>JavaScript</DropdownItem>
+          <DropdownItem leftIcon={<UndefinedIcon />}>Awesome!</DropdownItem>
         </div>
       </CSSTransition>
  
