@@ -1,13 +1,800 @@
-body {
+
+
+
+*{
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  padding: 0;
+  /*box-sizing: border-box ruins navbar*/
+ }
+ 
+ 
+ body {
+  margin: 0;
+  background: white;
+  font-family: roboto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-code {
+ }
+ 
+ 
+ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
+ }
+ 
+ 
+ .App{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+ }
+ 
+ 
+ .AppX{
+ 
+ 
+ }
+ 
+ 
+ 
+ 
+ :root {
+  --bg:  #242526;
+  --bg-accent: #484a4d;
+  --text-color: #dadce1;
+  --nav-size: 50px;
+  --border: 1px solid #474a4d;
+  --border-radius: 8px;
+  --speed: 500ms;
+ }
+ 
+ 
+ ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+ }
+ 
+ 
+ a {
+  color: var(--text-color);
+  text-decoration: none;;
+ }
+ 
+ 
+ /* Top Navigation Bar */
+ 
+ 
+ /* <nav> */
+ .navbar {
+  position: fixed;
+  height: var(--nav-size);
+  width: 100vw;
+  background-color: var(--bg);
+  padding: 10px 1rem;
+  border-bottom: var(--border);
+  color: white;
+ }
+ 
+ 
+ /*
+ @media all and (max-width: 767px){
+  .navbar {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    height: 70px;
+    background-color: var(--bg);
+    padding: 0 1rem;
+    border-bottom: var(--border);
+    color: white;
+   
+  }
+ 
+ 
+  .navbar ul{
+    display: flex;
+    flex-direction: row;
+    background-color: gold;
+  }
+ 
+ 
+  .nav-item a {
+    width: 300px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: blue;
+  }
+ 
+ 
+  .nav-item {
+    --button-size: calc(var(--nav-size) * 0.8);
+    width: var(--button-size);
+    height: var(--button-size);
+    background-color: #484a4d;
+    border-radius: 50%;
+    padding: 5px;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: filter 300ms;
+  }
+ 
+ 
+  .navbar .navbar-nav .dropdown {
+    position: absolute;
+    top: -162px;
+    width: 300px;
+    transform: translateX(50%);
+    background-color: var(--bg);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    overflow: hidden;
+    transition: height var(--speed) ease;
+  }
+   .offscreentwo {
+    position: absolute;
+    left: -9999px;
+  }
+ 
+ 
+ }
+ */
+ 
+ 
+ 
+ 
+ /* <ul> */
+ .navbar-nav {
+  width: 200px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+ }
+ 
+ 
+ /* <li> */
+ .nav-item {
+  width: calc(var(--nav-size) * 1.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ }
+ 
+ 
+ .arrowToEnd{
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-right: 50px;
+ 
+ 
+ }
+ 
+ 
+ .searchBar input{
+  position: absolute;
+  left: 0;
+  width: 500px;
+  margin-left: 250px;
+  top: 18px;
+  height: 10px;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 20px;
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ /* Icon Button */
+ .icon-button {
+  --button-size: calc(var(--nav-size) * 0.5);
+  width: var(--button-size);
+  height: var(--button-size);
+  background-color: #484a4d;
+  border-radius: 50%;
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter 300ms;
+ }
+ 
+ 
+ .icon-button:hover {
+  filter: brightness(1.2);
+ }
+ 
+ 
+ .icon-button svg {
+  fill: var(--text-color);
+  width: 20px;
+  height: 20px;
+ }
+ 
+ 
+ 
+ 
+ /* Dropdown Menu */
+ 
+ 
+ .dropdown {
+  position: absolute;
+  top: 65px;
+  width: 150px;
+  transform: translateX(-55%);
+  background-color: var(--bg);
+  border: var(--border);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  overflow: hidden;
+  transition: height var(--speed) ease;
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ .menu {
+  width: 100%;
+ }
+ 
+ 
+ .menu-item {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: var(--border-radius);
+  transition: background var(--speed);
+  padding: 0.5rem;
+ }
+ 
+ 
+ .menu-item .icon-button {
+  margin-right: 0.5rem;
+ }
+ 
+ 
+ 
+ 
+ .menu-item .icon-button:hover {
+  filter: none;
+ }
+ 
+ 
+ .menu-item:hover {
+  background-color: #525357;
+ }
+ 
+ 
+ .icon-right {
+  margin-left: auto;
+ }
+ 
+ 
+ /* CSSTransition classes  */
+ .menu-primary-enter {
+  position: absolute;
+  transform: translateX(-110%);
+ }
+ .menu-primary-enter-active {
+  transform: translateX(0%);
+  transition: all var(--speed) ease;
+ }
+ .menu-primary-exit {
+  position: absolute;
+ }
+ .menu-primary-exit-active {
+  transform: translateX(-110%);
+  transition: all var(--speed) ease;
+ }
+ 
+ 
+ 
+ 
+ .menu-secondary-enter {
+  transform: translateX(110%);
+ }
+ .menu-secondary-enter-active {
+  transform: translateX(0%);
+  transition: all var(--speed) ease;
+ }
+ .menu-secondary-exit {
+ 
+ 
+ }
+ .menu-secondary-exit-active {
+  transform: translateX(110%);
+  transition: all var(--speed) ease;
+ }
+ 
+ 
+ 
+ 
+ /****************************************
+ *********************************************
+ ****************LOGIN*************************8
+ *******************************************8
+ ******************************************888
+ ***********************************/
+ 
+ 
+ .bgImg{
+  background: #020202;
+ }
+ 
+ 
+ 
+ 
+ .bgImg:before{
+  content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0.8;
+    width: 100%;
+    height: 100%;
+    background: url("../public/moon.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+ }
+ 
+ 
+ .loginWrapper{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 4px;
+  padding: 70px;
+  width: 450px;
+  transform: translate(-50%, -50%);
+  background: rgba(5, 5, 5, 0.75);
+ 
+ 
+ }
+ 
+ 
+ 
+ 
+ .loginWrapper h1{
+  color: #fff;
+  font-size: 2rem;
+ }
+ 
+ 
+ .loginWrapper form{
+  color: white;
+  margin: 25px 0 65px;
+ }
+ 
+ 
+ form .loginField{
+  height: 50px;
+  position: relative;
+  margin-bottom: 16px;
+ }
+ 
+ 
+ .loginField input{
+  height: 100%;
+  width: 100%;
+  background: #333;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 1rem;
+  padding: 0 20px;
+ }
+ 
+ 
+ /*
+ .loginField input:is(:focus, :valid){
+  position: absolute;
+  left: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  pointer-events: none;
+  color: #8c8c8c;
+  transition: all 0.1s ease;
+ }
+ 
+ 
+ .loginField input:is(:focus, :valid)~label{
+  font-size: 0.75rem;
+  transform: translateY(-130%);
+ }
+ */
+ 
+ 
+ form button{
+  width: 100%;
+  padding: 16px 0;
+  font-size: 1rem;
+  background: #327ec5;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  margin: 25px 0 10px;
+  cursor: pointer;
+  transition: 0.1s ease;
+ }
+ 
+ 
+ form button:hover {
+  background: #0869c4;
+ }
+ 
+ 
+ .loginWrapper a{
+  text-decoration: none;
+ }
+ 
+ 
+ .loginWrapper a:hover{
+  text-decoration: underline;
+ }
+ 
+ 
+ 
+ 
+ .loginWrapper :where(label, p, a){
+  color: #b3b3b3;
+ }
+ 
+ 
+ form .formHelp{
+  display: flex;
+  justify-content: space-between;
+ }
+ 
+ 
+ form .rememberMe{
+  display: flex;
+ }
+ 
+ 
+ form .rememberMe input{
+  margin-right: 5px;
+  accent-color: #b3b3b3;
+ }
+ 
+ 
+ 
+ 
+ form .formHelp :where(label, a) {
+  font-size: 0.9rem;
+ }
+ 
+ 
+ .loginWrapper p a{
+  color: #fff;
+ }
+ 
+ 
+ .loginWrapper a {
+  color: #0071eb;
+ }
+ 
+ 
+ 
+ 
+ .hide {
+  display: none;
+ }
+ 
+ 
+ 
+ 
+ .offscreen {
+  position: absolute;
+  left: -9999px;
+ }
+ 
+ 
+ .valid {
+  font-size: 24px;
+  color: green;
+  position: absolute;
+  margin-left: 128px;
+  margin-top: 5px;
+ }
+ 
+ 
+ 
+ 
+ .invalid {
+  font-size: 24px;
+  color: red;
+  position: absolute;
+  margin-left: 128px;
+  margin-top: 5px;
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ .instructions {
+  margin-top: 2px;
+  font-size: 13px;
+  border-radius: 0.5rem;
+  padding: 1px;
+  background: transparent;
+  color: red;
+ }
+ 
+ 
+ 
+ 
+ .bi-envelope, .bi-lock{
+  position: absolute;
+  margin-left: -520px;
+  margin-top: 10px;
+  color: white;
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ .instructions .bi-x-circle{
+  position: absolute;
+  margin-left: -16px;
+  margin-top: 1px;
+ }
+ 
+ 
+ /****************************************
+ *********************************************
+ ****************USER SEARCH*************************8
+ *******************************************8
+ ******************************************888
+ ***********************************/
+ 
+ 
+ .userSearchDropdown{
+  position: absolute;
+  background-color: white;
+  color: black;
+  left: 250px;
+  top: 52px;
+  width: 520px;
+  border: 1px solid black;
+  max-height: 300px;
+  height: auto;
+  overflow-y: scroll;
+ }
+ 
+ 
+ .userSearchDropdownHidden{
+  display: none;
+ 
+ 
+ }
+ 
+ 
+ .userSearchDivs{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-size: 20px;
+  height: 50px;
+  border: 1px solid black;
+  padding: 2px;
+ }
+ 
+ 
+ .userSearchDivs:hover{
+  transition: all .4s ease;
+  background-color: rgb(196, 187, 187);
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ /****************************************
+ *********************************************
+ ****************POSTINGS*************************8
+ *******************************************8
+ ******************************************888
+ ***********************************/
+ 
+ 
+ 
+ 
+ .postings{
+  padding-top: 100px;
+ }
+ 
+ 
+ .postings .createPostSection form{
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+ }
+ .postings .createPostSection form textarea{
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  resize: none;
+ }
+ 
+ 
+ .postings .createPostSection form button{
+  width: 100%;
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+ }
+ 
+ 
+ .postings .createPostSection form button:hover{
+  border: 1px solid rgb(204, 49, 49);
+  transition: all .7s ease;
+ }
+ 
+ 
+ .post{
+  width: 100%;
+  border: 2px solid red;
+  height: 150px;
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+ }
+ 
+ 
+ .userWrapper{
+  border: 5px solid pink;
+  width: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ }
+ 
+ 
+ .userWrapper .avatar{
+  width: 40px;
+  height: 40px;
+  background-color: grey;
+  border-radius: 50%;
+  color: black;
+  margin-top: 5px;
+ }
+ 
+ 
+ .userWrapper .username a{
+  color: black;
+ }
+ 
+ 
+ .bodyAndFooter{
+  border: 3px solid blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+ }
+ 
+ 
+ .bodyAndFooter .body{
+  border: 3px solid green;
+  min-height: 90px;
+  height: auto;
+ }
+ 
+ 
+ .bodyAndFooter .footer{
+  display: flex;
+  border: 2px solid orange;
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ /****************************************
+ *********************************************
+ ****************PROFILE*************************8
+ *******************************************8
+ ******************************************888
+ ***********************************/
+ 
+ 
+ .profileApp{
+  padding-top: 100px;
+  margin-left: 100px;
+ }
+ 
+ 
+ .profileApp h1{
+  font-size: 100px;
+ }
+ 
+ 
+ .listOfPosts{
+  border: 2px solid purple;
+ }
+ 
+ 
+ .listOfPosts .profilePost{
+  width: 100%;
+  border: 2px solid red;
+  height: 150px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 20px;
+ }
+ 
+ 
+ .listOfPosts .profilePost .profileBody{
+  border: 3px solid green;
+  min-height: 90px;
+  height: auto;
+ }
+ 
+ 
+ 
+ 
+ .listOfPosts .profilePost .profileFooter{
+  border: 3px solid rgb(67, 128, 185);
+  min-height: 20px;
+ }
+ 
+ 
+ 
+ 
+ .profileReview textarea{
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  resize: none;
+ }
+ 
+ 
+ 
+ 
+ .profileReview button{
+  width: 100%;
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+ }
+ 
