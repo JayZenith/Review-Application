@@ -146,8 +146,16 @@ function Profile() {
         });
       };
 
+
 const [rating, setRating] = useState(null)
 const [rateColor, setRateColor] = useState(null)
+const [hover, setHover] = useState(null)
+const checkRating = (check) => {
+    console.log(check);
+    setRating(check);
+}
+
+
 
  return (
     <div className='profileApp'> {/*postings*/}
@@ -175,16 +183,19 @@ const [rateColor, setRateColor] = useState(null)
                 return(
                     <>
                         <label>
-                            <input type="radio" name="rate" 
+                            <input className="radioBtn" type="radio" name="rating"  
                             value={currentRate}
-                            onClick={()=>setRating(currentRate)}
+                            onClick={()=>checkRating(currentRate)}
+                        
                             />
 
-                            <FaStar size={50}
-                            color={currentRate <= (rateColor || rating) ?
-                                "yellow"
-                                : "grey"
+                            <FaStar className='star' size={50}
+                            color={currentRate <= (hover || rating) ?
+                                "red"
+                                : "black"
                             }
+                            onMouseEnter={()=>setHover(currentRate)}
+                            onMouseLeave={()=>setHover(null)}
                              />
 
                         </label>

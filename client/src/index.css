@@ -968,8 +968,18 @@
 
 
 
-.rating{
-  width: 400px;
-  height: 400px;
 
+
+.rating{
+  width: 500px;
+  height: 500px;
+
+}
+
+.radioBtn{
+  display: none;
+}
+
+.star{
+  cursor: pointer;
 }
