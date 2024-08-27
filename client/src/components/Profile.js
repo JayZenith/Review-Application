@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import { AuthContext } from "../helpers/AuthContext";
 import { DropdownContext } from "../helpers/DropdownContext";
@@ -17,6 +17,7 @@ function Profile() {
    let navigate = useNavigate();
    const { authState } = useContext(AuthContext);
    const [posted, setPosted] = useState(false);
+   const [reviewSize, setReviewSize] = useState(0);
    const { arrowState, setArrowState } = useContext(ScreenContext);
    const { dropdownState, setDropdownState } = useContext(DropdownContext);
    const { suggestionsState, setSuggestionsContext } = useContext(SuggestionsContext);
@@ -126,29 +127,36 @@ function Profile() {
  
      }  
 
+     const handleReviewChange = (e)=>{
+        //console.log(e.target.value.length)
+        setReviewSize(e.target.value.length)
+        setPost(e.target.value);
+      }
 
 
 
  return (
-   <div className='profileApp'>
-       <h1> {username} </h1>
-       {authState.id != id ?  ( //if user then hide review option
-           <div className="profileReview">
-               <form  onSubmit={onSubmit}>
-                   <textarea
+    <div className='profileApp'> {/*postings*/}
+        <h1> {username} </h1>
+        {authState.id != id ?  ( //if user then hide review option
+            <div className="profileReview"> 
+                <form  onSubmit={onSubmit}> 
+                    {reviewSize == 500 ? <p>Character Limit Reached</p> : ""}
+                    <textarea
                        placeholder="Review Me!"
                        id = "posting"
                        name = "posting"
-                       onChange={(e)=>setPost(e.target.value)}
-                   >
-                   </textarea>
-                   <button type="submit">Post</button>
+                       onChange={(e)=>handleReviewChange(e)}
+                       maxLength={500}
+                    >
+                    </textarea>
+                    <p>{reviewSize}/500</p>
+                    <button type="submit">Post</button>
                </form>
-           </div>
-   ) : <></>}
+            </div>
+        ) : <></>}
 
-
-       <div className='profilePageContainer'>
+        <div className='profilePageContainer'>
            {/*
            <div className='basicInfo'>
               
@@ -157,18 +165,31 @@ function Profile() {
                )}
            </div>
            */}
-           <div className='listOfPosts'>
+            <div className='listOfPosts'> {/*NEEDED TO SEPERATE FROM ABOVE?*/}
                {listOfPosts.slice(0).reverse().map((val, key) => {
                return (
-                   <div className="profilePost">
-                       {/*<div className="profilePosttitle"> {val.title} </div>*/}
-                       <div className="profileBody"
+                    <div className="profilePost"> {/*post*/}
+                        <div className="userWrapper"
+                             onClick={()=> {
+                                navigate(`/profile/${val.userID}`);
+                                window.location.reload()
+                                }}
+                        >
+                            <div className="avatar">
+                            
+                            </div>
+                            
+                            <div className="username">
+                                    {val.username} 
+                            </div>
+                        </div> {/*END USER-WRAPPER*/}
+                       <div className="profileBody"  
                            onClick={() => {
                                navigate(`/singlePost/${val.id}`);
                            }}
                        > {val.postText}
                        </div>
-                       <div className="profileFooter"> {val.username}
+                       <div className="profileFooter"> 
                           
                            <i class="bi bi-hand-thumbs-up"
                                onClick={() => {
@@ -182,7 +203,7 @@ function Profile() {
                                {val.dt}
                            </label>
                        </div>
-                   </div>
+                    </div>
                    );
                })}
            </div>

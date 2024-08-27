@@ -160,7 +160,7 @@ function Postings() {
 
 
     const handleInputChange = (e)=>{
-      console.log(e.target.value.length)
+      //console.log(e.target.value.length)
       setInputSize(e.target.value.length)
       setPost(e.target.value);
     }
@@ -173,7 +173,7 @@ function Postings() {
    <div className="postings">
        <div className="createPostSection">
            <form className="postForm" onSubmit={onSubmit}>
-            {inputSize == 100 ? <p>Character Limit Exceeded</p> : ""}
+            {inputSize == 500 ? <p>Character Limit Reached</p> : ""}
              <textarea
                  placeholder="Write Here"
                  id = "posting"
@@ -208,10 +208,10 @@ function Postings() {
                    <p>{val.postText}</p>
                </div> {/*END BODY*/}
                <div className="footer">
-                     {authState.username === val.username && (
+                     {authState.username === val.username ? (
                        <i className="bi bi-trash" onClick={()=>{deletePost(val.id)}}>                 
                        </i>
-                     )}
+                     ):(<i></i>)}
                      <div className="like-btn">
                        <i class="bi bi-hand-thumbs-up"
                          onClick={() => {

@@ -686,6 +686,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  cursor: pointer;
  }
  
  
@@ -748,8 +749,12 @@
  
  
  .profileApp{
+  
   padding-top: 100px;
-  margin-left: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
  }
  
  
@@ -759,19 +764,19 @@
  
  
  .listOfPosts{
-  border: 2px solid purple;
+  margin-top: 10px;
+  width: 800px;
+  border: 1px solid black;
  }
  
  
  .listOfPosts .profilePost{
   width: 100%;
   border: 2px solid red;
-  height: 150px;
-  padding: 10px;
+  min-height: 100px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-top: 20px;
  }
  
  
@@ -814,3 +819,5 @@
   color: black;
  }
  
+
+
