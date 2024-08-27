@@ -24,6 +24,7 @@ import Settings from './components/Settings';
 import Signup from './components/Signup';
 import ClipLoader from "react-spinners/ClipLoader";
 import SinglePost from './components/SinglePost';
+import PageNotFound from './components/PageNotFound';
 
 
 function App() {
@@ -127,6 +128,7 @@ useEffect(() => { //renders on any page load
          <Route path="/Settings/:id" element={<Settings />} />
          <Route path="/signup" element={<Signup />} />
          <Route path="/singlePost/:id" element={<SinglePost />} />
+         <Route path="*" element={<PageNotFound/>} />
        </Routes>
     
      </DropdownContext.Provider>

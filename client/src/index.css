@@ -951,3 +951,17 @@
   padding: 5px;
   justify-content: space-between;
 }
+
+
+
+.pageNotFound{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.pageNotFound a{
+  color: black;
+}
