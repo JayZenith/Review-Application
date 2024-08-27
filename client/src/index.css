@@ -784,6 +784,7 @@
  }
 
  .profileReview form button{
+    margin-top: 0px;
     width: 100%;
     background-color: white;
     border: 1px solid black;
@@ -967,13 +968,20 @@
 }
 
 
+  /****************************************
+ *********************************************
+ ****************PROFILE REVIEW *************************8
+ *******************************************8
+ ******************************************888
+ ***********************************/
+ 
 
 
 
 .rating{
-  width: 500px;
-  height: 500px;
-
+  margin-top: 15px;
+  width: 200px;
+  height: 80px;
 }
 
 .radioBtn{
@@ -982,4 +990,22 @@
 
 .star{
   cursor: pointer;
+}
+
+.reviewStarRating{
+  height: 40px;
+  width: 40px;
+  color: black;
+}
+
+
+.ratingStars{
+  width: 200px;
+  height: 80px;
+
+}
+
+
+ratingStar{
+
 }

@@ -24,6 +24,11 @@ function Profile() {
    const { suggestionsState, setSuggestionsContext } = useContext(SuggestionsContext);
 
 
+   const [rating, setRating] = useState(null)
+   const [rateColor, setRateColor] = useState(null)
+   const [hover, setHover] = useState(null)
+
+
 
 
    useEffect(()=>{
@@ -112,9 +117,10 @@ function Profile() {
 
 
    const onSubmit = (event) => {
+       console.log(rating)
        event.preventDefault(); //dosent work without
        axios.post("http://localhost:3001/posts", {
-         postText, id
+         postText, id, rating 
        }, {
          headers: {accessToken: localStorage.getItem("accessToken")},
        }).then((res) => {
@@ -147,9 +153,7 @@ function Profile() {
       };
 
 
-const [rating, setRating] = useState(null)
-const [rateColor, setRateColor] = useState(null)
-const [hover, setHover] = useState(null)
+
 const checkRating = (check) => {
     console.log(check);
     setRating(check);
@@ -162,10 +166,11 @@ const checkRating = (check) => {
         <h1> {username} </h1>
         {authState.id != id ?  ( //if user then hide review option
             <div className="profileReview"> 
+                <h2>WRITE A REVIEW</h2>
                 <form  onSubmit={onSubmit}> 
                     {reviewSize == 500 ? <p>Character Limit Reached</p> : ""}
                     <textarea
-                       placeholder="Review Me!"
+                       placeholder="..."
                        id = "posting"
                        name = "posting"
                        onChange={(e)=>handleReviewChange(e)}
@@ -173,39 +178,37 @@ const checkRating = (check) => {
                     >
                     </textarea>
                     <p>{reviewSize}/500</p>
+                    <div className="rating" >
+                            {[...Array(5)].map((star, idx)=>{
+                                const currentRate = idx + 1
+                                return(
+                                    <>
+                                        <label>
+                                            <input className="radioBtn" type="radio" name="rating"  
+                                            value={currentRate}
+                                            onClick={()=>checkRating(currentRate)}
+                                        
+                                            />
+
+                                            <FaStar className='star' size={30}
+                                            color={currentRate <= (hover || rating) ?
+                                                "red"
+                                                : "black"
+                                            }
+                                            onMouseEnter={()=>setHover(currentRate)}
+                                            onMouseLeave={()=>setHover(null)}
+                                            />
+
+                                        </label>
+                                    </>  
+                                )
+                            })}
+                     </div>
                     <button type="submit">Post</button>
                </form>
             </div>
         ) : <></>}
-        <div className="rating" >
-            {[...Array(5)].map((star, idx)=>{
-                const currentRate = idx + 1
-                return(
-                    <>
-                        <label>
-                            <input className="radioBtn" type="radio" name="rating"  
-                            value={currentRate}
-                            onClick={()=>checkRating(currentRate)}
-                        
-                            />
-
-                            <FaStar className='star' size={50}
-                            color={currentRate <= (hover || rating) ?
-                                "red"
-                                : "black"
-                            }
-                            onMouseEnter={()=>setHover(currentRate)}
-                            onMouseLeave={()=>setHover(null)}
-                             />
-
-                        </label>
-                        
-                    </>
-                    
-                )
-            })}
-
-        </div>
+        
 
         <div className='profilePageContainer'>
            {/*
@@ -216,6 +219,7 @@ const checkRating = (check) => {
                )}
            </div>
            */}
+            <h2>REVIEWS</h2>
             <div className='listOfPosts'> {/*NEEDED TO SEPERATE FROM ABOVE?*/}
                {listOfPosts.slice(0).reverse().map((val, key) => {
                return (
@@ -233,6 +237,9 @@ const checkRating = (check) => {
                             </div>
                         </div> {/*END USER-WRAPPER*/}
                        <div className='profileBodyAndFooter'>
+                            <div className="reviewStarRating">
+                                <Star >{val.rating}</Star>
+                            </div>
                             <div className="profileBody"  
                                 onClick={() => {
                                     navigate(`/singlePost/${val.id}`);
@@ -270,6 +277,45 @@ const checkRating = (check) => {
    </div>
  );
 }
+
+function Star(props){
+   const [rating, setRating] = useState(null)
+   const [rateColor, setRateColor] = useState(null)
+   const [hover, setHover] = useState(null)
+   
+   useEffect(()=>{
+    setRating(props.children);
+   },[])
+
+    return(
+        <div className="ratingStars" >
+            {[...Array(5)].map((star, idx)=>{
+                //console.log(props.children)
+                const currentRate = idx + 1;
+                return(
+                    <>
+                        <label>
+                        <input className="radioBtn" type="radio" name="rating"  
+                            value={currentRate}
+                            
+                                                
+                        />
+                            <FaStar className='ratingStar' size={20}
+                                color={currentRate <= (hover || rating) ?
+                                    "red"
+                                    : "black"
+                                }
+                                onMouseEnter={()=>setHover(currentRate)}
+                                onMouseLeave={()=>setHover(null)}
+                            />
+                        </label>
+                    </>  
+                )
+            })}
+        </div>  
+    )
+}
+
 
 
 export default Profile

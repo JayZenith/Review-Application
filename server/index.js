@@ -46,7 +46,8 @@ db.connect((err) => {
           targetID INT,
           title VARCHAR(30),
           postText VARCHAR(500),
-          username VARCHAR(30)
+          username VARCHAR(30),
+          rating INT
       )`,
       (err) => {
         if (err) throw new Error(err);
@@ -250,7 +251,7 @@ db.connect((err) => {
 
   app.post("/posts", validateToken, (req, res) => {
     const post = req.body;
-    console.log(post.postText)
+    console.log(post.rating)
     db.query(
       "INSERT INTO posts SET ?",
       {
@@ -259,6 +260,7 @@ db.connect((err) => {
         username: req.user.username,
         userID: req.user.id,
         targetID: post.id,
+        rating: post.rating,
        // username: post.username,
       },
       (err) => {
@@ -284,7 +286,7 @@ db.connect((err) => {
     id = req.params.id;
     //db.query(`SELECT * FROM posts WHERE userID = ${id}`, (err, result) => {
       db.query(
-        `select posts.title, posts.postText, posts.username, posts.id, posts.targetID, posts.userID, count(distinct likes.id) as dt from posts left join likes on posts.id = likes.postID group by posts.id`,
+        `select posts.title, posts.rating, posts.postText, posts.username, posts.id, posts.targetID, posts.userID, count(distinct likes.id) as dt from posts left join likes on posts.id = likes.postID group by posts.id`,
         (err, result) => {
       if (err) throw new Error(err);
       //res.json(result);
