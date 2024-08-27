@@ -54,7 +54,7 @@ function Profile() {
                   
                    response.data.listOfPosts.filter((post)=>{
                        if (post.targetID != parseInt(id)){
-                           console.log(post)
+                           //console.log(post)
                            //return post
                        }
                        else{
@@ -71,8 +71,9 @@ function Profile() {
                      return like.id;
                    })
                  );
-                 console.log(likedPosts)
+                 //console.log(likedPosts)
                  setPosted(false)
+                 setRating(null); //reset star rating
            });
           
          }
@@ -120,15 +121,16 @@ function Profile() {
        console.log(rating)
        event.preventDefault(); //dosent work without
        axios.post("http://localhost:3001/posts", {
-         postText, id, rating 
+         postText, id, rating, username
        }, {
          headers: {accessToken: localStorage.getItem("accessToken")},
        }).then((res) => {
            if(res.data.error){
              alert(res.data.error);
            }
-           console.log("worked");
+           //console.log("worked");
            setPosted(true);
+           
            //navigate("/postings");
        });
  
@@ -155,7 +157,7 @@ function Profile() {
 
 
 const checkRating = (check) => {
-    console.log(check);
+    //console.log(check);
     setRating(check);
 }
 
@@ -195,8 +197,8 @@ const checkRating = (check) => {
                                                 "red"
                                                 : "black"
                                             }
-                                            onMouseEnter={()=>setHover(currentRate)}
-                                            onMouseLeave={()=>setHover(null)}
+                                            //onMouseEnter={()=>setHover(currentRate)}
+                                            //onMouseLeave={()=>setHover(null)}
                                             />
 
                                         </label>
@@ -238,7 +240,54 @@ const checkRating = (check) => {
                         </div> {/*END USER-WRAPPER*/}
                        <div className='profileBodyAndFooter'>
                             <div className="reviewStarRating">
-                                <Star >{val.rating}</Star>
+                                
+
+{/****************************************************8 */}
+
+
+                            <div className="ratingStars" >
+            {[...Array(5)].map((star, idx)=>{
+                //console.log(props.children)
+                const currentRate = idx + 1;
+                return(
+                    <>
+                        <label>
+                        <input className="radioBtn" type="radio" name="rating"  
+                            value={currentRate}
+                            
+                                                
+                        />
+                            <FaStar className='ratingStar' size={20}
+                                color={currentRate <= (hover || val.rating) ?
+                                    "red"
+                                    : "black"
+                                }
+                                //onMouseEnter={()=>setHover(currentRate)}
+                                //onMouseLeave={()=>setHover(null)}
+                            />
+                        </label>
+                    </>  
+                )
+            })}
+        </div>  
+
+
+
+{/****************************************** */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                {/*<Star >{val.rating}</Star>*/}
                             </div>
                             <div className="profileBody"  
                                 onClick={() => {
@@ -284,6 +333,7 @@ function Star(props){
    const [hover, setHover] = useState(null)
    
    useEffect(()=>{
+    console.log(props.children)
     setRating(props.children);
    },[])
 
@@ -305,8 +355,8 @@ function Star(props){
                                     "red"
                                     : "black"
                                 }
-                                onMouseEnter={()=>setHover(currentRate)}
-                                onMouseLeave={()=>setHover(null)}
+                                //onMouseEnter={()=>setHover(currentRate)}
+                                //onMouseLeave={()=>setHover(null)}
                             />
                         </label>
                     </>  

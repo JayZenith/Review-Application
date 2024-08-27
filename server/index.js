@@ -33,6 +33,7 @@ db.connect((err) => {
         createUsersTable();
         createCommentTable();
         createLikesTable();
+        createBioTable();
       });
     });
   });
@@ -44,6 +45,7 @@ db.connect((err) => {
           postID INT,
           userID INT, 
           targetID INT,
+          targetName VARCHAR(30),
           title VARCHAR(30),
           postText VARCHAR(500),
           username VARCHAR(30),
@@ -52,6 +54,20 @@ db.connect((err) => {
       (err) => {
         if (err) throw new Error(err);
         console.log("Post Table created/exists");
+      }
+    );
+  }
+
+
+  function createBioTable() {
+    db.query(
+      `CREATE TABLE IF NOT EXISTS bio (
+          id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+          bioText VARCHAR(500)
+      )`,
+      (err) => {
+        if (err) throw new Error(err);
+        console.log("Bio Table created/exists");
       }
     );
   }
@@ -222,7 +238,7 @@ db.connect((err) => {
   app.get("/posts", validateToken, (req, res) => {
     //console.log(req.user.id)
     db.query(
-      "select posts.title, posts.postText, posts.username, posts.id, posts.userID, count(distinct likes.id) as dt from posts left join likes on posts.id = likes.postID group by posts.id",
+      "select posts.title, posts.targetID, posts.targetName, posts.postText, posts.username, posts.id, posts.userID, count(distinct likes.id) as dt from posts left join likes on posts.id = likes.postID group by posts.id",
       (err, result) => {
         if (err) throw new Error(err);
         //console.log(result[0].dt);
@@ -260,7 +276,9 @@ db.connect((err) => {
         username: req.user.username,
         userID: req.user.id,
         targetID: post.id,
+        targetName: post.username,
         rating: post.rating,
+        
        // username: post.username,
       },
       (err) => {

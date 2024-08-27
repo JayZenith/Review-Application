@@ -223,9 +223,22 @@ function Postings() {
                        <label>
                            {val.dt}
                        </label>
+                       
                      </div>
                  </div> {/*END FOOTER*/}
              </div>
+             <div className="theTarget"
+                        onClick={()=> {
+                          navigate(`/profile/${val.targetID}`);
+                          window.location.reload()
+                          }}
+                       >
+                        <div className="avatar">
+                          
+                        </div>
+                         To {val.targetName}
+                
+              </div>
            </div>
          );
        })}
