@@ -134,6 +134,18 @@ function Profile() {
       }
 
 
+      const deletePost = (id) => {
+        axios.delete(`http://localhost:3001/deletePost/${id}`, {
+          headers: {
+            accessToken: localStorage.getItem("accessToken"),
+          },
+        }).then(()=> {
+          setPosted(true); //to render deleted post
+          //navigate("/postings"); Ishouldnt need this
+        });
+      };
+
+
 
  return (
     <div className='profileApp'> {/*postings*/}
@@ -176,33 +188,39 @@ function Profile() {
                                 }}
                         >
                             <div className="avatar">
-                            
                             </div>
-                            
                             <div className="username">
                                     {val.username} 
                             </div>
                         </div> {/*END USER-WRAPPER*/}
-                       <div className="profileBody"  
-                           onClick={() => {
-                               navigate(`/singlePost/${val.id}`);
-                           }}
-                       > {val.postText}
-                       </div>
-                       <div className="profileFooter"> 
-                          
-                           <i class="bi bi-hand-thumbs-up"
-                               onClick={() => {
-                                   likePost(val.id);
-                               }}
-                               className={likedPosts.includes(val.id) ? "bi bi-hand-thumbs-up" : "bi bi-hand-thumbs-up red"
-                                  
-                               }
-                           ></i>
-                           <label>
-                               {val.dt}
-                           </label>
-                       </div>
+                       <div className='profileBodyAndFooter'>
+                            <div className="profileBody"  
+                                onClick={() => {
+                                    navigate(`/singlePost/${val.id}`);
+                                }}
+                            > 
+                                <p>{val.postText}</p>
+                            </div>
+                            <div className="profileFooter"> 
+                                {authState.username === val.username? (
+                                     <i className="bi bi-trash" onClick={()=>{deletePost(val.id)}}>                 
+                                    </i>
+                                ):(<i></i>)}
+                                <div className='likeBtn'>
+                                    <i class="bi bi-hand-thumbs-up"
+                                        onClick={() => {
+                                            likePost(val.id);
+                                        }}
+                                        className={likedPosts.includes(val.id) ? "bi bi-hand-thumbs-up" : "bi bi-hand-thumbs-up red"
+                                            
+                                        }
+                                    ></i>
+                                    <label>
+                                        {val.dt}
+                                    </label>
+                                </div> {/*likeBtn*/}
+                            </div>
+                        </div>
                     </div>
                    );
                })}

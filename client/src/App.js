@@ -23,6 +23,7 @@ import Profile from './components/Profile';
 import Settings from './components/Settings';
 import Signup from './components/Signup';
 import ClipLoader from "react-spinners/ClipLoader";
+import SinglePost from './components/SinglePost';
 
 
 function App() {
@@ -125,6 +126,7 @@ useEffect(() => { //renders on any page load
          <Route path="/profile/:id" element={<Profile />} />
          <Route path="/Settings/:id" element={<Settings />} />
          <Route path="/signup" element={<Signup />} />
+         <Route path="/singlePost/:id" element={<SinglePost />} />
        </Routes>
     
      </DropdownContext.Provider>

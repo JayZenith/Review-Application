@@ -211,7 +211,7 @@ function Postings() {
                      {authState.username === val.username ? (
                        <i className="bi bi-trash" onClick={()=>{deletePost(val.id)}}>                 
                        </i>
-                     ):(<i></i>)}
+                     ):(<i></i>)} {/*Need the latter icon to move like button to right*/}
                      <div className="like-btn">
                        <i class="bi bi-hand-thumbs-up"
                          onClick={() => {

@@ -72,6 +72,7 @@ db.connect((err) => {
           id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
           commentID INT,
           postID INT,
+          userID INT, 
           username VARCHAR(30),
           commentBody VARCHAR(100)
       )`,
@@ -324,6 +325,7 @@ db.connect((err) => {
         commentBody: cmt.commentBody,
         postID: cmt.postID,
         username: userName,
+        userID: cmt.userID,
       },
       (err, resp) => {
         if (err) throw new Error(err);
