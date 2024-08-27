@@ -5,6 +5,7 @@ import { AuthContext } from "../helpers/AuthContext";
 import { DropdownContext } from "../helpers/DropdownContext";
 import { ScreenContext } from '../helpers/ScreenContext';
 import { SuggestionsContext } from "../helpers/SuggestionsContext";
+import { FaStar } from 'react-icons/fa' 
 
 
 function Profile() {
@@ -145,7 +146,8 @@ function Profile() {
         });
       };
 
-
+const [rating, setRating] = useState(null)
+const [rateColor, setRateColor] = useState(null)
 
  return (
     <div className='profileApp'> {/*postings*/}
@@ -167,6 +169,32 @@ function Profile() {
                </form>
             </div>
         ) : <></>}
+        <div className="rating" >
+            {[...Array(5)].map((star, idx)=>{
+                const currentRate = idx + 1
+                return(
+                    <>
+                        <label>
+                            <input type="radio" name="rate" 
+                            value={currentRate}
+                            onClick={()=>setRating(currentRate)}
+                            />
+
+                            <FaStar size={50}
+                            color={currentRate <= (rateColor || rating) ?
+                                "yellow"
+                                : "grey"
+                            }
+                             />
+
+                        </label>
+                        
+                    </>
+                    
+                )
+            })}
+
+        </div>
 
         <div className='profilePageContainer'>
            {/*

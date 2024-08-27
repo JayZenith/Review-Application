@@ -965,3 +965,11 @@
 .pageNotFound a{
   color: black;
 }
+
+
+
+.rating{
+  width: 400px;
+  height: 400px;
+
+}
