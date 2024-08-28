@@ -522,9 +522,22 @@ app.post("/likes", validateToken, (req, res) => {
 
 
 app.delete("/deleteAccount", validateToken, (req,res)=>{
+  console.log(req.user.id)
   db.query(`DELETE FROM users WHERE username='${req.user.username}'`, (err,result) => {
     if (err) throw new Error(err);
-    res.json(result);
+    db.query(`DELETE FROM posts where userID=${req.user.id}`,(err,result)=>{
+      if (err) throw new Error(err);
+      db.query(`DELETE FROM posts where targetID=${req.user.id}`,(err,result)=>{
+        if (err) throw new Error(err);
+        db.query(`DELETE FROM likes where userID=${req.user.id}`,(err,result)=>{
+          if (err) throw new Error(err);
+          db.query(`DELETE FROM comments where userID=${req.user.id}`,(err,result)=>{
+            if (err) throw new Error(err);
+            res.json(result);
+          })
+        })
+      })
+    })
   });
 })
 
