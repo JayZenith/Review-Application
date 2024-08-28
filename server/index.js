@@ -63,6 +63,7 @@ db.connect((err) => {
     db.query(
       `CREATE TABLE IF NOT EXISTS bio (
           id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+          userID INT, 
           bioText VARCHAR(500)
       )`,
       (err) => {
@@ -263,6 +264,8 @@ db.connect((err) => {
     );
   
   });
+
+
 
 
   app.post("/posts", validateToken, (req, res) => {
@@ -485,8 +488,27 @@ app.get("/basicInfo/:id", (req,res) => {
   });
 })
 
+app.post("/addBio", validateToken, (req,res)=>{
+    const { bioText} = req.body;
+    const userID = req.user.id;
+    db.query(`INSERT INTO bio SET ?`,
+      {
+        bioText: bioText,
+        userID: userID,
+      },
+      (err)=>{
+        if (err) throw new Error(err);
+      }
+    )
+})
 
-
+app.get("/getBio/:id", (req,res)=>{
+  const id = req.params.id;
+  db.query(`SELECT * FROM bio WHERE id='${id}'`, (err,result)=>{
+    if(err) throw new Error(err);
+    res.json(result);
+  });
+})
 
 /*LIKES*/
 app.post("/likes", validateToken, (req, res) => {

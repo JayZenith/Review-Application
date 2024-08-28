@@ -28,12 +28,21 @@ function Profile() {
    const [rateColor, setRateColor] = useState(null)
    const [hover, setHover] = useState(null)
 
+   const [numOfReviews, setNumOfReviews] = useState(0);
+ 
+   const [theBio, setTheBio] = useState('');
+
 
 
 
    useEffect(()=>{
        //setSuggestionsContext([]);
-   })
+       axios.get(`http://localhost:3001/getBio/${authState.id}`)
+        .then((response)=>{
+            if(response.data[0])
+                setTheBio(response.data[0].bioText)
+        })
+   },[])
   
    useEffect(()=>{
          if (!localStorage.getItem("accessToken")){
@@ -58,6 +67,7 @@ function Profile() {
                            //return post
                        }
                        else{
+                           setNumOfReviews(numOfReviews+1);
                            return post;
                        }
                    })
@@ -155,6 +165,11 @@ function Profile() {
       };
 
 
+      const editProfile = () => {
+        navigate("/profile/editProfile")
+      }
+
+
 
 const checkRating = (check) => {
     //console.log(check);
@@ -166,6 +181,8 @@ const checkRating = (check) => {
  return (
     <div className='profileApp'> {/*postings*/}
         <h1> {username} </h1>
+        <button onClick={editProfile}>Edit Profile</button>
+        <div>{theBio}</div>
         {authState.id != id ?  ( //if user then hide review option
             <div className="profileReview"> 
                 <h2>WRITE A REVIEW</h2>
@@ -222,6 +239,7 @@ const checkRating = (check) => {
            </div>
            */}
             <h2>REVIEWS</h2>
+            <p># of reviews: {numOfReviews}</p>
             <div className='listOfPosts'> {/*NEEDED TO SEPERATE FROM ABOVE?*/}
                {listOfPosts.slice(0).reverse().map((val, key) => {
                return (
