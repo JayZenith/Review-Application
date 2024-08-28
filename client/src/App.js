@@ -352,7 +352,7 @@ function SearchBar(){
          
           <DropdownItem
             leftIcon={<LogoutIcon />}
-            rightIcon={<LogoutIcon />}
+            //rightIcon={<LogoutIcon />}
             goToMenu="animals">
             Logout
           </DropdownItem>

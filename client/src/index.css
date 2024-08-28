@@ -1011,3 +1011,33 @@
   height: 40px;
   border-radius: 50%;
 }
+
+
+
+  /****************************************
+ *********************************************
+ ****************SETTINGS *************************8
+ *******************************************8
+ ******************************************888
+ ***********************************/
+ 
+ .settings{
+  padding: 100px;
+ }
+
+ .settings input{
+  width: 500px;
+  height: 40px;
+  margin-top: 10px;
+  font-weight: 700;
+  font-size: 20px;
+  padding: 5px;
+ }
+
+
+ .settings button{
+  margin-top: 10px;
+  height: 40px;
+  width: 200px;
+  font-size: 20px;
+ }

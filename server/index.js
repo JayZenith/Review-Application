@@ -521,6 +521,14 @@ app.post("/likes", validateToken, (req, res) => {
 });
 
 
+app.delete("/deleteAccount", validateToken, (req,res)=>{
+  db.query(`DELETE FROM users WHERE username='${req.user.username}'`, (err,result) => {
+    if (err) throw new Error(err);
+    res.json(result);
+  });
+})
+
+
 
 app.put("/changepassword", validateToken, (req,res) => {
   const {oldPassword, newPassword} = req.body;
