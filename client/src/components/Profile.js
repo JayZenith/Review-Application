@@ -39,7 +39,7 @@ function Profile() {
        //setSuggestionsContext([]);
        axios.get(`http://localhost:3001/getBio/${authState.id}`)
         .then((response)=>{
-            if(response.data[0])
+            if(response.data[0])//why cant i check bioText here?
                 setTheBio(response.data[0].bioText)
         })
    },[])

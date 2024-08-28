@@ -28,6 +28,7 @@ function EditProfile() {
             headers: {accessToken: localStorage.getItem("accessToken")}
         }).then((err,response)=>{
             if (err) throw new Error;
+            console.log(response)
         })
     }
 

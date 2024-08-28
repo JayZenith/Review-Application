@@ -491,20 +491,36 @@ app.get("/basicInfo/:id", (req,res) => {
 app.post("/addBio", validateToken, (req,res)=>{
     const { bioText} = req.body;
     const userID = req.user.id;
-    db.query(`INSERT INTO bio SET ?`,
-      {
-        bioText: bioText,
-        userID: userID,
-      },
-      (err)=>{
-        if (err) throw new Error(err);
+    db.query(`SELECT * FROM bio WHERE userID='${userID}'`, (err,result)=>{
+      if (!result[0]) {
+        db.query(`INSERT INTO bio SET ?`,
+          {
+            bioText: bioText,
+            userID: userID,
+          },
+          (err)=>{
+            if (err) throw new Error(err);
+          }
+        )
       }
-    )
+      else{
+        console.log(userID)
+        db.query(`UPDATE bio 
+          SET bioText='${bioText}' 
+          WHERE userID='${userID}'`,
+          (err)=>{
+            if (err) throw new Error(err);
+          }
+        )
+
+      }
+    })
+    
 })
 
 app.get("/getBio/:id", (req,res)=>{
   const id = req.params.id;
-  db.query(`SELECT * FROM bio WHERE id='${id}'`, (err,result)=>{
+  db.query(`SELECT * FROM bio WHERE userID='${id}'`, (err,result)=>{
     if(err) throw new Error(err);
     res.json(result);
   });
