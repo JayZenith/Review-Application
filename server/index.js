@@ -376,6 +376,9 @@ db.connect((err) => {
     const deleteId = req.params.deleteId;
     db.query(`DELETE FROM posts WHERE id=${deleteId}`, (err, result) => {
       if (err) throw new Error(err);
+      db.query(`DELETE FROM comments WHERE postID=${deleteId}`,(err,result)=>{
+        if(err) throw new Error(err);
+      })
       //res.json(result)
     });
     res.json("deleted post");
