@@ -43,6 +43,17 @@ function Profile() {
                 setTheBio(response.data[0].bioText)
         })
    },[])
+
+
+   useEffect(()=>{
+        axios.get(`http://localhost:3001/profilePosts/${id}`)
+            .then((response)=>{
+                console.log(response.data)
+                setListOfPosts(response.data)
+                setNumOfReviews(response.data.length);
+
+            })
+   },[posted])
   
    useEffect(()=>{
          if (!localStorage.getItem("accessToken")){
@@ -51,6 +62,7 @@ function Profile() {
            axios.get(`http://localhost:3001/basicInfo/${id}`)
            .then((response) => {
                //console.log(response.data[0].username)
+               
                setUsername(response.data[0].username)
            });
 
@@ -59,10 +71,9 @@ function Profile() {
            .then((response) => {
                //console.log(response.data[0].username)
                //console.log(response.data)
-               let numberOfReviews = 0;
-               setListOfPosts(//response.data.listOfPosts
-                  
-                   
+               //let numberOfReviews = 0;
+               /*
+               setListOfPosts(//response.data.listOfPosts       
                    response.data.listOfPosts.filter((post)=>{
                        
                        if (post.targetID != parseInt(id)){
@@ -82,6 +93,7 @@ function Profile() {
                    })
                   
                );
+               */
                //console.log(listOfPosts)
                //console.log(response.data.listOfPosts)
                //console.log(response.data.userLikes)

@@ -351,6 +351,15 @@ db.connect((err) => {
   });
 
 
+  app.get("/profilePosts/:id",(req,res)=>{
+    id=req.params.id;
+    db.query(`SELECT * FROM posts WHERE targetID=${id}`,(err, result)=>{
+      if(err) throw new Error(err);
+      res.json(result)
+    })
+  })
+
+
 
   app.get("/comments/:postId", (req, res) => {
     postId = req.params.postId;
