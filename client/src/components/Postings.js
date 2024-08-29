@@ -205,14 +205,20 @@ function Postings() {
                          navigate(`/singlePost/${val.id}`);
                        }}
                  >
+                   
                    <p>{val.postText}</p>
                </div> {/*END BODY*/}
                <div className="footer">
+                
                      {authState.username === val.username ? (
+                      <>
                        <i className="bi bi-trash" onClick={()=>{deletePost(val.id)}}>                 
                        </i>
+                       <p>{val.created_at}</p>
+                       </>
                      ):(<i></i>)} {/*Need the latter icon to move like button to right*/}
                      <div className="like-btn">
+                      
                        <i class="bi bi-hand-thumbs-up"
                          onClick={() => {
                              likePost(val.id);
@@ -220,13 +226,16 @@ function Postings() {
                          className={likedPosts.includes(val.id) ? "bi bi-hand-thumbs-up" : "bi bi-hand-thumbs-up red"
                          }
                        ></i>
+                       
                        <label>
                            {val.dt}
                        </label>
                        
+                       
                      </div>
                  </div> {/*END FOOTER*/}
              </div>
+             {val.targetID ? (
              <div className="theTarget"
                         onClick={()=> {
                           navigate(`/profile/${val.targetID}`);
@@ -239,6 +248,9 @@ function Postings() {
                          To {val.targetName}
                 
               </div>
+              ) : (
+                ""
+              )}
            </div>
          );
        })}

@@ -5,6 +5,11 @@ const bcrypt = require("bcrypt");
 const { validateToken } = require("./middleware/AuthMiddleWare");
 const { sign } = require("jsonwebtoken");
 
+const multer = require("multer");
+const path = require("path");
+
+
+
 require("dotenv").config();
 
 const app = express();
@@ -34,6 +39,7 @@ db.connect((err) => {
         createCommentTable();
         createLikesTable();
         createBioTable();
+        createAvatarTable();
       });
     });
   });
@@ -42,6 +48,8 @@ db.connect((err) => {
     db.query(
       `CREATE TABLE IF NOT EXISTS posts (
           id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
           postID INT,
           userID INT, 
           targetID INT,
@@ -69,6 +77,20 @@ db.connect((err) => {
       (err) => {
         if (err) throw new Error(err);
         console.log("Bio Table created/exists");
+      }
+    );
+  }
+
+  function createAvatarTable() {
+    db.query(
+      `CREATE TABLE IF NOT EXISTS avatar (
+          ImageID INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+          ImageData BLOB,
+          userID INT
+      )`,
+      (err) => {
+        if (err) throw new Error(err);
+        console.log("Avatar Table created/exists");
       }
     );
   }
@@ -239,7 +261,7 @@ db.connect((err) => {
   app.get("/posts", validateToken, (req, res) => {
     //console.log(req.user.id)
     db.query(
-      "select posts.title, posts.targetID, posts.targetName, posts.postText, posts.username, posts.id, posts.userID, count(distinct likes.id) as dt from posts left join likes on posts.id = likes.postID group by posts.id",
+      "select posts.title, posts.created_at, posts.targetID, posts.targetName, posts.postText, posts.username, posts.id, posts.userID, count(distinct likes.id) as dt from posts left join likes on posts.id = likes.postID group by posts.id",
       (err, result) => {
         if (err) throw new Error(err);
         //console.log(result[0].dt);
@@ -482,10 +504,27 @@ app.post("/", (req, res) => {
 
 app.get("/basicInfo/:id", (req,res) => {
   const id = req.params.id;
+  console.log("here",id);
   db.query(`SELECT users.id, users.username, users.email FROM users WHERE id='${id}'`, (err,result)=>{
     if(err) throw new Error(err);
     res.json(result);
   });
+})
+
+
+app.post("/addAvatar", validateToken, (req,res)=>{
+  const {formData} = req.body;
+  const userID = req.user.id;
+  console.log(formData)
+  db.query(`INSERT INTO avatar SET ?`,
+    {
+      imageData: formData,
+      userID: userID,
+    },
+    (err)=>{
+      if (err) throw new Error(err);
+    }
+  )
 })
 
 app.post("/addBio", validateToken, (req,res)=>{

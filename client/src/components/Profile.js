@@ -39,7 +39,7 @@ function Profile() {
        //setSuggestionsContext([]);
        axios.get(`http://localhost:3001/getBio/${authState.id}`)
         .then((response)=>{
-            if(response.data[0])//why cant i check bioText here?
+            if(response.data[0])
                 setTheBio(response.data[0].bioText)
         })
    },[])
@@ -58,18 +58,27 @@ function Profile() {
            axios.get(`http://localhost:3001/byuserId/${id}`)
            .then((response) => {
                //console.log(response.data[0].username)
-               //console.log(response.data[0])
+               //console.log(response.data)
+               let numberOfReviews = 0;
                setListOfPosts(//response.data.listOfPosts
                   
+                   
                    response.data.listOfPosts.filter((post)=>{
+                       
                        if (post.targetID != parseInt(id)){
                            //console.log(post)
                            //return post
                        }
                        else{
-                           setNumOfReviews(numOfReviews+1);
+                           numberOfReviews = numberOfReviews+1;
+                           setNumOfReviews(numberOfReviews);
+                           console.log(numberOfReviews)
+                          
                            return post;
                        }
+                        if(numberOfReviews == 0){
+                            setNumOfReviews(0);
+                        }
                    })
                   
                );
@@ -128,7 +137,7 @@ function Profile() {
 
 
    const onSubmit = (event) => {
-       console.log(rating)
+       //console.log(rating)
        event.preventDefault(); //dosent work without
        axios.post("http://localhost:3001/posts", {
          postText, id, rating, username
@@ -292,17 +301,6 @@ const checkRating = (check) => {
 
 
 {/****************************************** */}
-
-
-
-
-
-
-
-
-
-
-
 
 
                                 {/*<Star >{val.rating}</Star>*/}

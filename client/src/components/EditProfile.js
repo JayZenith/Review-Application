@@ -37,8 +37,11 @@ function EditProfile() {
         setBioText(e.target.value);
     }
 
+    
+
   return (
     <div className='editProfile'>
+        <h1>Edit Bio</h1>
         <form>
             {bioSize == 200 ? <p>Character Limit Reached</p> : ""}
             <textarea
@@ -52,8 +55,47 @@ function EditProfile() {
             <p>{bioSize}/200</p>
         </form>
         <button onClick={addBio}>Submit</button>
+        <SetImage></SetImage>
     </div>
   )
 }
+
+function SetImage(){
+    const [image, setImage] = useState('')
+
+    const handleImage = (e) =>{
+        console.log(e.target.files[0])
+        setImage(e.target.files[0])
+    }
+
+    const handleApi = () => {
+        const formData = new FormData()
+        formData.append('image', image)
+        //console.log(formData);
+        axios.post('http://localhost:3001/addAvatar', formData, {
+            headers: {
+                accessToken: localStorage.getItem("accessToken"),
+              },
+        })
+        .then((res)=>{
+            console.log(res)
+        })
+    }
+
+    return(
+        <>
+            <h1>Image Upload</h1>
+            <div>
+                <input type="file" name="file"
+                onChange={handleImage}
+                ></input>
+                <button
+                onClick={handleApi}
+                >Submit File</button>
+            </div>
+        </>
+    )
+}
+
 
 export default EditProfile
