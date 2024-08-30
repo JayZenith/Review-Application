@@ -102,6 +102,7 @@ useEffect(() => { //renders on any page load
         <DropdownContext.Provider value={{ dropdownState, setDropdownState }}>
     
         {authState.status ? (  //if authenticated 
+        
           <Navbar>
                 <NavItem icon={<HomeIcon />} item="Home" />
                 <NavItem icon={<ProfileIcon />} item="Profile" />
@@ -110,6 +111,8 @@ useEffect(() => { //renders on any page load
                   <DropdownMenu></DropdownMenu>
                 </NavItem>
           </Navbar>
+        
+         
           ) : ( //Figure out 
             <>
               {/*Login/Signup Page*/}
@@ -124,7 +127,7 @@ useEffect(() => { //renders on any page load
             <Route path="/signup" element={<Signup />} />
             <Route path="/singlePost/:id" element={<SinglePost />} />
             <Route path="/profile/editProfile" element={<EditProfile />} />
-            <Route path="*" element={<PageNotFound/>} />
+            {/*<Route path="*" element={<PageNotFound/>} />*/}
           </Routes>
     
           </DropdownContext.Provider>

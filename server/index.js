@@ -16,6 +16,7 @@ const app = express();
 app.use(cors());
 // Middleware 
 app.use(express.json()); //parse json bodies in request object
+app.use(express.static('public'));
 
 
 const storage = multer.diskStorage({

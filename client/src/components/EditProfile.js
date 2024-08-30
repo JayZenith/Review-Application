@@ -14,7 +14,7 @@ function EditProfile() {
     const { dropdownState, setDropdownState } = useContext(DropdownContext);
     const { suggestionsState, setSuggestionsContext } = useContext(SuggestionsContext);
     const [ bioSize, setBioSize] = useState(0);
-
+    const [ imgData, setImgData ] = useState([])
     useEffect(()=>{
         if (!localStorage.getItem("accessToken"))
             navigate("/");
@@ -23,7 +23,7 @@ function EditProfile() {
 
     useEffect(()=>{
         axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
-        .then(res=>console.log(res.data))
+        .then(res=>setImgData(res.data[0]))
         .catch(err=>console.log(err))
     },[])
 
@@ -48,7 +48,11 @@ function EditProfile() {
 
   return (
     <div className='editProfile'>
+        <div className='profileAvatar'>
+            <img className='imgAvatar' src={`http://localhost:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
+        </div>
         <h1>Edit Bio</h1>
+        
         <form>
             {bioSize == 200 ? <p>Character Limit Reached</p> : ""}
             <textarea
