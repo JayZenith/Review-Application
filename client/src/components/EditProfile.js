@@ -48,9 +48,7 @@ function EditProfile() {
 
   return (
     <div className='editProfile'>
-        <div className='profileAvatar'>
-            <img className='imgAvatar' src={`http://localhost:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
-        </div>
+        
         <h1>Edit Bio</h1>
         
         <form>

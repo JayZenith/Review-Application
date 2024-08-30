@@ -45,6 +45,8 @@ function App() {
  const [arrowState, setArrowState] = useState(false) //Arrow toggle 
  const [dropdownState, setDropdownState] = useState(false) //Dropdown toggle
 
+ 
+
  useEffect(()=>{ //Check for acccessToken
   if (!localStorage.getItem("accessToken")){
     location("/"); //if not go to login
@@ -105,7 +107,8 @@ useEffect(() => { //renders on any page load
         
           <Navbar>
                 <NavItem icon={<HomeIcon />} item="Home" />
-                <NavItem icon={<ProfileIcon />} item="Profile" />
+                {/*<NavItem icon={<ProfileIcon />} item="Profile" />*/}
+                <NavItem icon={<ProfileImage />} item="Profile" />
                 <SearchBar />
                 <NavItem icon={<DownIcon />} item="Arrow">
                   <DropdownMenu></DropdownMenu>
@@ -210,6 +213,24 @@ function SearchBar(){
         })}
       </div> {/*END user-search-results*/}
     </>
+  );
+ }
+
+
+ function ProfileImage(){
+  const[imgData, setImgData] = useState([])
+  const { authState, setAuthState } = useContext(AuthContext);
+
+  useEffect(()=>{
+    axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
+    .then(res=>setImgData(res.data[0]))
+    .catch(err=>console.log(err))
+  },[])
+
+  return(
+    <AuthContext.Provider value={{ authState, setAuthState }}>
+      <img className='imgAvatar' src={`http://localhost:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
+    </AuthContext.Provider>
   );
  }
  
