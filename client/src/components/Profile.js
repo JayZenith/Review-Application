@@ -6,6 +6,7 @@ import { DropdownContext } from "../helpers/DropdownContext";
 import { ScreenContext } from '../helpers/ScreenContext';
 import { SuggestionsContext } from "../helpers/SuggestionsContext";
 import { FaStar } from 'react-icons/fa' 
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 function Profile() {
@@ -32,17 +33,19 @@ function Profile() {
  
    const [theBio, setTheBio] = useState('');
 
+   const [loading, isLoading]=useState(false)
 
 
 
    useEffect(()=>{
+        setPosted(true);
        //setSuggestionsContext([]);
        axios.get(`http://localhost:3001/getBio/${authState.id}`)
         .then((response)=>{
             if(response.data[0])
                 setTheBio(response.data[0].bioText)
         })
-   },[])
+   },[posted])
 
 
    useEffect(()=>{
@@ -51,14 +54,21 @@ function Profile() {
                 console.log(response.data)
                 setListOfPosts(response.data)
                 setNumOfReviews(response.data.length);
+                setPosted(false)
 
             })
    },[posted])
-  
+
    useEffect(()=>{
-         if (!localStorage.getItem("accessToken")){
-           navigate("/");
-         } else {
+    if(!localStorage.getItem("accessToken")){
+        navigate("/");
+    }
+   }, [posted])
+  
+
+
+   useEffect(()=>{
+    isLoading(true);
            axios.get(`http://localhost:3001/basicInfo/${id}`)
            .then((response) => {
                //console.log(response.data[0].username)
@@ -66,34 +76,11 @@ function Profile() {
                setUsername(response.data[0].username)
            });
 
-
+           /*
            axios.get(`http://localhost:3001/byuserId/${id}`)
            .then((response) => {
                //console.log(response.data[0].username)
                //console.log(response.data)
-               //let numberOfReviews = 0;
-               /*
-               setListOfPosts(//response.data.listOfPosts       
-                   response.data.listOfPosts.filter((post)=>{
-                       
-                       if (post.targetID != parseInt(id)){
-                           //console.log(post)
-                           //return post
-                       }
-                       else{
-                           numberOfReviews = numberOfReviews+1;
-                           setNumOfReviews(numberOfReviews);
-                           console.log(numberOfReviews)
-                          
-                           return post;
-                       }
-                        if(numberOfReviews == 0){
-                            setNumOfReviews(0);
-                        }
-                   })
-                  
-               );
-               */
                //console.log(listOfPosts)
                //console.log(response.data.listOfPosts)
                //console.log(response.data.userLikes)
@@ -106,17 +93,19 @@ function Profile() {
                  setPosted(false)
                  setRating(null); //reset star rating
            });
+           */
           
-         }
-          
+         
+           isLoading(false);
    }, [posted])
-
 
 
 
    const likePost = (postId) => {
        axios.post("http://localhost:3001/likes", {
            postID: postId
+           //console.log(response.data.listOfPosts)
+           //console.log(response.data.userLikes)
        }, {
            headers: {accessToken: localStorage.getItem("accessToken")}
        }).then((response) => {

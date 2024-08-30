@@ -325,6 +325,8 @@ db.connect((err) => {
   });
 
   
+
+  
   app.get("/byuserId/:id", (req, res) => {
     id = req.params.id;
     //db.query(`SELECT * FROM posts WHERE userID = ${id}`, (err, result) => {
@@ -351,9 +353,12 @@ db.connect((err) => {
   });
 
 
+ 
+
+
   app.get("/profilePosts/:id",(req,res)=>{
     id=req.params.id;
-    db.query(`SELECT * FROM posts WHERE targetID=${id}`,(err, result)=>{
+    db.query(`SELECT posts.*, COUNT(distinct likes.id) as dt FROM posts LEFT JOIN likes ON posts.id=likes.postID WHERE targetID=${id} GROUP BY posts.id`,(err, result)=>{
       if(err) throw new Error(err);
       res.json(result)
     })

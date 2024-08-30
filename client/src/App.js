@@ -36,6 +36,7 @@ function App() {
    id: 0,
    status: false, // not authorized
  });
+
  const [suggestionsState, setSuggestionsContext] = useState([]); //used for search suggestions
  const [arrowState, setArrowState] = useState(false)
  const [dropdownState, setDropdownState] = useState(false)
@@ -48,9 +49,6 @@ function App() {
  
 useEffect(() => { //renders on any page load
   isLoading(true);
-  if (!localStorage.getItem("accessToken")){
-    location("/"); //if not go to login
-  }
   axios
     .get("http://localhost:3001/auth", {
       headers: {
@@ -74,7 +72,7 @@ useEffect(() => { //renders on any page load
            location("/postings")
           }
       }
-       isLoading(false);
+      isLoading(false); //when retrieved auth state 
      });
   }, []);
 
@@ -165,8 +163,6 @@ function SearchBar(){
   }, [])
  
  
- 
- 
   const onChangeHandler = (text) => {
     let matches = []
     if (text.length > 0){
@@ -176,12 +172,10 @@ function SearchBar(){
       })
     }
     //console.log('matches ',matches)
-    setSuggestionsContext(matches)
+    //setSuggestionsContext(matches)
     setSuggestionsContext(matches);//to set useContext hook right away due to lag
     setInput(text) //set search input
   }
- 
- 
  
  
   const userSearch = () => {
@@ -189,16 +183,11 @@ function SearchBar(){
   }
  
  
-  const handleKeyUp = (e) => {
+  const handleKeyUp = (e) => { //dont need as we dont load results on sep page
     if(e.key === "Enter"){
       userSearch();
     }
   }
- 
- 
- 
- 
- 
  
   return(
     <>
@@ -241,19 +230,17 @@ function SearchBar(){
  
  
  function NavItem(props) {
+  let location = useNavigate()
   const [open, setOpen] = useState(false);
   const { authState, setAuthState } = useContext(AuthContext);
   const [navFocused, setNavFocused]= useState(false);
- 
- 
- 
- 
- 
+
  
   return (
      <AuthContext.Provider value={{ authState, setAuthState }}>
     <li
     //onBlurCapture={props.item=="Arrow" ? "" : ""}
+
     className={props.item=="Search" ? "nav-item offscreentwo" : props.item=="Arrow"?"arrowToEnd" : "nav-item"}>
       <a href={props.item=="Home"?"/postings": props.item=="Profile" ? `/profile/${authState.id}` : "#"} className="icon-button" onClick={() => setOpen(!open)}>
         {props.icon}
@@ -292,8 +279,6 @@ function SearchBar(){
       setAuthState({ username: "", id: 0, status: false });
       location("/"); //login page
     }
- 
- 
  
  
     const out =()=>{
