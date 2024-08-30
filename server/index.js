@@ -9,7 +9,6 @@ const multer = require("multer");
 const path = require("path");
 
 
-
 require("dotenv").config();
 
 const app = express();
@@ -17,6 +16,21 @@ const app = express();
 app.use(cors());
 // Middleware 
 app.use(express.json()); //parse json bodies in request object
+
+
+const storage = multer.diskStorage({
+  destination: (req,file,cb)=>{
+    cb(null, 'public/images')
+  },
+  filename: (req,file,cb)=>{
+    cb(null, file.fieldname+"_"+Date.now()+path.extname(file.originalname));
+  }
+})
+
+const upload = multer({
+  storage: storage
+})
+
 
 const db = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -83,10 +97,10 @@ db.connect((err) => {
 
   function createAvatarTable() {
     db.query(
-      `CREATE TABLE IF NOT EXISTS avatar (
-          ImageID INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-          ImageData BLOB,
-          userID INT
+      `CREATE TABLE IF NOT EXISTS avatars (
+          id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+          ImageData VARCHAR(200),
+          userID INT 
       )`,
       (err) => {
         if (err) throw new Error(err);
@@ -526,20 +540,58 @@ app.get("/basicInfo/:id", (req,res) => {
 })
 
 
-app.post("/addAvatar", validateToken, (req,res)=>{
-  const {formData} = req.body;
-  const userID = req.user.id;
-  console.log(formData)
-  db.query(`INSERT INTO avatar SET ?`,
-    {
-      imageData: formData,
-      userID: userID,
-    },
-    (err)=>{
-      if (err) throw new Error(err);
-    }
-  )
+const fs=require('fs')
+
+app.post("/upload", upload.single('image'), validateToken, (req,res)=>{
+  const image = req.file.filename;
+  //console.log([image])
+  //db.query(`INSERT INTO avatars SET ImageData = ?`, [image], (err,result)=>{
+  db.query(`SELECT * FROM avatars WHERE userID=${req.user.id}`,
+    (err, result) => {
+      if (err) throw new Error(err)
+      if(!result[0]){ //if no user, insert 
+        db.query(
+          "INSERT INTO avatars SET ?",
+          {
+            ImageData: image,
+            userID: req.user.id,
+          },
+          (err) => {
+            if (err) throw new Error(err);
+            res.json({Status:"Image Upload Success"})
+          }
+        )
+      }else{ //Update the image in user section
+        console.log(result[0].ImageData);
+        db.query(
+          `UPDATE avatars SET ImageData=? WHERE userID=${req.user.id}`, [image],
+          (err) => {
+            if (err) throw new Error(err);
+            fs.unlink(`./public/images/${result[0].ImageData}`,(err)=>{
+              if(err){
+                console.error(`Error removing file: ${err}`);
+                return;
+              }
+              console.log(`File ${result[0].ImageData} has been successfully removed.`);
+            })
+            res.json({Status:"Image Upload Success"})
+          }
+        )
+
+      }
+    })
+    
+  });
+
+app.get("/getAvatar/:id", (req,res)=>{
+  const id = req.params.id;
+  db.query(`SELECT * from avatars WHERE userID=${id}`,(err,result)=>{
+    if(err) throw new Error(err)
+    res.json(result);
+    //console.log(res);
+  })
 })
+
 
 app.post("/addBio", validateToken, (req,res)=>{
     const { bioText} = req.body;

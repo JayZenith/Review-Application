@@ -51,7 +51,7 @@ function Profile() {
    useEffect(()=>{
         axios.get(`http://localhost:3001/profilePosts/${id}`)
             .then((response)=>{
-                console.log(response.data)
+                //console.log(response.data)
                 setListOfPosts(response.data)
                 setNumOfReviews(response.data.length);
                 setPosted(false)

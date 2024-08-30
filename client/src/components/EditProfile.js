@@ -21,6 +21,13 @@ function EditProfile() {
     },[])
 
 
+    useEffect(()=>{
+        axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
+        .then(res=>console.log(res.data))
+        .catch(err=>console.log(err))
+    },[])
+
+
     const addBio = () => {
         axios.post("http://localhost:3001/addBio",{
             bioText
@@ -61,25 +68,30 @@ function EditProfile() {
 }
 
 function SetImage(){
-    const [image, setImage] = useState('')
+    const [file, setFile] = useState('')
 
     const handleImage = (e) =>{
         console.log(e.target.files[0])
-        setImage(e.target.files[0])
+        setFile(e.target.files[0])
     }
 
     const handleApi = () => {
         const formData = new FormData()
-        formData.append('image', image)
+        formData.append('image', file)
         //console.log(formData);
-        axios.post('http://localhost:3001/addAvatar', formData, {
+        axios.post('http://localhost:3001/upload', formData, {
             headers: {
                 accessToken: localStorage.getItem("accessToken"),
               },
         })
         .then((res)=>{
-            console.log(res)
+            if(res.data.Status==="Image Upload Success"){
+                console.log("Succeeded")
+            }else{
+                console.log("Failed")
+            }
         })
+        .catch(err=>console.log(err));
     }
 
     return(
@@ -89,9 +101,7 @@ function SetImage(){
                 <input type="file" name="file"
                 onChange={handleImage}
                 ></input>
-                <button
-                onClick={handleApi}
-                >Submit File</button>
+                <button onClick={handleApi}>Submit File</button>
             </div>
         </>
     )
