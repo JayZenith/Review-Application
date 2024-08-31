@@ -269,6 +269,20 @@ db.connect((err) => {
     });
   });
   
+
+  app.get("/users2", (req, res) => {
+    const name = req.params.usern;
+    console.log(name)
+    db.query("SELECT users.*, avatars.ImageData "+
+      "FROM users LEFT OUTER JOIN avatars ON "+
+      "users.id=avatars.userID GROUP BY users.id, avatars.id", (err, result) => {
+      if (err) throw new Error(err);
+      res.json(result);
+      //res.end();
+    });
+  });
+  
+  
   
   
   

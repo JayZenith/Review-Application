@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { AuthContext } from "../helpers/AuthContext";
 import { SuggestionsContext } from "../helpers/SuggestionsContext";
+import { FaStar } from 'react-icons/fa' 
 
 
 function Postings() {
@@ -21,6 +22,8 @@ function Postings() {
    const [inputSize, setInputSize] = useState(0)
    const [theTargets, setTheTargets] = useState([])
    let navigate = useNavigate();
+
+   const [hover, setHover] = useState(null)
   
 
 
@@ -242,6 +245,41 @@ function Postings() {
              </div> {/*END USER-WRAPPER*/}
                {/*<div className="title"> {val.title} </div>*/}
              <div className="bodyAndFooter">
+
+              {val.targetID ? 
+              <div className="postingsStarRating">
+              {[...Array(5)].map((star, idx)=>{
+                //console.log(props.children)
+                const currentRate = idx + 1;
+                return(
+                    <>
+                        <label>
+                        <input className="radioBtn" type="radio" name="rating"  
+                            value={currentRate}
+                            
+                                                
+                        />
+                            <FaStar className='ratingStar' size={20}
+                                color={currentRate <= (hover || val.rating) ?
+                                    "red"
+                                    : "black"
+                                }
+                                //onMouseEnter={()=>setHover(currentRate)}
+                                //onMouseLeave={()=>setHover(null)}
+                            />
+                        </label>
+                    </>  
+                )
+            })}
+             </div>
+            :<></>
+            }
+
+
+
+              
+
+               
                <div className="body"
                      onClick={() => {
                          navigate(`/singlePost/${val.id}`);
@@ -256,9 +294,10 @@ function Postings() {
                       <>
                        <i className="bi bi-trash" onClick={()=>{deletePost(val.id)}}>                 
                        </i>
-                       <p>{val.created_at}</p>
+    
                        </>
                      ):(<i></i>)} {/*Need the latter icon to move like button to right*/}
+                     <p>{val.created_at}</p>
                      <div className="like-btn">
                       
                        <i class="bi bi-hand-thumbs-up"
@@ -305,6 +344,9 @@ function Postings() {
 
 
 
+function StarRating(props){
+  
+}
 
 
 

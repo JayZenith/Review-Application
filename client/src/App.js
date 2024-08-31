@@ -153,8 +153,9 @@ function SearchBar(){
  
   useEffect(()=>{ //Load the Users for searching 
     const loadUsers = async () => {
-      const response = await axios.get("http://localhost:3001/users");
+      const response = await axios.get("http://localhost:3001/users2");
       setUsers(response.data)
+      console.log(response.data)
     }
     loadUsers();
   }, [])
@@ -206,7 +207,12 @@ function SearchBar(){
                 window.location.reload()
               }}
             >
-              <div className="userSearchAvatar"></div>
+              <div className="avatar">
+                {userData.ImageData ?
+                    <img className='imgAvatar' src={`http://localhost:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
+                  : <></>
+                }
+              </div>
               <p>{userData.username}</p>
             </div> 
           )
