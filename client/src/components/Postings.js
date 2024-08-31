@@ -19,6 +19,7 @@ function Postings() {
    const [jsonData, setJSON] = useState([])//for users during usr search
    const [suggestions, setSuggestions] = useState([])
    const [inputSize, setInputSize] = useState(0)
+   const [theTargets, setTheTargets] = useState([])
    let navigate = useNavigate();
   
 
@@ -52,7 +53,8 @@ function Postings() {
          headers: {accessToken: localStorage.getItem("accessToken")}
        }).then((res) => {
         console.log(res.data)
-       setListOfPosts(res.data);
+       setTheTargets(res.data.array2);
+       setListOfPosts(res.data.array1);
        /*
        setLikedPosts(
          res.data.userLikes.map((like) => {
@@ -64,6 +66,24 @@ function Postings() {
        });
      }
    }, [posted]); //render if we create a new post. Redundant?
+
+   /*
+   useEffect(() => { //load posts and likes of posts
+    if (!localStorage.getItem("accessToken")){
+      navigate("/"); //if not go to login
+    }
+    else { //without the website will break
+      axios.get("http://localhost:3001/posts3", {
+        headers: {accessToken: localStorage.getItem("accessToken")}
+      }).then((res) => {
+       console.log(res.data)
+      setTheTargets(res.data);
+      setPosted(false); //to reset call to render created post
+      });
+    }
+  }, [posted]); //render if we create a new post. Redundant?
+  */
+
 
 
    const likePost = (postId) => {
@@ -201,6 +221,8 @@ function Postings() {
            </form>
        </div> {/*END createPostSection*/}
        {listOfPosts.slice(0).reverse().map((val, key) => {
+         const aTarget = theTargets[listOfPosts.length -(key+1)];
+         console.log(listOfPosts.length -(key+1));
          return (
            <div className="post">       
              <div className="userWrapper">
@@ -263,7 +285,10 @@ function Postings() {
                           }}
                        >
                         <div className="avatar">
-                          
+                          {aTarget.ImageData ?
+                          <img className='imgAvatar' src={`http://localhost:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
+                          : <></>
+                          }
                         </div>
                          To {val.targetName}
                 

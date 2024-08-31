@@ -310,12 +310,27 @@ db.connect((err) => {
       "LEFT OUTER JOIN likes ON posts.id=likes.postID GROUP BY posts.id, avatars.id",
       (err, result) => {
         if (err) throw new Error(err);
-        res.json(result);
+        db.query("SELECT posts.*, avatars.* "+
+          "FROM posts LEFT OUTER JOIN avatars "+
+          "ON posts.targetID=avatars.userID",(err,result2)=>{
+            if(err) throw new Error(err);
+            res.json({array1: result, array2:result2});
+          })
+        //res.json(result);
         
       }
     );
   
   });
+  
+  app.get("/posts3", validateToken, (req,res)=>{
+    db.query("SELECT posts.*, avatars.* "+
+      "FROM posts LEFT OUTER JOIN avatars "+
+      "ON posts.targetID=avatars.userID",(err,result)=>{
+        if(err) throw new Error(err);
+        res.json(result);
+      })
+  })
 
 
 
