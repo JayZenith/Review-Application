@@ -302,6 +302,21 @@ db.connect((err) => {
   
   });
 
+  app.get("/posts2", validateToken, (req, res) => {
+    //console.log(req.user.id)
+    db.query(   
+      "SELECT posts.*, count(distinct likes.id) as dt, avatars.ImageData " +
+      "FROM posts LEFT OUTER JOIN avatars ON posts.userID=avatars.userID " +
+      "LEFT OUTER JOIN likes ON posts.id=likes.postID GROUP BY posts.id, avatars.id",
+      (err, result) => {
+        if (err) throw new Error(err);
+        res.json(result);
+        
+      }
+    );
+  
+  });
+
 
 
 

@@ -48,15 +48,18 @@ function Postings() {
        navigate("/"); //if not go to login
      }
      else { //without the website will break
-       axios.get("http://localhost:3001/posts", {
+       axios.get("http://localhost:3001/posts2", {
          headers: {accessToken: localStorage.getItem("accessToken")}
        }).then((res) => {
-       setListOfPosts(res.data.listOfPosts);
+        console.log(res.data)
+       setListOfPosts(res.data);
+       /*
        setLikedPosts(
          res.data.userLikes.map((like) => {
            return like.id;
          })
        );
+       */
        setPosted(false); //to reset call to render created post
        });
      }
@@ -165,6 +168,17 @@ function Postings() {
       setPost(e.target.value);
     }
 
+    
+    //const[imgData, setImgData] = useState([])
+
+    /*
+    useEffect(()=>{
+      axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
+      .then(res=>setImgData(res.data[0]))
+      .catch(err=>console.log(err))
+    },[])
+
+    */
 
   
 
@@ -190,9 +204,15 @@ function Postings() {
          return (
            <div className="post">       
              <div className="userWrapper">
-                 <Link to={`/profile/${val.userID}`}>
-                   <div className="avatar">
-                     </div>
+                  <Link to={`/profile/${val.userID}`}>
+                    <div className="avatar">
+                      {val.ImageData? 
+                      <img className='imgAvatar' src={`http://localhost:3001/images/`+val.ImageData} width="200" height="100" alt="" />
+                      //<></>
+                      :
+                      <></>
+                      }
+                    </div>
                    </Link>
                    <div className="username">
                        <Link to={`/profile/${val.userID}`}>{val.username} </Link>

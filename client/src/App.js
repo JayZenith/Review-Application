@@ -229,7 +229,12 @@ function SearchBar(){
 
   return(
     <AuthContext.Provider value={{ authState, setAuthState }}>
+      {imgData?
       <img className='imgAvatar' src={`http://localhost:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
+      //<></>
+      :
+      <></>
+      }
     </AuthContext.Provider>
   );
  }
