@@ -403,7 +403,10 @@ db.connect((err) => {
 
   app.get("/profilePosts/:id",(req,res)=>{
     id=req.params.id;
-    db.query(`SELECT posts.*, COUNT(distinct likes.id) as dt FROM posts LEFT JOIN likes ON posts.id=likes.postID WHERE targetID=${id} GROUP BY posts.id`,(err, result)=>{
+    db.query(`SELECT posts.*, COUNT(distinct likes.id) as dt, avatars.ImageData `+
+       `FROM posts LEFT OUTER JOIN avatars ON posts.userID=avatars.userID `+
+       `LEFT JOIN likes ON posts.id=likes.postID `+
+       `WHERE targetID=${id} GROUP BY posts.id, avatars.id`,(err, result)=>{
       if(err) throw new Error(err);
       res.json(result)
     })

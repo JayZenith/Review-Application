@@ -261,6 +261,12 @@ const checkRating = (check) => {
                                 }}
                         >
                             <div className="avatar">
+                            {val.ImageData? 
+                                <img className='imgAvatar' src={`http://localhost:3001/images/`+val.ImageData} width="200" height="100" alt="" />
+                                //<></>
+                                :
+                                <></>
+                            }
                             </div>
                             <div className="username">
                                     {val.username} 
