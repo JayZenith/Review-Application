@@ -166,9 +166,18 @@ function SearchBar(){
   const onChangeHandler = (text) => { ///Set the suggestions 
     let matches = []
     if (text.length > 0){
-      matches = users.filter(user=>{
-        const regex = new RegExp(`^${text}`,"gi");
-        return user.email.match(regex); //search by email
+       matches = users.filter(user=>{
+        //const regex = new RegExp(`^${text}`,"gi");
+        try{
+          const regex = new RegExp(`^${text}`,"gi");
+          if(user.email.match(regex)){
+            return user.email.match(regex);
+          }
+
+        }catch(err){
+          console.log(err)
+        }
+        //return user.email.match(regex); //search by email
       })
     }
     //console.log('matches ',matches)
