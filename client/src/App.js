@@ -67,6 +67,8 @@ useEffect(() => { //renders on any page load
       } else {
         setAuthState({ //can also use res.data.email
           username: res.data.username,
+          firstname: res.data.firstname,
+          lastname: res.data.lastname,
           id: res.data.id,
           status: true,
         });
@@ -166,7 +168,7 @@ function SearchBar(){
     if (text.length > 0){
       matches = users.filter(user=>{
         const regex = new RegExp(`^${text}`,"gi");
-        return user.username.match(regex);
+        return user.email.match(regex); //search by email
       })
     }
     //console.log('matches ',matches)
@@ -213,7 +215,7 @@ function SearchBar(){
                   : <></>
                 }
               </div>
-              <p>{userData.username}</p>
+              <p>{userData.firstname+ " " +userData.lastname}</p>
             </div> 
           )
         })}

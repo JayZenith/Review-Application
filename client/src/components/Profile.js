@@ -73,7 +73,8 @@ function Profile() {
            .then((response) => {
                //console.log(response.data[0].username)
                
-               setUsername(response.data[0].username)
+               //setUsername(response.data[0].username)
+               setUsername(response.data[0].firstname + response.data[0].lastname);
            });
 
            /*

@@ -144,6 +144,8 @@ db.connect((err) => {
       `CREATE TABLE IF NOT EXISTS users (
           id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
           username VARCHAR(30),
+          firstname VARCHAR(30),
+          lastname VARCHAR(30),
           password VARCHAR(100), 
           email VARCHAR(30)
       )`,
@@ -178,6 +180,8 @@ db.connect((err) => {
             "INSERT INTO users SET ?",
             {
               username: user.user,
+              firstname: user.fname,
+              lastname: user.lname,
               password: hash,
               email: user.email,
             },
@@ -200,6 +204,8 @@ db.connect((err) => {
                 res.json({
                   token: accessToken,
                   username: result[0].username,
+                  firstname: result[0].firstname,
+                  lastname: result[0].lastname,
                   id: result[0].id,
                   email: user.email,
                 });
@@ -276,6 +282,18 @@ db.connect((err) => {
     db.query("SELECT users.*, avatars.ImageData "+
       "FROM users LEFT OUTER JOIN avatars ON "+
       "users.id=avatars.userID GROUP BY users.id, avatars.id", (err, result) => {
+      if (err) throw new Error(err);
+      res.json(result);
+      //res.end();
+    });
+  });
+
+  app.get("/users3", (req, res) => {
+    const name = req.params.usern;
+    console.log(name)
+    db.query("SELECT users.*, avatars.ImageData, bio.bioText"+
+      "FROM users LEFT OUTER JOIN avatars ON users.id=avatars.userID "+
+      "LEFT JOIN bio ON users.id=avatars.userID GROUP BY users.id, avatars.id, bio.id", (err, result) => {
       if (err) throw new Error(err);
       res.json(result);
       //res.end();
@@ -602,7 +620,7 @@ app.post("/", (req, res) => {
 app.get("/basicInfo/:id", (req,res) => {
   const id = req.params.id;
   console.log("here",id);
-  db.query(`SELECT users.id, users.username, users.email FROM users WHERE id='${id}'`, (err,result)=>{
+  db.query(`SELECT users.id, users.username, users.firstname, users.lastname, users.email FROM users WHERE id='${id}'`, (err,result)=>{
     if(err) throw new Error(err);
     res.json(result);
   });
