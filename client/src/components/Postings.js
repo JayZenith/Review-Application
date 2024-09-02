@@ -52,7 +52,7 @@ function Postings() {
        navigate("/"); //if not go to login
      }
      else { //without the website will break
-       axios.get("http://localhost:3001/posts2", {
+       axios.get("http://localhost:3001/posts4", {
          headers: {accessToken: localStorage.getItem("accessToken")}
        }).then((res) => {
         console.log(res.data)
@@ -240,7 +240,7 @@ function Postings() {
                     </div>
                    </Link>
                    <div className="username">
-                       <Link to={`/profile/${val.userID}`}>{val.username} </Link>
+                       <Link to={`/profile/${val.userID}`}>{val.firstname} </Link>
                    </div>
              </div> {/*END USER-WRAPPER*/}
                {/*<div className="title"> {val.title} </div>*/}

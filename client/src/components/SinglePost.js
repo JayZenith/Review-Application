@@ -16,11 +16,11 @@ function SinglePost() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/singlePost/byId2/${id}`)
+      .get(`http://localhost:3001/singlePost/byId3/${id}`)
       .then((response) => {
         setPostObject(response.data[0]);
       });
-    axios.get(`http://localhost:3001/comments2/${id}`).then((response) => {
+    axios.get(`http://localhost:3001/comments3/${id}`).then((response) => {
       setComments(response.data);
     });
   }, [comments]); //did this fix problem of having to rerender upon create/delete comment??
@@ -106,9 +106,9 @@ function SinglePost() {
                       }
 
                     </div>
-                    {postObject.username}
+                    {postObject.firstname}
                 </div>
-            {authState.username === postObject.username && (
+            {authState.email === postObject.email && (
               <i className="bi bi-trash" onClick={()=>{deletePost(postObject.id)}}></i>
             )}
           </div>
@@ -149,8 +149,8 @@ function SinglePost() {
                                 navigate(`/profile/${comment.userID}`);
                                 window.location.reload()
                                 }}
-                  > {comment.username} </div>
-                    {authState.username === comment.username && (
+                  > {comment.firstname} </div>
+                    {authState.email === comment.email && (
                         <i className="bi bi-trash" onClick={() => {deleteComment(comment.id);}}>
                         </i>
                     )}

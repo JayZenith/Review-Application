@@ -351,6 +351,29 @@ db.connect((err) => {
     );
   
   });
+
+
+  app.get("/posts4", validateToken, (req, res) => {
+    //console.log(req.user.id)
+    db.query(   
+      "SELECT posts.*, count(distinct likes.id) as dt, avatars.ImageData, users.* " +
+      "FROM posts LEFT OUTER JOIN avatars ON posts.userID=avatars.userID " +
+      "LEFT OUTER JOIN likes ON posts.id=likes.postID " +
+      "LEFT OUTER JOIN users ON posts.userID=users.id GROUP BY posts.id, avatars.id, users.id",
+      (err, result) => {
+        if (err) throw new Error(err);
+        db.query("SELECT posts.*, avatars.* "+
+          "FROM posts LEFT OUTER JOIN avatars "+
+          "ON posts.targetID=avatars.userID",(err,result2)=>{
+            if(err) throw new Error(err);
+            res.json({array1: result, array2:result2});
+          })
+        //res.json(result);
+        
+      }
+    );
+  
+  });
   
   app.get("/posts3", validateToken, (req,res)=>{
     db.query("SELECT posts.*, avatars.* "+
@@ -399,6 +422,20 @@ db.connect((err) => {
   });
 
   
+  app.get("/singlePost/byId3/:id", (req, res) => {
+    id = req.params.id;
+    db.query(`SELECT posts.*, COUNT(distinct likes.id) as dt, `+
+      `avatars.ImageData, users.* FROM posts LEFT OUTER JOIN avatars ON `+
+      `posts.userID=avatars.userID LEFT JOIN likes ON posts.id=likes.postID `+
+      `LEFT OUTER JOIN users ON posts.userID=users.id `+
+      `WHERE posts.id = ${id} GROUP BY posts.id, avatars.id, users.id`, (err, result) => {
+      if (err) throw new Error(err);
+      res.json(result);
+      //res.end();
+    });
+  });
+
+
   app.get("/singlePost/byId2/:id", (req, res) => {
     id = req.params.id;
     db.query(`SELECT posts.*, COUNT(distinct likes.id) as dt, `+
@@ -410,7 +447,6 @@ db.connect((err) => {
       //res.end();
     });
   });
-
   
   app.get("/byuserId/:id", (req, res) => {
     id = req.params.id;
@@ -469,6 +505,18 @@ db.connect((err) => {
     db.query(`SELECT comments.*, avatars.ImageData FROM comments LEFT OUTER JOIN `+
       `avatars ON comments.userID=avatars.userID WHERE comments.postID=${postId} `+
       `GROUP BY comments.id, avatars.id`, (err, result) => {
+      if (err) throw new Error(err);
+      res.json(result);
+      //res.end();
+    });
+  });
+
+  app.get("/comments3/:postId", (req, res) => {
+    postId = req.params.postId;
+    db.query(`SELECT comments.*, avatars.ImageData, users.* FROM comments LEFT OUTER JOIN `+
+      `avatars ON comments.userID=avatars.userID LEFT OUTER JOIN users ON comments.userID=users.id `+
+      `WHERE comments.postID=${postId} `+
+      `GROUP BY comments.id, avatars.id, users.id`, (err, result) => {
       if (err) throw new Error(err);
       res.json(result);
       //res.end();

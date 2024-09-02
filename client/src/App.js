@@ -69,6 +69,7 @@ useEffect(() => { //renders on any page load
           username: res.data.username,
           firstname: res.data.firstname,
           lastname: res.data.lastname,
+          email: res.data.email,
           id: res.data.id,
           status: true,
         });
@@ -175,7 +176,9 @@ function SearchBar(){
           }
 
         }catch(err){
-          console.log(err)
+          //console.log(err)
+          return;
+
         }
         //return user.email.match(regex); //search by email
       })
