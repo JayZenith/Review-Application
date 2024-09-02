@@ -11,53 +11,29 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 function Profile() {
    let { id } = useParams();
+   let navigate = useNavigate();
+
    const [postText, setPost] = useState('');
    const [username, setUsername] = useState("");
    const [listOfPosts,setListOfPosts] = useState([]);
-   //const [listOfPosts,setListOfPosts] = useState([]);
    const [likedPosts, setLikedPosts] = useState([])
-   let navigate = useNavigate();
+   
    const { authState } = useContext(AuthContext);
    const [posted, setPosted] = useState(false);
    const [reviewSize, setReviewSize] = useState(0);
+
    const { arrowState, setArrowState } = useContext(ScreenContext);
    const { dropdownState, setDropdownState } = useContext(DropdownContext);
    const { suggestionsState, setSuggestionsContext } = useContext(SuggestionsContext);
 
 
    const [rating, setRating] = useState(null)
-   const [rateColor, setRateColor] = useState(null)
    const [hover, setHover] = useState(null)
 
    const [numOfReviews, setNumOfReviews] = useState(0);
- 
    const [theBio, setTheBio] = useState('');
 
    const [loading, isLoading]=useState(false)
-
-
-
-   useEffect(()=>{
-        setPosted(true);
-       //setSuggestionsContext([]);
-       axios.get(`http://localhost:3001/getBio/${authState.id}`)
-        .then((response)=>{
-            if(response.data[0])
-                setTheBio(response.data[0].bioText)
-        })
-   },[posted])
-
-
-   useEffect(()=>{
-        axios.get(`http://localhost:3001/profilePosts/${id}`)
-            .then((response)=>{
-                //console.log(response.data)
-                setListOfPosts(response.data)
-                setNumOfReviews(response.data.length);
-                setPosted(false)
-
-            })
-   },[posted])
 
    useEffect(()=>{
     if(!localStorage.getItem("accessToken")){
@@ -65,39 +41,37 @@ function Profile() {
     }
    }, [posted])
   
+   useEffect(()=>{
+        //setPosted(true);
+       //setSuggestionsContext([]);
+       axios.get(`http://localhost:3001/getBio/${id}`)
+        .then((response)=>{
+            console.log(response)
+            if(response.data[0])
+                setTheBio(response.data[0].bioText)
+        })
+    },[])
+
+   useEffect(()=>{
+        axios.get(`http://localhost:3001/profilePosts/${id}`)
+            .then((response)=>{
+                //console.log(response.data)
+                setListOfPosts(response.data)
+                setNumOfReviews(response.data.length);
+                //setPosted(false)
+            })
+   },[posted])
 
 
    useEffect(()=>{
-    isLoading(true);
-           axios.get(`http://localhost:3001/basicInfo/${id}`)
-           .then((response) => {
+        isLoading(true);
+        axios.get(`http://localhost:3001/basicInfo/${id}`)
+        .then((response) => {
                //console.log(response.data[0].username)
-               
                //setUsername(response.data[0].username)
-               setUsername(response.data[0].firstname + response.data[0].lastname);
-           });
-
-           /*
-           axios.get(`http://localhost:3001/byuserId/${id}`)
-           .then((response) => {
-               //console.log(response.data[0].username)
-               //console.log(response.data)
-               //console.log(listOfPosts)
-               //console.log(response.data.listOfPosts)
-               //console.log(response.data.userLikes)
-               setLikedPosts(
-                   response.data.userLikes.map((like) => {
-                     return like.id;
-                   })
-                 );
-                 //console.log(likedPosts)
-                 setPosted(false)
-                 setRating(null); //reset star rating
-           });
-           */
-          
-         
-           isLoading(false);
+            setUsername(response.data[0].firstname +" "+response.data[0].lastname);
+        });
+        isLoading(false);
    }, [])
 
 
@@ -136,22 +110,18 @@ function Profile() {
    }
 
 
-
-
    const onSubmit = (event) => {
        //console.log(rating)
        event.preventDefault(); //dosent work without
        axios.post("http://localhost:3001/posts", {
-         postText, id, rating, username
+         postText, id, rating, username //username?
        }, {
          headers: {accessToken: localStorage.getItem("accessToken")},
        }).then((res) => {
            if(res.data.error){
              alert(res.data.error);
            }
-           //console.log("worked");
            setPosted(true);
-           
            //navigate("/postings");
        });
  
@@ -175,17 +145,15 @@ function Profile() {
         });
       };
 
-
       const editProfile = () => {
         navigate("/profile/editProfile")
       }
 
 
-
-const checkRating = (check) => {
-    //console.log(check);
-    setRating(check);
-}
+    const checkRating = (check) => {
+        //console.log(check);
+        setRating(check);
+    }
 
 
 
