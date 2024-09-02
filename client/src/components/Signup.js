@@ -119,7 +119,7 @@ function Signup() {
    }
 
    try{
-       await axios.post("http://localhost:3001/signupThree", {
+       await axios.post("http://localhost:3001/signupFour", {
            //user, pwd, email
            user, fname, lname, pwd, email
        })
@@ -133,7 +133,8 @@ function Signup() {
                //console.log("here")
                //console.log(res.data)
                localStorage.setItem("accessToken", res.data.token);
-               setAuthState({username: res.data.username, id:res.data.id, email:res.data.email, status: true})
+               //setAuthState({username: res.data.username, id:res.data.id, email:res.data.email, status: true})
+               setAuthState({firstname: res.data.firstname, lastname:res.data.lastname, id:res.data.id, email:res.data.email, status: true})
                history("/postings");
            }
        })
@@ -167,6 +168,7 @@ function Signup() {
                        <p ref={userExistRef} className={userExists ? "errmsg" :
                        "offscreen"} aria-live="assertive">{userExists}
                        </p>
+                       {/*
                        <div className="loginField">
                            <label htmlFor='username'>
                                <span className={validName ? "valid" : "hide"}>
@@ -191,6 +193,7 @@ function Signup() {
                                    onBlur={() => setUserFocus(false)}
                            />   
                        </div>
+                       */}
                        <p id="uidnote" className={userFocus && user &&
                                    !validName ? "instructions" : "offscreen"}>
                                    <i class="bi bi-x-circle"></i>
@@ -355,7 +358,7 @@ function Signup() {
 
                        <div className='loginField'>
                                <input
-                               disabled={!validName || !validPwd || !validMatch ? true : false}
+                               disabled={!validFname || !validLname || !validEmail || !validPwd || !validMatch ? true : false}
                                type="submit"
                                value="Submit" />
                        </div>

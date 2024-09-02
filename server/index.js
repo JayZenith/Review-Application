@@ -143,7 +143,6 @@ db.connect((err) => {
     db.query(
       `CREATE TABLE IF NOT EXISTS users (
           id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-          username VARCHAR(30),
           firstname VARCHAR(30),
           lastname VARCHAR(30),
           password VARCHAR(100), 
@@ -169,9 +168,91 @@ db.connect((err) => {
   });
 
 
+
+    app.post("/signupFour", (req, res) => {
+      const user = req.body;
+      //db.query(`SELECT * FROM users WHERE email='${user.email}' OR username='${user.user}'`, (err, result) => {
+        db.query(`SELECT * FROM users WHERE email='${user.email}'`, (err, result) => {
+        if (err) throw new Error(err);
+        //console.log(result);
+        if (!result[0]) { //if no such user exists
+          bcrypt.hash(user.pwd, 10).then((hash) => {
+            db.query(
+              "INSERT INTO users SET ?",
+              {
+                //username: user.user,
+                firstname: user.fname,
+                lastname: user.lname,
+                password: hash,
+                email: user.email,
+              },
+              (err, result) => {
+                if (err) throw new Error(err);
+                
+                //console.log("1 user inserted");
+                //console.log(result[0]);
+                db.query(`SELECT * FROM users WHERE email='${user.email}'`, (err, result) => {
+                  if(err) throw new Error;
+                  //console.log(result[0]);
+                  db.query(
+                    "INSERT INTO avatars SET ?",
+                    {
+                      ImageData: "image_1725231104039.png",
+                      userID: result[0].id,
+                    },
+                    (err) => {
+                      if (err) throw new Error(err);
+                    }
+                  )
+    
+                  const accessToken = sign(
+                    {
+                      email: user.email,
+                      id: result[0].id,
+                      firstname: user.fname,
+                      lastname: user.lname,
+                      //username: result[0].username,
+                    },
+                    process.env.ACCESS_TOKEN
+                  );
+                  res.json({
+                    token: accessToken,
+                    //username: result[0].username,
+                    firstname: result[0].firstname,
+                    lastname: result[0].lastname,
+                    id: result[0].id,
+                    email: user.email,
+                  });
+                })
+              }
+            );
+          });
+        } else {
+          //console.log("user exist")
+          res.json({ error: "User already exists!"});
+        }
+      }); //end of Select Query
+      //res.json("success");
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   app.post("/signupThree", (req, res) => {
     const user = req.body;
-    db.query(`SELECT * FROM users WHERE email='${user.email}' OR username='${user.user}'`, (err, result) => {
+    //db.query(`SELECT * FROM users WHERE email='${user.email}' OR username='${user.user}'`, (err, result) => {
+      db.query(`SELECT * FROM users WHERE email='${user.email}'`, (err, result) => {
       if (err) throw new Error(err);
       //console.log(result);
       if (!result[0]) { //if no such user exists
@@ -179,7 +260,7 @@ db.connect((err) => {
           db.query(
             "INSERT INTO users SET ?",
             {
-              username: user.user,
+              //username: user.user,
               firstname: user.fname,
               lastname: user.lname,
               password: hash,
@@ -197,13 +278,15 @@ db.connect((err) => {
                   {
                     email: user.email,
                     id: result[0].id,
-                    username: result[0].username,
+                    firstname: user.fname,
+                    lastname: user.lname,
+                    //username: result[0].username,
                   },
                   process.env.ACCESS_TOKEN
                 );
                 res.json({
                   token: accessToken,
-                  username: result[0].username,
+                  //username: result[0].username,
                   firstname: result[0].firstname,
                   lastname: result[0].lastname,
                   id: result[0].id,
@@ -428,8 +511,9 @@ db.connect((err) => {
       `avatars.ImageData, users.* FROM posts LEFT OUTER JOIN avatars ON `+
       `posts.userID=avatars.userID LEFT JOIN likes ON posts.id=likes.postID `+
       `LEFT OUTER JOIN users ON posts.userID=users.id `+
-      `WHERE posts.id = ${id} GROUP BY posts.id, avatars.id, users.id`, (err, result) => {
+      `WHERE posts.id=${id} GROUP BY posts.id, avatars.id, users.id`, (err, result) => {
       if (err) throw new Error(err);
+      console.log(result);
       res.json(result);
       //res.end();
     });
@@ -575,6 +659,7 @@ db.connect((err) => {
   
   /* USERS */
 
+
 app.post("/signup", (req, res) => {
   const user = req.body;
   bcrypt.hash(user.pwd, 10).then((hash) => {
@@ -668,7 +753,8 @@ app.post("/", (req, res) => {
 app.get("/basicInfo/:id", (req,res) => {
   const id = req.params.id;
   console.log("here",id);
-  db.query(`SELECT users.id, users.username, users.firstname, users.lastname, users.email FROM users WHERE id='${id}'`, (err,result)=>{
+  //db.query(`SELECT users.id, users.username, users.firstname, users.lastname, users.email FROM users WHERE id='${id}'`, (err,result)=>{
+    db.query(`SELECT users.* FROM users WHERE id='${id}'`, (err,result)=>{
     if(err) throw new Error(err);
     res.json(result);
   });
@@ -697,7 +783,7 @@ app.post("/upload", upload.single('image'), validateToken, (req,res)=>{
           }
         )
       }else{ //Update the image in user section
-        console.log(result[0].ImageData);
+        //console.log(result[0].ImageData);
         db.query(
           `UPDATE avatars SET ImageData=? WHERE userID=${req.user.id}`, [image],
           (err) => {

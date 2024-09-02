@@ -98,7 +98,7 @@ function Profile() {
           
          
            isLoading(false);
-   }, [posted])
+   }, [])
 
 
 

@@ -18,6 +18,7 @@ function SinglePost() {
     axios
       .get(`http://localhost:3001/singlePost/byId3/${id}`)
       .then((response) => {
+        console.log(response)
         setPostObject(response.data[0]);
       });
     axios.get(`http://localhost:3001/comments3/${id}`).then((response) => {
@@ -47,7 +48,8 @@ function SinglePost() {
           //alert(res.data.username)
           const commentToAdd = {
             commentBody: newComment,
-            username: res.data.username,
+            firstname: res.data.firstname,
+            //username: res.data.username,
             id: res.data.id,
           };
           setComments([...comments, commentToAdd]);
