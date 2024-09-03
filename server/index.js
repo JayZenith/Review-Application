@@ -65,13 +65,10 @@ db.connect((err) => {
           id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-          postID INT,
           userID INT, 
           targetID INT,
           targetName VARCHAR(30),
-          title VARCHAR(30),
           postText VARCHAR(500),
-          username VARCHAR(30),
           rating INT
       )`,
       (err) => {
@@ -158,6 +155,30 @@ db.connect((err) => {
 
   app.get("/auth", validateToken, (req, res) => {
     res.json(req.user);
+  });
+
+  app.post("/posts", validateToken, (req, res) => {
+    const post = req.body;
+    console.log(post.rating)
+    db.query(
+      "INSERT INTO posts SET ?",
+      {
+        //title: post.title,
+        postText: post.postText,
+        //username: req.user.firstname,
+        userID: req.user.id,
+        targetID: post.id,
+        targetName: post.username,
+        rating: post.rating,
+        
+       // username: post.username,
+      },
+      (err) => {
+        if (err) throw new Error(err);
+        console.log("1 post inserted");
+        res.json(post);
+      }
+    );
   });
 
     app.post("/signupFour", (req, res) => {
@@ -415,9 +436,11 @@ db.connect((err) => {
       "LEFT OUTER JOIN users ON posts.userID=users.id GROUP BY posts.id, avatars.id, users.id",
       (err, result) => {
         if (err) throw new Error(err);
-        db.query("SELECT posts.*, avatars.* "+
+        db.query("SELECT posts.*, avatars.*, users.*"+
           "FROM posts LEFT OUTER JOIN avatars "+
-          "ON posts.targetID=avatars.userID",(err,result2)=>{
+          "ON posts.targetID=avatars.userID LEFT OUTER JOIN "+
+          "users ON posts.targetID=users.id GROUP BY "+
+          "posts.id, avatars.id, users.id",(err,result2)=>{
             if(err) throw new Error(err);
             res.json({array1: result, array2:result2});
           })
@@ -440,29 +463,7 @@ db.connect((err) => {
 
 
 
-  app.post("/posts", validateToken, (req, res) => {
-    const post = req.body;
-    console.log(post.rating)
-    db.query(
-      "INSERT INTO posts SET ?",
-      {
-        //title: post.title,
-        postText: post.postText,
-        username: req.user.username,
-        userID: req.user.id,
-        targetID: post.id,
-        targetName: post.username,
-        rating: post.rating,
-        
-       // username: post.username,
-      },
-      (err) => {
-        if (err) throw new Error(err);
-        console.log("1 post inserted");
-        res.json(post);
-      }
-    );
-  });
+  
   
   
   app.get("/singlePost/byId/:id", (req, res) => {

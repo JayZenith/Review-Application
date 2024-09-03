@@ -9,6 +9,8 @@ import { FaStar } from 'react-icons/fa'
 
 
 function Postings() {
+  let navigate = useNavigate();
+
    const [postText, setPost] = useState('');
    const [listOfPosts, setListOfPosts] = useState([]);
    const [likedPosts, setLikedPosts] = useState([])
@@ -21,20 +23,15 @@ function Postings() {
    const [suggestions, setSuggestions] = useState([])
    const [inputSize, setInputSize] = useState(0)
    const [theTargets, setTheTargets] = useState([])
-   let navigate = useNavigate();
+   
 
    const [hover, setHover] = useState(null)
   
-
-
    useEffect(()=>{ //Check for acccessToken
      if (!localStorage.getItem("accessToken")){
        navigate("/"); //if not go to login
      }
    }, []);
-
-
-
 
    useEffect(()=>{ //Load the Users
      const loadUsers = async () => {
@@ -46,48 +43,23 @@ function Postings() {
    }, [])
 
 
-  
-   useEffect(() => { //load posts and likes of posts
-     if (!localStorage.getItem("accessToken")){
-       navigate("/"); //if not go to login
-     }
-     else { //without the website will break
-       axios.get("http://localhost:3001/posts4", {
-         headers: {accessToken: localStorage.getItem("accessToken")}
-       }).then((res) => {
-        console.log(res.data)
-       setTheTargets(res.data.array2);
-       setListOfPosts(res.data.array1);
-       /*
-       setLikedPosts(
-         res.data.userLikes.map((like) => {
-           return like.id;
-         })
-       );
-       */
-       setPosted(false); //to reset call to render created post
-       });
-     }
-   }, [posted]); //render if we create a new post. Redundant?
-
-   /*
-   useEffect(() => { //load posts and likes of posts
-    if (!localStorage.getItem("accessToken")){
-      navigate("/"); //if not go to login
-    }
-    else { //without the website will break
-      axios.get("http://localhost:3001/posts3", {
-        headers: {accessToken: localStorage.getItem("accessToken")}
-      }).then((res) => {
-       console.log(res.data)
-      setTheTargets(res.data);
-      setPosted(false); //to reset call to render created post
-      });
-    }
-  }, [posted]); //render if we create a new post. Redundant?
-  */
-
-
+  useEffect(()=>{
+    axios.get("http://localhost:3001/posts4", {
+      headers: {accessToken: localStorage.getItem("accessToken")}
+    }).then((res) => {
+     console.log(res.data)
+    setTheTargets(res.data.array2);
+    setListOfPosts(res.data.array1);
+    /*
+    setLikedPosts(
+      res.data.userLikes.map((like) => {
+        return like.id;
+      })
+    );
+    */
+    setPosted(false); //to reset call to render created post
+    });
+  }, [posted])
 
    const likePost = (postId) => {
        axios.post("http://localhost:3001/likes", {
@@ -115,8 +87,6 @@ function Postings() {
              setLikedPosts([...likedPosts,postId])
            }
        })
-
-
    }
   
    const onSubmit = (event) => {
@@ -144,16 +114,11 @@ function Postings() {
      });
    };
 
-
-  
-
-
    const userSearch = () => {
      //console.log(suggestions);
      //console.log("signalState ",signalState);
      navigate(`/userSearch`);
    }
-
 
     const onChangeHandler = (text) => {
      let matches = []
@@ -193,7 +158,6 @@ function Postings() {
 
     
     //const[imgData, setImgData] = useState([])
-
     /*
     useEffect(()=>{
       axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
@@ -203,26 +167,23 @@ function Postings() {
 
     */
 
-  
-
-
  return (
    <div className="postings">
-       <div className="createPostSection">
-           <form className="postForm" onSubmit={onSubmit}>
+      <div className="createPostSection">
+          <form className="postForm" onSubmit={onSubmit}>
             {inputSize == 500 ? <p>Character Limit Reached</p> : ""}
-             <textarea
-                 placeholder="Write Here"
-                 id = "posting"
-                 name = "posting"
-                 onChange={(e)=>handleInputChange(e)}
-                 maxLength={500}
-             >
-             </textarea>
-             <p>{inputSize}/500</p>
-             <button type="submit">Post</button>
-           </form>
-       </div> {/*END createPostSection*/}
+            <textarea
+              placeholder="Write Here"
+              id = "posting"
+              name = "posting"
+              onChange={(e)=>handleInputChange(e)}
+              maxLength={500}
+            >
+            </textarea>
+            <p>{inputSize}/500</p>
+            <button type="submit">Post</button>
+          </form>
+      </div> {/*END createPostSection*/}
        {listOfPosts.slice(0).reverse().map((val, key) => {
          const aTarget = theTargets[listOfPosts.length -(key+1)];
          console.log(listOfPosts.length -(key+1));
@@ -326,7 +287,7 @@ function Postings() {
                           : <></>
                           }
                         </div>
-                         To {val.targetName}
+                         To {aTarget.firstname}
                 
               </div>
               ) : (
