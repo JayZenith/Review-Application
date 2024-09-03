@@ -174,13 +174,11 @@ db.connect((err) => {
       //db.query(`SELECT * FROM users WHERE email='${user.email}' OR username='${user.user}'`, (err, result) => {
         db.query(`SELECT * FROM users WHERE email='${user.email}'`, (err, result) => {
         if (err) throw new Error(err);
-        //console.log(result);
         if (!result[0]) { //if no such user exists
           bcrypt.hash(user.pwd, 10).then((hash) => {
             db.query(
               "INSERT INTO users SET ?",
               {
-                //username: user.user,
                 firstname: user.fname,
                 lastname: user.lname,
                 password: hash,
@@ -188,12 +186,8 @@ db.connect((err) => {
               },
               (err, result) => {
                 if (err) throw new Error(err);
-                
-                //console.log("1 user inserted");
-                //console.log(result[0]);
                 db.query(`SELECT * FROM users WHERE email='${user.email}'`, (err, result) => {
                   if(err) throw new Error;
-                  //console.log(result[0]);
                   db.query(
                     "INSERT INTO avatars SET ?",
                     {
@@ -204,20 +198,17 @@ db.connect((err) => {
                       if (err) throw new Error(err);
                     }
                   )
-    
                   const accessToken = sign(
                     {
                       email: user.email,
                       id: result[0].id,
                       firstname: user.fname,
                       lastname: user.lname,
-                      //username: result[0].username,
                     },
                     process.env.ACCESS_TOKEN
                   );
                   res.json({
                     token: accessToken,
-                    //username: result[0].username,
                     firstname: result[0].firstname,
                     lastname: result[0].lastname,
                     id: result[0].id,
@@ -228,8 +219,7 @@ db.connect((err) => {
             );
           });
         } else {
-          //console.log("user exist")
-          res.json({ error: "User already exists!"});
+          res.json({ error: "User with Email already exists!"});
         }
       }); //end of Select Query
       //res.json("success");

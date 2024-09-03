@@ -2,6 +2,7 @@ import React, { useState, useContext, useRef, useEffect } from 'react'
 import axios from "axios"
 import { useNavigate, Link } from 'react-router-dom'
 import { AuthContext } from '../helpers/AuthContext'
+import LoginCSS from '../styles/Login.module.css';
 
 
 function Login() {
@@ -12,22 +13,22 @@ function Login() {
  const [password, setPassword]=useState('')
  const {setAuthState} = useContext(AuthContext)
 
-
  useEffect(() => {
     userRef.current.focus(); //obtained off first render of signup page
   }, [])
 
  async function submit(e){
    e.preventDefault();
-
-
    try{
        await axios.post("http://localhost:3001/login", {
            email,password
        })
        .then(res=>{
-           if(res.data.error){
+           if(res.data.error==="User dosen't exist"){
                alert(res.data.error);
+           }
+           else if(res.data.error==="wrong username and password combination"){
+            alert(res.data.error);
            }
            else{
                localStorage.setItem("accessToken", res.data.token);

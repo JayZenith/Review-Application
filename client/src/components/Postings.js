@@ -122,7 +122,7 @@ function Postings() {
    const onSubmit = (event) => {
      event.preventDefault(); //without will redirect incorreclty
      axios.post("http://localhost:3001/posts", {
-       postText
+       postText, 
      }, {
        headers: {accessToken: localStorage.getItem("accessToken")},
      }).then((res) => {
@@ -268,16 +268,13 @@ function Postings() {
                                 //onMouseLeave={()=>setHover(null)}
                             />
                         </label>
-                    </>  
-                )
-            })}
-             </div>
-            :<></>
-            }
+                        </>  
+                    )
+                })}
+                </div>
+                :<></>
+              }
 
-
-
-              
 
                
                <div className="body"
