@@ -69,6 +69,7 @@ useEffect(() => { //renders on any page load
       if (res.data.error) { //if theres an error then user not authorized
         setAuthState({ ...authState, status: false });
       } else {
+        
         setAuthState({ //can also use res.data.email
           firstname: res.data.firstname,
           lastname: res.data.lastname,
@@ -76,6 +77,7 @@ useEffect(() => { //renders on any page load
           id: res.data.id,
           status: true,
         });
+        console.log(res.data.firstname)
         //if im at login or sign up while logged in, redirect to home
         if (window.location.pathname === "/" ||
            window.location.pathname === "/signup"

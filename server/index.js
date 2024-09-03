@@ -154,7 +154,9 @@ db.connect((err) => {
 
 
   app.get("/auth", validateToken, (req, res) => {
+    console.log(req.user)
     res.json(req.user);
+
   });
 
   app.post("/posts", validateToken, (req, res) => {
@@ -200,6 +202,7 @@ db.connect((err) => {
                 if (err) throw new Error(err);
                 db.query(`SELECT * FROM users WHERE email='${user.email}'`, (err, result) => {
                   if(err) throw new Error;
+                  
                   db.query(
                     "INSERT INTO avatars SET ?",
                     {
@@ -313,14 +316,17 @@ db.connect((err) => {
                 email: user.email,
                 id: result[0].id,
                 username: result[0].username,
+                firstname: result[0].firstname,
+                lastname: result[0].lastname,
               },
               process.env.ACCESS_TOKEN
             );
             res.json({
               token: accessToken,
-              username: result[0].username,
+              firstname: result[0].firstname,
+              lastname: result[0].lastname,
               id: result[0].id,
-              email: user.email,
+              email: result[0].email,
             });
           }
         });

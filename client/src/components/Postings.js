@@ -247,8 +247,7 @@ function Postings() {
                    <p>{val.postText}</p>
                </div> {/*END BODY*/}
                <div className="footer">
-                
-                     {authState.username === val.username ? (
+                     {authState.email === val.email ? (
                       <>
                        <i className="bi bi-trash" onClick={()=>{deletePost(val.id)}}>                 
                        </i>
