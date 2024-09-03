@@ -155,19 +155,10 @@ db.connect((err) => {
     );
   }
 
-  /*
-  res.json({ token: accessToken,
-               username: result[0].username,
-               id: result[0].id,
-               email: user.email,
-  });  CREATED FROM SIGNING UP 
-  */
 
   app.get("/auth", validateToken, (req, res) => {
     res.json(req.user);
   });
-
-
 
     app.post("/signupFour", (req, res) => {
       const user = req.body;
@@ -191,7 +182,7 @@ db.connect((err) => {
                   db.query(
                     "INSERT INTO avatars SET ?",
                     {
-                      ImageData: "image_1725231104039.png",
+                      ImageData: "image_1725231104039.png", //default avatar
                       userID: result[0].id,
                     },
                     (err) => {
@@ -225,20 +216,7 @@ db.connect((err) => {
       //res.json("success");
     });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*
   app.post("/signupThree", (req, res) => {
     const user = req.body;
     //db.query(`SELECT * FROM users WHERE email='${user.email}' OR username='${user.user}'`, (err, result) => {
@@ -293,6 +271,8 @@ db.connect((err) => {
     }); //end of Select Query
     //res.json("success");
   });
+
+  */
   
   app.post("/login", (req, res) => {
     const user = req.body;

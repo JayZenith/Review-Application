@@ -12,10 +12,17 @@ function Login() {
  const [email, setEmail]=useState('')
  const [password, setPassword]=useState('')
  const {setAuthState} = useContext(AuthContext)
+ const userExistsRef = useRef(); //set if user exists 
+ const [userExists, setUserExists] = useState('');
 
  useEffect(() => {
     userRef.current.focus(); //obtained off first render of signup page
   }, [])
+
+  useEffect(() => {
+    setUserExists(''); //do this to reinitiliaze after new render
+  }, [email, password])
+ 
 
  async function submit(e){
    e.preventDefault();
@@ -25,47 +32,46 @@ function Login() {
        })
        .then(res=>{
            if(res.data.error==="User dosen't exist"){
-               alert(res.data.error);
+            setUserExists(res.data.error);
            }
            else if(res.data.error==="wrong username and password combination"){
-            alert(res.data.error);
+            setUserExists(res.data.error);
            }
            else{
-               localStorage.setItem("accessToken", res.data.token);
-               setAuthState({username: res.data.username, id:res.data.id, email:res.data.email, status: true})
-               history("/postings");
+            localStorage.setItem("accessToken", res.data.token);
+            setAuthState({username: res.data.username, id:res.data.id, email:res.data.email, status: true})
+            history("/postings");
            }
        })
        .catch(e=>{
-           alert("Wrong details")
-           console.log(e);
+           setUserExists("Wrong details");
+           //console.log(e);
        })
    }catch(e){
-       console.log(e);
+        //console.log(e);
    }
  }
 
 
  return (
-   <>
-   <div className="bgImg">
-       <div className="loginWrapper">
+   <div className={LoginCSS.backgroundImg}>
+       <div className={LoginCSS.loginWrapper}>
            <h1>Login</h1>
+           <p ref={userExistsRef} className={userExists ? LoginCSS.errmsg :
+                LoginCSS.offscreen} aria-live="assertive">{userExists}
+            </p>
            <form action="#">
-               <div className="loginField">
-                   <input ref={userRef} type="email" onChange={(e)=>{setEmail(e.target.value)}} placeholder="Email" required/>
-                  
+               <div className={LoginCSS.loginField}>
+                   <input ref={userRef} type="email" onChange={(e)=>{setEmail(e.target.value)}} placeholder="Email" required/>  
                </div>
-               <div className="loginField">
-                   <input type="password" onChange={(e)=>{setPassword(e.target.value)}} placeholder="Password" required/>
-                  
+               <div className={LoginCSS.loginField}>
+                   <input type="password" onChange={(e)=>{setPassword(e.target.value)}} placeholder="Password" required/> 
                </div>
                <button type="submit"onClick={submit}>Sign In</button>
                <p>No Account? <Link to="/signup">Sign Up Now</Link></p>   
            </form>       
        </div>
    </div>
-   </>
  )
 }
 
