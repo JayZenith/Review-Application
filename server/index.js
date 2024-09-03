@@ -154,14 +154,14 @@ db.connect((err) => {
 
 
   app.get("/auth", validateToken, (req, res) => {
-    console.log(req.user)
+    //console.log(req.user)
     res.json(req.user);
 
   });
 
   app.post("/posts", validateToken, (req, res) => {
     const post = req.body;
-    console.log(post.rating)
+    //console.log(post.rating)
     db.query(
       "INSERT INTO posts SET ?",
       {
@@ -436,7 +436,8 @@ db.connect((err) => {
   app.get("/posts4", validateToken, (req, res) => {
     //console.log(req.user.id)
     db.query(   
-      "SELECT posts.*, count(distinct likes.id) as dt, avatars.ImageData, users.* " +
+      "SELECT posts.*, count(distinct likes.id) as dt, avatars.ImageData, users.firstname, " +
+      "users.lastname, users.email " +
       "FROM posts LEFT OUTER JOIN avatars ON posts.userID=avatars.userID " +
       "LEFT OUTER JOIN likes ON posts.id=likes.postID " +
       "LEFT OUTER JOIN users ON posts.userID=users.id GROUP BY posts.id, avatars.id, users.id",
@@ -448,6 +449,7 @@ db.connect((err) => {
           "users ON posts.targetID=users.id GROUP BY "+
           "posts.id, avatars.id, users.id",(err,result2)=>{
             if(err) throw new Error(err);
+            //console.log(result)
             res.json({array1: result, array2:result2});
           })
         //res.json(result);
