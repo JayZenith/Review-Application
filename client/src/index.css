@@ -5,7 +5,6 @@
   /*box-sizing: border-box ruins navbar*/
  }
  
- 
  body {
   margin: 0;
   background: white;
@@ -14,12 +13,10 @@
   -moz-osx-font-smoothing: grayscale;
  }
  
- 
  code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
  }
- 
  
  .App{
   display: flex;
@@ -34,8 +31,6 @@
  
  
  }
- 
- 
  
  
  :root {
@@ -139,12 +134,9 @@
    .offscreentwo {
     position: absolute;
     left: -9999px;
-  }
- 
- 
+  } 
  }
  */
- 
  
  
  /* <ul> */
@@ -156,7 +148,6 @@
   align-items: center;
   justify-content: flex-start;
  }
- 
  
  /* <li> */
  .nav-item {
@@ -172,27 +163,7 @@
   right: 0;
   top: 0;
   margin-right: 50px;
- 
- 
  }
- 
- 
- .searchBar input{
-  position: absolute;
-  left: 0;
-  width: 450px;
-  margin-left: 250px;
-  top: 18px;
-  height: 10px;
-  border-radius: 20px;
-  padding: 10px;
-  font-size: 20px;
- }
- 
- 
- 
- 
- 
  
  /* Icon Button */
  .icon-button {
@@ -220,13 +191,8 @@
   width: 20px;
   height: 20px;
  }
- 
- 
- 
- 
+  
  /* Dropdown Menu */
- 
- 
  .dropdown {
   position: absolute;
   top: 65px;
@@ -240,11 +206,9 @@
   transition: height var(--speed) ease;
  }
  
- 
  .menu {
   width: 100%;
  }
- 
  
  .menu-item {
   height: 50px;
@@ -260,23 +224,17 @@
   margin-right: 0.5rem;
  }
  
- 
- 
- 
  .menu-item .icon-button:hover {
   filter: none;
  }
- 
  
  .menu-item:hover {
   background-color: #525357;
  }
  
- 
  .icon-right {
   margin-left: auto;
  }
- 
  
  /* CSSTransition classes  */
  .menu-primary-enter {
@@ -295,9 +253,6 @@
   transition: all var(--speed) ease;
  }
  
- 
- 
- 
  .menu-secondary-enter {
   transform: translateX(110%);
  }
@@ -314,16 +269,25 @@
   transition: all var(--speed) ease;
  }
  
- 
- 
 
- 
  /****************************************
  *********************************************
  ****************USER SEARCH*************************8
  *******************************************8
  ******************************************888
  ***********************************/
+
+ .searchBar input{
+  position: absolute;
+  left: 0;
+  top: 18px;
+  width: 450px;
+  height: 10px;
+  margin-left: 250px;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 16px;
+ }
  
  
  .userSearchDropdown{
@@ -375,9 +339,6 @@
  *******************************************8
  ******************************************888
  ***********************************/
- 
- 
- 
  
  .postings{
   padding-top: 100px;

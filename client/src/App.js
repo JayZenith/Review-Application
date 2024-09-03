@@ -44,17 +44,16 @@ function App() {
  const [suggestionsState, setSuggestionsContext] = useState([]); //search suggestions 
  const [arrowState, setArrowState] = useState(false) //Arrow toggle 
  const [dropdownState, setDropdownState] = useState(false) //Dropdown toggle
+ 
 
  
 
  useEffect(()=>{ //Check for acccessToken
   if (!localStorage.getItem("accessToken")){
     if(!window.location.pathname==="/signup"){
-      //if user refrshes at /signup then they can stay there 
       location("/"); //if not go to login
     }
     //if user refrshes at /signup then they can stay there 
-    
     }
   }, []);
  
@@ -71,14 +70,12 @@ useEffect(() => { //renders on any page load
         setAuthState({ ...authState, status: false });
       } else {
         setAuthState({ //can also use res.data.email
-          username: res.data.username,
           firstname: res.data.firstname,
           lastname: res.data.lastname,
           email: res.data.email,
           id: res.data.id,
           status: true,
         });
-       
         //if im at login or sign up while logged in, redirect to home
         if (window.location.pathname === "/" ||
            window.location.pathname === "/signup"
@@ -97,13 +94,12 @@ useEffect(() => { //renders on any page load
     location("/"); //login page
   }
 
-  return (
+  return ( //AppX is not defined
     <div className={loading ? 'App' : 'AppX'}>
-     {
+     { 
        loading ? //if loading, show loader
        <ClipLoader color={"#DC143C"} loading={loading} size={100} aria-label="Loading Spinner" data-testid="loader"
        />
-
        : //else show navbar 
 
         <AuthContext.Provider value={{ authState, setAuthState }}>
@@ -112,7 +108,6 @@ useEffect(() => { //renders on any page load
         <DropdownContext.Provider value={{ dropdownState, setDropdownState }}>
     
         {authState.status ? (  //if authenticated 
-        
           <Navbar>
                 <NavItem icon={<HomeIcon />} item="Home" />
                 {/*<NavItem icon={<ProfileIcon />} item="Profile" />*/}
@@ -122,8 +117,6 @@ useEffect(() => { //renders on any page load
                   <DropdownMenu></DropdownMenu>
                 </NavItem>
           </Navbar>
-        
-         
           ) : ( //Figure out 
             <>
               {/*Login/Signup Page*/}
@@ -157,13 +150,18 @@ function SearchBar(){
   const [input, setInput] = useState(''); //input in search field
   const [isFocused, setIsFocused] = useState(false);
   const [dropdownState, setDropdownState] = useState(false);
+  const searchRef = useRef();
+
+  useEffect(() => {
+    searchRef.current.focus(); //obtained off first render of signup page
+  }, [])
  
  
   useEffect(()=>{ //Load the Users for searching 
     const loadUsers = async () => {
       const response = await axios.get("http://localhost:3001/users2");
       setUsers(response.data)
-      console.log(response.data)
+      //console.log(response.data)
     }
     loadUsers();
   }, [])
@@ -179,11 +177,9 @@ function SearchBar(){
           if(user.email.match(regex)){
             return user.email.match(regex);
           }
-
         }catch(err){
           //console.log(err)
           return;
-
         }
         //return user.email.match(regex); //search by email
       })
@@ -193,7 +189,6 @@ function SearchBar(){
     setSuggestionsContext(matches);//to set useContext hook right away due to lag
     setInput(text) //set search input
   }
- 
  /*
   const userSearch = () => {
     location(`/userSearch`);
@@ -210,11 +205,12 @@ function SearchBar(){
     <>
       <div className='searchBar'>
         <input
-          placeholder='Search...'
-          valye={input}
+          placeholder='Search Users By Email...'
+          value={input}
           onChange={(e)=>{onChangeHandler(e.target.value);}}
           onFocusCapture={() => setDropdownState(true)}
-          //onBlurCapture={() => setDropdownState(false)}
+          ref={searchRef}
+          onBlurCapture={() => setDropdownState(false)}
         />
       </div>
       <div className="userSearchDropdown">
@@ -246,7 +242,7 @@ function SearchBar(){
   const[imgData, setImgData] = useState([])
   const { authState, setAuthState } = useContext(AuthContext);
 
-  useEffect(()=>{
+  useEffect(()=>{ //authState.id to show self 
     axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
     .then(res=>setImgData(res.data[0]))
     .catch(err=>console.log(err))
