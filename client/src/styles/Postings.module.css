@@ -1,11 +1,6 @@
- /****************************************
- *********************************************
- ****************POSTINGS*************************8
- *******************************************8
- ******************************************888
- ***********************************/
+
  
- .postings{
+   .postings{
     padding-top: 100px;
     display: flex;
     flex-direction: column;
@@ -13,10 +8,8 @@
     align-items: center;
     
    }
-  
-  
+
    .postings .createPostSection{
-  
     width: 700px;
     height: 250px;
    }
@@ -59,7 +52,7 @@
    .post{
     width: 700px;
     border: 1px solid black;
-    height: auto;
+    height: auto; /*Need to stretch container */
     display: flex;
     flex-direction: row;
     padding: 10px;
@@ -85,15 +78,27 @@
     color: black;
     margin-top: 5px;
    }
+
+   .nameAndRating{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      
+   }
+
+   .nameAndRating .postingsStarRating{
+      position: absolute;
+      margin-left: 440px;
+  
+   }
    
    
-   .userWrapper .username a{
+   .bodyAndFooter .username a{
     color: black;
    }
    
    
    .bodyAndFooter{
-   
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -112,7 +117,14 @@
     word-wrap: break-word;
     
    }
-  
+
+   .avatar{
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: grey;
+   }
+
   
    .theTarget{
     display: flex;

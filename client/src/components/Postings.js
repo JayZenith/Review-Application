@@ -5,7 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { AuthContext } from "../helpers/AuthContext";
 import { SuggestionsContext } from "../helpers/SuggestionsContext";
-import { FaStar } from 'react-icons/fa' 
+import { FaStar } from 'react-icons/fa'
+import PostingsCSS from '../styles/Postings.module.css'; 
 
 
 function Postings() {
@@ -23,8 +24,6 @@ function Postings() {
    const [suggestions, setSuggestions] = useState([])
    const [inputSize, setInputSize] = useState(0)
    const [theTargets, setTheTargets] = useState([])
-   
-
    const [hover, setHover] = useState(null)
   
    useEffect(()=>{ //Check for acccessToken
@@ -87,7 +86,7 @@ function Postings() {
              setLikedPosts([...likedPosts,postId])
            }
        })
-   }
+   } //Come back to all this 
   
    const onSubmit = (event) => {
      event.preventDefault(); //without will redirect incorreclty
@@ -168,9 +167,9 @@ function Postings() {
     */
 
  return (
-   <div className="postings">
-      <div className="createPostSection">
-          <form className="postForm" onSubmit={onSubmit}>
+   <div className={PostingsCSS.postings}>
+      <div className={PostingsCSS.createPostSection}>
+          <form className={PostingsCSS.postForm} onSubmit={onSubmit}>
             {inputSize == 500 ? <p>Character Limit Reached</p> : ""}
             <textarea
               placeholder="Write Here"
@@ -184,44 +183,105 @@ function Postings() {
             <button type="submit">Post</button>
           </form>
       </div> {/*END createPostSection*/}
-       {listOfPosts.slice(0).reverse().map((val, key) => {
-         const aTarget = theTargets[listOfPosts.length -(key+1)];
-         console.log(listOfPosts.length -(key+1));
-         return (
-           <div className="post">       
-             <div className="userWrapper">
-                  <Link to={`/profile/${val.userID}`}>
-                    <div className="avatar">
-                      {val.ImageData? 
-                      <img className='imgAvatar' src={`http://localhost:3001/images/`+val.ImageData} width="200" height="100" alt="" />
-                      //<></>
-                      :
-                      <></>
-                      }
-                    </div>
-                   </Link>
-                   <div className="username">
-                       <Link to={`/profile/${val.userID}`}>{val.firstname} </Link>
-                   </div>
+      {listOfPosts.slice(0).reverse().map((val, key) => {
+        const aTarget = theTargets[listOfPosts.length -(key+1)];
+        //console.log(listOfPosts.length -(key+1));
+        return (
+        <div className={PostingsCSS.post}>       
+             <div className={PostingsCSS.userWrapper}>
+                <Link to={`/profile/${val.userID}`}>
+                  <div className={PostingsCSS.avatar}>
+                    {val.ImageData? 
+                      <img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} width="200" height="100" alt="" />
+                    //<></>
+                    :
+                    <></>
+                    }
+                  </div>
+                </Link>
+                
              </div> {/*END USER-WRAPPER*/}
                {/*<div className="title"> {val.title} </div>*/}
-             <div className="bodyAndFooter">
+             <div className={PostingsCSS.bodyAndFooter}>
+                <div className={PostingsCSS.nameAndRating}>
+                  <div className={PostingsCSS.username}>
+                    <Link to={`/profile/${val.userID}`}>{val.firstname} </Link>
+                  </div>
+                  {val.targetID ? //then show rating for them
+                  <StarRating>{val.rating}</StarRating>
+                  :<></>
+                  }
+                </div>
+                <div className={PostingsCSS.body}
+                  onClick={() => {
+                      navigate(`/singlePost/${val.id}`);
+                  }}
+                > 
+                  <p>{val.postText}</p>
+               </div> {/*END BODY*/}
+               <div className={PostingsCSS.footer}>
+                     {authState.email === val.email ? (
+                       <i className="bi bi-trash" onClick={()=>{deletePost(val.id)}}>                 
+                       </i>
+                     ):(<i></i>)} {/*Need the latter icon to move like button to right*/}
+                     <p>{val.created_at}</p>
+                     <div className="like-btn">
+                       <i class="bi bi-hand-thumbs-up"
+                         onClick={() => {
+                             likePost(val.id);
+                         }}
+                         className={likedPosts.includes(val.id) ? "bi bi-hand-thumbs-up" : "bi bi-hand-thumbs-up red"
+                         }
+                       ></i>
+                       <label> 
+                           {val.dt}
+                       </label>
+                     </div>
+                 </div> {/*END FOOTER*/}
+             </div>
+             {val.targetID ? (
+             <div className={PostingsCSS.theTarget}
+                onClick={()=> {
+                    navigate(`/profile/${val.targetID}`);
+                    window.location.reload()
+                }}
+              >
+                <div className={PostingsCSS.avatar}>
+                    {aTarget.ImageData ?
+                    <img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
+                    : <></>
+                    }
+                </div>
+                To {aTarget.firstname}
+              </div>
+              ) : (
+                ""
+              )}
+          </div>
+         );
+       })}
+   </div>
+ );
+}
 
-              {val.targetID ? 
-              <div className="postingsStarRating">
-              {[...Array(5)].map((star, idx)=>{
-                //console.log(props.children)
+
+
+function StarRating(props){
+  const [hover, setHover] = useState(null)
+
+  return(
+  <div className={PostingsCSS.postingsStarRating}>
+                {[...Array(5)].map((star, idx)=>{
                 const currentRate = idx + 1;
+                //val.rating is key here 
                 return(
                     <>
                         <label>
                         <input className="radioBtn" type="radio" name="rating"  
-                            value={currentRate}
-                            
-                                                
+                            value={currentRate}  
                         />
                             <FaStar className='ratingStar' size={20}
-                                color={currentRate <= (hover || val.rating) ?
+                                color={currentRate <= (hover || props.children) ? 
                                     "red"
                                     : "black"
                                 }
@@ -232,76 +292,8 @@ function Postings() {
                         </>  
                     )
                 })}
-                </div>
-                :<></>
-              }
-
-
-               
-               <div className="body"
-                     onClick={() => {
-                         navigate(`/singlePost/${val.id}`);
-                       }}
-                 >
-                   
-                   <p>{val.postText}</p>
-               </div> {/*END BODY*/}
-               <div className="footer">
-                     {authState.email === val.email ? (
-                      <>
-                       <i className="bi bi-trash" onClick={()=>{deletePost(val.id)}}>                 
-                       </i>
-    
-                       </>
-                     ):(<i></i>)} {/*Need the latter icon to move like button to right*/}
-                     <p>{val.created_at}</p>
-                     <div className="like-btn">
-                      
-                       <i class="bi bi-hand-thumbs-up"
-                         onClick={() => {
-                             likePost(val.id);
-                         }}
-                         className={likedPosts.includes(val.id) ? "bi bi-hand-thumbs-up" : "bi bi-hand-thumbs-up red"
-                         }
-                       ></i>
-                       
-                       <label>
-                           {val.dt}
-                       </label>
-                       
-                       
-                     </div>
-                 </div> {/*END FOOTER*/}
-             </div>
-             {val.targetID ? (
-             <div className="theTarget"
-                        onClick={()=> {
-                          navigate(`/profile/${val.targetID}`);
-                          window.location.reload()
-                          }}
-                       >
-                        <div className="avatar">
-                          {aTarget.ImageData ?
-                          <img className='imgAvatar' src={`http://localhost:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
-                          : <></>
-                          }
-                        </div>
-                         To {aTarget.firstname}
-                
-              </div>
-              ) : (
-                ""
-              )}
-           </div>
-         );
-       })}
-   </div>
- );
-}
-
-
-
-function StarRating(props){
+    </div>
+  );
   
 }
 
