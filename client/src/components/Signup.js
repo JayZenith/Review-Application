@@ -48,8 +48,8 @@ function Signup() {
 
 
  //const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
- const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{0,23}$/;
- const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+ const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{0,28}$/;
+ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{0,28}$/;
  const EMAIL_REGEX = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
 
 
@@ -60,30 +60,22 @@ function Signup() {
 
  useEffect(() => {
    const result = USER_REGEX.test(user);
-   //console.log(result);
-   //console.log(user);
    setValidName(result); //element now true
  }, [user]) //only run this when user state changed
 
  useEffect(() => {
     const result = USER_REGEX.test(fname);
-    //console.log(result);
-    //console.log(user);
     setValidFname(result); //element now true
   }, [fname]) //only run this when user state changed
 
   useEffect(() => {
     const result = USER_REGEX.test(lname);
-    //console.log(result);
-    //console.log(user);
     setValidLname(result); //element now true
   }, [lname]) //only run this when user state changed
 
 
  useEffect(() => {
    const result = PWD_REGEX.test(pwd);
-   //console.log(result);
-   //console.log(pwd);
    setValidPwd(result); //password is true
    const match = pwd === matchPwd;
    setValidMatch(match); //passwords match
@@ -92,8 +84,6 @@ function Signup() {
 
  useEffect(() => {
    const result = EMAIL_REGEX.test(email);
-   //console.log(result);
-   //console.log(email);
    setValidEmail(result); //password is true
  }, [email])
 
@@ -106,7 +96,6 @@ function Signup() {
 
  const handleSubmit = async (e) => {
    e.preventDefault();
-
    //something to do with preventing attack
    //const v1 = USER_REGEX.test(user);
    const v1 = USER_REGEX.test(fname);
@@ -130,8 +119,6 @@ function Signup() {
                setUserExists(res.data.error);
            }
            else{
-               //console.log("here")
-               //console.log(res.data)
                localStorage.setItem("accessToken", res.data.token);
                //setAuthState({username: res.data.username, id:res.data.id, email:res.data.email, status: true})
                setAuthState({firstname: res.data.firstname, lastname:res.data.lastname, id:res.data.id, email:res.data.email, status: true})
@@ -159,47 +146,14 @@ function Signup() {
        </section>
    ) : (
        <div className="bgImg">
-               <div className='loginWrapper'>
-               <p ref={errRef} className={errMsg ? "errmsg" :
+            <div className='loginWrapper'>
+               <p ref={errRef} className={errMsg ? "errmsg" : 
                            "offscreen"} aria-live="assertive">{errMsg}
                </p>
                <h1>Sign Up</h1>
                    <form action="#" onSubmit={handleSubmit}>
                        <p ref={userExistRef} className={userExists ? "errmsg" :
                        "offscreen"} aria-live="assertive">{userExists}
-                       </p>
-                       {/*
-                       <div className="loginField">
-                           <label htmlFor='username'>
-                               <span className={validName ? "valid" : "hide"}>
-                                   <i className="bi bi-check"></i>
-                               </span>
-                               <span className={validName || !user ?  "hide" :
-                               "invalid"}>
-                                   <i className="bi bi-x"></i>
-                               </span>
-                           </label>
-                           <input
-                                   type="text"
-                                   id="username"
-                                   placeholder='Username'
-                                   ref={userRef} //used to obtain this element upon 1st render
-                                   onChange={(e) => setUser(e.target.value)}
-                                   required
-                                   aria-invalid={validName ? "false" : "true"}
-                                   aria-describedby='uidnote'
-                                   autoComplete = 'new-password'
-                                   onFocus={() => setUserFocus(true)}
-                                   onBlur={() => setUserFocus(false)}
-                           />   
-                       </div>
-                       */}
-                       <p id="uidnote" className={userFocus && user &&
-                                   !validName ? "instructions" : "offscreen"}>
-                                   <i class="bi bi-x-circle"></i>
-                                       4 to 24 characters.
-                                       Must begin wtih a letter.<br />
-                                       Letters, numbers, underscores, hyphens allowed.
                        </p>
                        <div className="loginField">
                            <label htmlFor='firstname'>
@@ -228,8 +182,8 @@ function Signup() {
                        <p id="uidnote" className={fnameFocus && fname &&
                                    !validFname ? "instructions" : "offscreen"}>
                                    <i class="bi bi-x-circle"></i>
-                                       4 to 24 characters.
-                                       Must begin wtih a letter.<br />
+                                       1 to 29 characters.
+                                       Must begin wtih a letter.
                                        Letters, numbers, underscores, hyphens allowed.
                        </p>
                        <div className="loginField">
@@ -246,7 +200,7 @@ function Signup() {
                                    type="text"
                                    id="lastname"
                                    placeholder='Last Name'
-                                   ref={userRef} //used to obtain this element upon 1st render
+                                   //ref={userRef} //used to obtain this element upon 1st render
                                    onChange={(e) => setLname(e.target.value)}
                                    required
                                    aria-invalid={validFname ? "false" : "true"}
@@ -256,11 +210,11 @@ function Signup() {
                                    onBlur={() => setLnameFocus(false)}
                            />   
                        </div>
-                       <p id="uidnote" className={userFocus && lname &&
+                       <p id="uidnote" className={lnameFocus && lname &&
                                    !validLname ? "instructions" : "offscreen"}>
                                    <i class="bi bi-x-circle"></i>
-                                       4 to 24 characters.
-                                       Must begin wtih a letter.<br />
+                                       1 to 29 characters.
+                                       Must begin wtih a letter.
                                        Letters, numbers, underscores, hyphens allowed.
                        </p>
                        <div className="loginField">
@@ -320,7 +274,7 @@ function Signup() {
                            <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" :
                                    "offscreen"}>
                                        <i class="bi bi-x-circle"></i>
-                                       8 to 24 characters. Must include uppercase and <br />
+                                       8 to 24 characters. Must include uppercase and 
                                        lowercase letters, a number and one of: <span aria-label="exclamation mark">!</span>
                                        <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span>
                                        <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
@@ -358,15 +312,14 @@ function Signup() {
 
                        <div className='loginField'>
                                <input
+                               className='signupButton'
                                disabled={!validFname || !validLname || !validEmail || !validPwd || !validMatch ? true : false}
                                type="submit"
                                value="Submit" />
                        </div>
                                <p>Already have an account? <Link to="/">Login</Link></p>
                        </form>
-               </div>
-
-                   {/*<Link to="/">Login</Link>*/}
+            </div>
        </div>
        )}
    </>

@@ -49,7 +49,12 @@ function App() {
 
  useEffect(()=>{ //Check for acccessToken
   if (!localStorage.getItem("accessToken")){
-    location("/"); //if not go to login
+    if(!window.location.pathname==="/signup"){
+      //if user refrshes at /signup then they can stay there 
+      location("/"); //if not go to login
+    }
+    //if user refrshes at /signup then they can stay there 
+    
     }
   }, []);
  

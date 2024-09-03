@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useRef, useEffect } from 'react'
 import axios from "axios"
 import { useNavigate, Link } from 'react-router-dom'
 import { AuthContext } from '../helpers/AuthContext'
@@ -7,11 +7,15 @@ import { AuthContext } from '../helpers/AuthContext'
 function Login() {
  const history=useNavigate();
 
-
+ const userRef = useRef(); //to focus in on username
  const [email, setEmail]=useState('')
  const [password, setPassword]=useState('')
  const {setAuthState} = useContext(AuthContext)
 
+
+ useEffect(() => {
+    userRef.current.focus(); //obtained off first render of signup page
+  }, [])
 
  async function submit(e){
    e.preventDefault();
@@ -48,22 +52,16 @@ function Login() {
            <h1>Login</h1>
            <form action="#">
                <div className="loginField">
-                   <input type="email" onChange={(e)=>{setEmail(e.target.value)}} placeholder="Email" required/>
-                   <i className="bi bi-envelope"></i>
+                   <input ref={userRef} type="email" onChange={(e)=>{setEmail(e.target.value)}} placeholder="Email" required/>
+                  
                </div>
                <div className="loginField">
-                   <input type="password" onChange={(e)=>{setPassword(e.target.value)}} placeholder="password" required/>
-                   <i className="bi bi-lock"></i>
+                   <input type="password" onChange={(e)=>{setPassword(e.target.value)}} placeholder="Password" required/>
+                  
                </div>
                <button type="submit"onClick={submit}>Sign In</button>
-               <div className="formHelp">
-                   {/*<div class="rememberMe">
-                       <input type="checkbox" id="remember-me"/>
-                       <label for="remember-me">Remember me</label>
-                   </div>*/}
-               </div>
-           </form>    
-           <p>No Account? <Link to="/signup">Sign Up Now</Link></p>       
+               <p>No Account? <Link to="/signup">Sign Up Now</Link></p>   
+           </form>       
        </div>
    </div>
    </>
