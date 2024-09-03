@@ -7,7 +7,7 @@ import { ScreenContext } from '../helpers/ScreenContext';
 import { SuggestionsContext } from "../helpers/SuggestionsContext";
 import { FaStar } from 'react-icons/fa' 
 import ClipLoader from "react-spinners/ClipLoader";
-
+import ProfileCSS from '../styles/Profile.module.css';
 
 function Profile() {
    let { id } = useParams();
@@ -158,12 +158,14 @@ function Profile() {
 
 
  return (
-    <div className='profileApp'> {/*postings*/}
+    <div className={ProfileCSS.profileApp}> {/*postings*/}
         <h1> {username} </h1>
-        <button onClick={editProfile}>Edit Profile</button>
-        <div>{theBio}</div>
+        {authState.id == id ?
+        <button className={ProfileCSS.profileBioBtn} onClick={editProfile}>Edit Profile</button>   
+        : <></> }
+        <div className={ProfileCSS.profileBio}>{theBio}</div>
         {authState.id != id ?  ( //if user then hide review option
-            <div className="profileReview"> 
+            <div className={ProfileCSS.profileReview}> 
                 <h2>WRITE A REVIEW</h2>
                 <form  onSubmit={onSubmit}> 
                     {reviewSize == 500 ? <p>Character Limit Reached</p> : ""}
@@ -176,39 +178,35 @@ function Profile() {
                     >
                     </textarea>
                     <p>{reviewSize}/500</p>
-                    <div className="rating" >
-                            {[...Array(5)].map((star, idx)=>{
-                                const currentRate = idx + 1
-                                return(
-                                    <>
-                                        <label>
-                                            <input className="radioBtn" type="radio" name="rating"  
+                    <div className={ProfileCSS.rating}>
+                        {[...Array(5)].map((star, idx)=>{
+                            const currentRate = idx + 1
+                            return(
+                                <>
+                                    <label>
+                                        <input className="radioBtn" type="radio" name="rating"  
                                             value={currentRate}
                                             onClick={()=>checkRating(currentRate)}
-                                        
-                                            />
-
-                                            <FaStar className='star' size={30}
+                                        />
+                                        <FaStar className='star' size={30}
                                             color={currentRate <= (hover || rating) ?
                                                 "red"
-                                                : "black"
+                                                :"black"
                                             }
                                             //onMouseEnter={()=>setHover(currentRate)}
                                             //onMouseLeave={()=>setHover(null)}
-                                            />
-
-                                        </label>
-                                    </>  
-                                )
-                            })}
+                                        />
+                                    </label>
+                                </>  
+                            )
+                        })}
                      </div>
                     <button type="submit">Post</button>
                </form>
             </div>
         ) : <></>}
-        
 
-        <div className='profilePageContainer'>
+        <div className={ProfileCSS.profilePageContainer}>
            {/*
            <div className='basicInfo'>
               
@@ -219,76 +217,65 @@ function Profile() {
            */}
             <h2>REVIEWS</h2>
             <p># of reviews: {numOfReviews}</p>
-            <div className='listOfPosts'> {/*NEEDED TO SEPERATE FROM ABOVE?*/}
+            <div className={ProfileCSS.listOfPosts}> {/*NEEDED TO SEPERATE FROM ABOVE?*/}
                {listOfPosts.slice(0).reverse().map((val, key) => {
                return (
-                    <div className="profilePost"> {/*post*/}
+                    <div className={ProfileCSS.profilePost}> {/*post*/}
                         <div className="userWrapper"
-                             onClick={()=> {
+                            onClick={()=> {
                                 navigate(`/profile/${val.userID}`);
                                 window.location.reload()
-                                }}
+                            }}
                         >
-                            <div className="avatar">
+                            <div className={ProfileCSS.avatar}>
                             {val.ImageData? 
-                                <img className='imgAvatar' src={`http://localhost:3001/images/`+val.ImageData} width="200" height="100" alt="" />
+                                <img className={ProfileCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} width="200" height="100" alt="" />
                                 //<></>
                                 :
                                 <></>
                             }
                             </div>
-                            <div className="username">
+                            <div className={ProfileCSS.username}>
                                     {val.username} 
                             </div>
                         </div> {/*END USER-WRAPPER*/}
-                       <div className='profileBodyAndFooter'>
+                        <div className={ProfileCSS.profileBodyAndFooter}>
                             <div className="reviewStarRating">
-                                
 
-{/****************************************************8 */}
-
-
-                            <div className="ratingStars" >
-            {[...Array(5)].map((star, idx)=>{
-                //console.log(props.children)
-                const currentRate = idx + 1;
-                return(
-                    <>
-                        <label>
-                        <input className="radioBtn" type="radio" name="rating"  
-                            value={currentRate}
-                            
-                                                
-                        />
-                            <FaStar className='ratingStar' size={20}
-                                color={currentRate <= (hover || val.rating) ?
-                                    "red"
-                                    : "black"
-                                }
-                                //onMouseEnter={()=>setHover(currentRate)}
-                                //onMouseLeave={()=>setHover(null)}
-                            />
-                        </label>
-                    </>  
-                )
-            })}
-        </div>  
-
-
-
-{/****************************************** */}
-
+                                <div className={"ratingStars"} >
+                                    {[...Array(5)].map((star, idx)=>{
+                                        //console.log(props.children)
+                                        const currentRate = idx + 1;
+                                        return(
+                                            <>
+                                                <label>
+                                                <input className="radioBtn" type="radio" name="rating"  
+                                                    value={currentRate}                                                
+                                                />
+                                                    <FaStar className='ratingStar' size={20}
+                                                        color={currentRate <= (hover || val.rating) ?
+                                                            "red"
+                                                            : "black"
+                                                        }
+                                                        //onMouseEnter={()=>setHover(currentRate)}
+                                                        //onMouseLeave={()=>setHover(null)}
+                                                    />
+                                                </label>
+                                            </>  
+                                        )
+                                    })}
+                                </div>  
 
                                 {/*<Star >{val.rating}</Star>*/}
                             </div>
-                            <div className="profileBody"  
+                            <div className={ProfileCSS.profileBody}  
                                 onClick={() => {
                                     navigate(`/singlePost/${val.id}`);
                                 }}
                             > 
                                 <p>{val.postText}</p>
                             </div>
-                            <div className="profileFooter"> 
+                            <div className={ProfileCSS.profileFooter}> 
                                 {authState.username === val.username? (
                                      <i className="bi bi-trash" onClick={()=>{deletePost(val.id)}}>                 
                                     </i>

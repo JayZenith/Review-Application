@@ -37,9 +37,13 @@
    
    .postings .createPostSection form button{
     width: 700px;
-    background-color: white;
+    background-color: rgb(204, 47, 47);
     border: 1px solid black;
-    color: black;
+    color: white;
+    border-radius: 10px;
+    margin-top: 5px;
+ 
+  
    }
    
    
