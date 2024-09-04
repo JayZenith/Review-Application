@@ -55,7 +55,7 @@ function Profile() {
    useEffect(()=>{
         axios.get(`http://localhost:3001/profilePosts/${id}`)
             .then((response)=>{
-                //console.log(response.data)
+                console.log(response.data)
                 setListOfPosts(response.data)
                 setNumOfReviews(response.data.length);
                 //setPosted(false)
@@ -191,7 +191,7 @@ function Profile() {
                                         <FaStar className='star' size={30}
                                             color={currentRate <= (hover || rating) ?
                                                 "red"
-                                                :"black"
+                                                :"white"
                                             }
                                             //onMouseEnter={()=>setHover(currentRate)}
                                             //onMouseLeave={()=>setHover(null)}
@@ -226,6 +226,7 @@ function Profile() {
                                 navigate(`/profile/${val.userID}`);
                                 window.location.reload()
                             }}
+                            
                         >
                             <div className={ProfileCSS.avatar}>
                             {val.ImageData? 
@@ -236,11 +237,12 @@ function Profile() {
                             }
                             </div>
                             <div className={ProfileCSS.username}>
-                                    {val.username} 
+                                    {val.firstname} 
                             </div>
                         </div> {/*END USER-WRAPPER*/}
                         <div className={ProfileCSS.profileBodyAndFooter}>
                             <div className="reviewStarRating">
+                          
 
                                 <div className={"ratingStars"} >
                                     {[...Array(5)].map((star, idx)=>{

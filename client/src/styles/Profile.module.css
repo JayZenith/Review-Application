@@ -12,6 +12,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: white;
    }
 
   .profileApp .profileBioBtn{
@@ -20,18 +21,22 @@
     height: 40px;
     border-radius: 10px;
     background-color: rgb(204, 47, 47);
-    border: 1px solid black;
+    border: 1px solid rgb(255, 255, 255);
     color: white;
     cursor: pointer;
+   
+    
   }
    
    
    .profileApp h1{
     font-size: 100px;
+    color: white;
+   
    }
   
    .profileReview form{
-  
+    color: white;
     display: flex;
     flex-direction: column;
     padding: 0px;
@@ -49,6 +54,7 @@
       background-color: #f8f8f8;
       font-size: 16px;
       resize: none;
+      color: rgb(0, 0, 0);
   
    }
   
@@ -69,38 +75,47 @@
     margin-top: 0px;
     margin-bottom: 15px;
     width: 800px;
+    color: white;
    }
   
    .profilePost{
     margin-top: 20px;
-    border: 1px solid black;
+    border: 1px solid white;
     display: flex;
     flex-direction: row;
     padding: 20px;
+    color: white;
    }
   
    .listOfPosts .profilePost .userWrapper{
-    border: 0px solid rgb(0, 0, 0);
+    border: 0px solid rgb(255, 255, 255);
     width: 90px;
     display: flex;
     flex-direction: column;
     align-items: center;
     cursor: pointer;
+    color: white;
+   }
+
+   .username{
+    color: white;
    }
    
    
    .listOfPosts .profilePost .profileBodyAndFooter{
-    border: 0px solid black;
+    border: 0px solid rgb(255, 255, 255);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
+    color: white;
    }
   
    .profileApp .profileBodyAndFooter .profileBody{
-    border: 1px solid black;
+    border: 1px solid rgb(255, 255, 255);
     padding: 10px;
     min-height: 90px;
+    color: white;
    }
    
    
@@ -110,6 +125,7 @@
     padding: 1px;
     justify-content: space-between;
     border: 1px solid rgb(0, 0, 0);
+    color: white;
    }
    
    
@@ -131,7 +147,7 @@
   .reviewStarRating{
     height: 40px;
     width: 40px;
-    color: black;
+    color: rgb(255, 255, 255);
   }
   
   

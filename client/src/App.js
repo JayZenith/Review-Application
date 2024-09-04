@@ -206,7 +206,7 @@ function SearchBar(){
   const dropState = (state) => {
     setTimeout(()=>{
       setDropdownState(state)
-    },"150");
+    },"100");
     console.log(dropdownState);
    
 

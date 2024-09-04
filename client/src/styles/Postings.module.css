@@ -29,7 +29,8 @@
     box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 4px;
-    background-color: #f8f8f8;
+    color: white;
+    background-color: #161515;
     font-size: 16px;
     resize: none;
    }
@@ -55,7 +56,7 @@
    
    .post{
     width: 700px;
-    border: 1px solid black;
+    border: 1px solid white;
     height: auto; /*Need to stretch container */
     display: flex;
     flex-direction: row;
@@ -71,10 +72,14 @@
     flex-direction: column;
     align-items: center;
     cursor: pointer;
+    
    }
    
    
-   .userWrapper .avatar{
+   .post .userWrapper .imgAvatar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 40px;
     height: 40px;
     background-color: grey;
@@ -98,7 +103,7 @@
    
    
    .bodyAndFooter .username a{
-    color: black;
+    color: white;
    }
    
    
@@ -111,7 +116,7 @@
    
    
    .bodyAndFooter .body{
-    border: 1px solid black;
+    
     padding: 10px;
     min-height: 90px;
     
@@ -119,7 +124,7 @@
    
    .bodyAndFooter .body p{
     word-wrap: break-word;
-    
+    color: white;
    }
 
    .avatar{
@@ -136,6 +141,7 @@
     min-width: 60px;
     align-items: center;
     justify-content: center;
+    color: white;
   
    }
    
@@ -143,9 +149,14 @@
     display: flex;
     padding: 1px;
     justify-content: space-between;
-    border: 1px solid rgb(0, 0, 0);
+    color: white;
+    
    }
    
+
+   .footer label{
+      color: white;
+   }
    
    
    

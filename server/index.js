@@ -63,7 +63,7 @@ db.connect((err) => {
     db.query(
       `CREATE TABLE IF NOT EXISTS posts (
           id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          created_at VARCHAR(30),
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
           userID INT, 
           targetID INT,
@@ -161,6 +161,9 @@ db.connect((err) => {
 
   app.post("/posts", validateToken, (req, res) => {
     const post = req.body;
+    var created = new Date().toLocaleString().replace(',','')
+
+    console.log(created)
     //console.log(post.rating)
     db.query(
       "INSERT INTO posts SET ?",
@@ -172,6 +175,7 @@ db.connect((err) => {
         targetID: post.id,
         targetName: post.username,
         rating: post.rating,
+        created_at: created,
         
        // username: post.username,
       },
@@ -542,10 +546,10 @@ db.connect((err) => {
 
   app.get("/profilePosts/:id",(req,res)=>{
     id=req.params.id;
-    db.query(`SELECT posts.*, COUNT(distinct likes.id) as dt, avatars.ImageData `+
+    db.query(`SELECT posts.*, COUNT(distinct likes.id) as dt, avatars.ImageData, users.firstname `+
        `FROM posts LEFT OUTER JOIN avatars ON posts.userID=avatars.userID `+
-       `LEFT JOIN likes ON posts.id=likes.postID `+
-       `WHERE targetID=${id} GROUP BY posts.id, avatars.id`,(err, result)=>{
+       `LEFT JOIN likes ON posts.id=likes.postID LEFT OUTER JOIN users ON posts.userID=users.id `+
+       `WHERE targetID=${id} GROUP BY posts.id, avatars.id, users.id`,(err, result)=>{
       if(err) throw new Error(err);
       res.json(result)
     })

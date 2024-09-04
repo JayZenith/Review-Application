@@ -283,7 +283,7 @@ function StarRating(props){
                             <FaStar className='ratingStar' size={20}
                                 color={currentRate <= (hover || props.children) ? 
                                     "red"
-                                    : "black"
+                                    : "white"
                                 }
                                 //onMouseEnter={()=>setHover(currentRate)}
                                 //onMouseLeave={()=>setHover(null)}

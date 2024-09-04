@@ -14,20 +14,22 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    color: white;
    }
   
   
    .theSinglePost{
-    border: 1px solid black;
+
     width: 700px;
-    border: 1px solid black;
+    border: 1px solid white;
     height: auto; /*Need to stretch container */
     padding: 10px;
     margin-top: 0px;
+    color: white;
    }
   
    .singlePostBody{
-    border: 1px solid black;
+    border: 1px solid rgb(0, 0, 0);
     padding: 10px;
    }
   
@@ -36,6 +38,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    color: white;
    }
   
    .singlePostAvatar{
@@ -43,13 +46,14 @@
       width: 30px;
       height: 30px;
       border-radius: 50%;
+      color: white;
   
    }
   
    .singlePostUsername{
     display: flex;
     align-items: center;
-    border: 1px solid black;
+    border: 1px solid rgb(0, 0, 0);
     height: 50px;
     width: 100px;
     justify-content: space-around;
@@ -62,7 +66,7 @@
     justify-content: space-between;
     height: 150px;
     width: 700px;
-    border: 1px solid black;
+    border: 1px solid rgb(0, 0, 0);
    }
   
    .singlePostPage .addCommentContainer textarea{
@@ -70,6 +74,7 @@
     height: auto;
     font-size: 20px;
     padding: 5px;
+ 
    }
   
   
@@ -82,57 +87,39 @@
   
   }
 
-  .addCommentContainer textarea{
-    width: 700px;
-    height: 400px;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    font-size: 16px;
-    resize: none;
-  }
-  
+
   
   .listOfComments{
     margin-top: 20px;
-    border: 1px solid black;
+    border: 1px solid rgb(255, 255, 255);
     width: 780px;
     padding: 20px;
+    color: white;
   }
   
   .comment{
-    border: 1px solid black;
+    border: 1px solid rgb(0, 0, 0);
     display: flex;
     flex-direction: column;
     padding: 10px;
+    color: white;
   }
   
   .commentBody{
     padding: 20px;
     min-height: 60px;
-    border: 1px solid black;
+    border: 1px solid rgb(0, 0, 0);
   }
   
   .commentFooter{
-    border: 1px solid black;
+    border: 1px solid rgb(0, 0, 0);
     display: flex;
     align-items: center;
     padding: 5px;
     justify-content: space-between;
+    color: white;
   }
   
   
   
-  .pageNotFound{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
   
-  .pageNotFound a{
-    color: black;
-  }
