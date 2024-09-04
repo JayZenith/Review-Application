@@ -74,6 +74,7 @@
     cursor: pointer;
     
    }
+
    
    
    .post .userWrapper .imgAvatar{
@@ -84,8 +85,27 @@
     height: 40px;
     background-color: grey;
     border-radius: 50%;
-    color: black;
+    color: white;
     margin-top: 5px;
+   }
+
+   .post .theTarget{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+   }
+
+   .post .theTarget .avatar .imgAvatar{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: grey;
+      border-radius: 50%;
+      color: white;
+
    }
 
    .nameAndRating{
@@ -103,7 +123,8 @@
    
    
    .bodyAndFooter .username a{
-    color: white;
+    color: rgb(252, 252, 252);
+    font-weight: 800;
    }
    
    
@@ -150,7 +171,7 @@
     padding: 1px;
     justify-content: space-between;
     color: white;
-    
+ 
    }
    
 

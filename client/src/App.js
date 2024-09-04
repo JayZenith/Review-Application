@@ -171,12 +171,19 @@ function SearchBar(){
  
   const onChangeHandler = (text) => { ///Set the suggestions 
     let matches = []
+
     if (text.length > 0){
        matches = users.filter(user=>{
+        let u = user.firstname+" "+user.lastname;
+        console.log(u)
         //const regex = new RegExp(`^${text}`,"gi");
         try{
           const regex = new RegExp(`^${text}`,"gi");
-          if(user.email.match(regex)){
+          
+          if(user.firstname.match(regex)){
+            return user.firstname.match(regex);
+          }
+          else if(user.email.match(regex)){
             return user.email.match(regex);
           }
         }catch(err){

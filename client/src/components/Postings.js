@@ -252,7 +252,7 @@ function Postings() {
                     : <></>
                     }
                 </div>
-                To {aTarget.firstname}
+                {/*aTarget.firstname*/}
               </div>
               ) : (
                 ""
