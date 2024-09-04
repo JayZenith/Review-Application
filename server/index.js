@@ -142,6 +142,7 @@ db.connect((err) => {
           id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
           firstname VARCHAR(30),
           lastname VARCHAR(30),
+          fullname VARCHAR(60),
           password VARCHAR(100), 
           email VARCHAR(30)
       )`,
@@ -201,6 +202,7 @@ db.connect((err) => {
                 lastname: user.lname,
                 password: hash,
                 email: user.email,
+                fullname: user.fname + ' ' + user.lname,
               },
               (err, result) => {
                 if (err) throw new Error(err);

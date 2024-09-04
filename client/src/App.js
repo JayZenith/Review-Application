@@ -174,14 +174,11 @@ function SearchBar(){
 
     if (text.length > 0){
        matches = users.filter(user=>{
-        let u = user.firstname+" "+user.lastname;
-        console.log(u)
         //const regex = new RegExp(`^${text}`,"gi");
         try{
           const regex = new RegExp(`^${text}`,"gi");
-          
-          if(user.firstname.match(regex)){
-            return user.firstname.match(regex);
+          if(user.fullname.match(regex)){
+            return user.fullname.match(regex);
           }
           else if(user.email.match(regex)){
             return user.email.match(regex);
