@@ -12,6 +12,7 @@
    .postings .createPostSection{
     width: 700px;
     height: 250px;
+    color: white;
    }
    
    
@@ -33,6 +34,7 @@
     background-color: #161515;
     font-size: 16px;
     resize: none;
+   
    }
    
    
@@ -62,6 +64,13 @@
     flex-direction: row;
     padding: 10px;
     margin-top: 0px;
+    
+    /*
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    max-height: 400px;
+    overflow: auto;
+    */
    }
    
    
@@ -140,6 +149,10 @@
     
     padding: 10px;
     min-height: 90px;
+    max-height: 400px;
+    overflow: auto;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
     
    }
    
@@ -167,10 +180,13 @@
    }
    
    .bodyAndFooter .footer{
+    position: sticky;
+    bottom: 0;
     display: flex;
     padding: 1px;
     justify-content: space-between;
     color: white;
+ 
  
    }
    

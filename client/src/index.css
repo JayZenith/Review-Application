@@ -407,3 +407,8 @@
 .pageNotFound a{
   color: black;
 }
+
+
+.searchBar input::placeholder{
+  color: black;
+}

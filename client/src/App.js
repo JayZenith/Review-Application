@@ -220,7 +220,7 @@ function SearchBar(){
     <>
       <div className='searchBar'>
         <input
-          placeholder='Search Users By Email...'
+          placeholder='Search Users By Name or Email...'
           value={input}
           onChange={(e)=>{onChangeHandler(e.target.value);}}
           onFocusCapture={() => dropState(true)}
