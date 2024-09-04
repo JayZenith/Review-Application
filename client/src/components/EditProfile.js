@@ -5,6 +5,7 @@ import { AuthContext } from "../helpers/AuthContext";
 import { DropdownContext } from "../helpers/DropdownContext";
 import { ScreenContext } from '../helpers/ScreenContext';
 import { SuggestionsContext } from "../helpers/SuggestionsContext";
+import { ImageContext } from "../helpers/ImageContext";
 import EditProfileCSS from '../styles/EditProfile.module.css';
 
 function EditProfile() {
@@ -14,8 +15,10 @@ function EditProfile() {
     const { arrowState, setArrowState } = useContext(ScreenContext);
     const { dropdownState, setDropdownState } = useContext(DropdownContext);
     const { suggestionsState, setSuggestionsContext } = useContext(SuggestionsContext);
+    const { imageState, setImageState } = useContext(ImageContext);
     const [ bioSize, setBioSize] = useState(0);
     const [ imgData, setImgData ] = useState([])
+
     useEffect(()=>{
         if (!localStorage.getItem("accessToken"))
             navigate("/");
@@ -34,10 +37,12 @@ function EditProfile() {
             bioText
         },{
             headers: {accessToken: localStorage.getItem("accessToken")}
-        }).then((err,response)=>{
-            if (err) throw new Error;
-            console.log(response)
+        }).then((res)=>{
+            alert(res.data);
         })
+        .catch(err=>console.log(err));
+        
+       
     }
 
     const handleBioChange = (e) => {
@@ -48,6 +53,7 @@ function EditProfile() {
     
 
   return (
+    <ImageContext.Provider value={{ imageState, setImageState }}>
     <div className={EditProfileCSS.editProfile}>
         <h1>Edit Bio</h1>
         <div className={EditProfileCSS.editBio}>
@@ -67,11 +73,14 @@ function EditProfile() {
         </div>
         <SetImage></SetImage>
     </div>
+    </ImageContext.Provider>
   )
 }
 
 function SetImage(){
     const [file, setFile] = useState('')
+    const { imageState, setImageState } = useContext(ImageContext)
+   
 
     const handleImage = (e) =>{
         console.log(e.target.files[0])
@@ -89,9 +98,10 @@ function SetImage(){
         })
         .then((res)=>{
             if(res.data.Status==="Image Upload Success"){
-                console.log("Succeeded")
+                alert("File Upload Succeeded")
+                setImageState(true);
             }else{
-                console.log("Failed")
+                alert("File Upload Failed")
             }
         })
         .catch(err=>console.log(err));

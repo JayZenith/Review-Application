@@ -10,6 +10,7 @@ import { AuthContext } from "./helpers/AuthContext";
 import { SuggestionsContext } from "./helpers/SuggestionsContext";
 import { ScreenContext } from "./helpers/ScreenContext";
 import { DropdownContext } from "./helpers/DropdownContext";
+import { ImageContext } from "./helpers/ImageContext";
 
 //SVGs
 import { ReactComponent as DownIcon } from './icons/down.svg';
@@ -44,7 +45,7 @@ function App() {
  const [suggestionsState, setSuggestionsContext] = useState([]); //search suggestions 
  const [arrowState, setArrowState] = useState(false) //Arrow toggle 
  const [dropdownState, setDropdownState] = useState(false) //Dropdown toggle
- 
+ const [imageState, setImageState] = useState(false) //
 
  
 
@@ -107,7 +108,7 @@ useEffect(() => { //renders on any page load
         <SuggestionsContext.Provider value={{ suggestionsState, setSuggestionsContext }}>
         <ScreenContext.Provider value={{ arrowState, setArrowState }}>
         <DropdownContext.Provider value={{ dropdownState, setDropdownState }}>
-    
+        <ImageContext.Provider value={{ imageState, setImageState }}>
         {authState.status ? (  //if authenticated 
           <Navbar>
                 <NavItem icon={<HomeIcon />} item="Home" />
@@ -134,11 +135,12 @@ useEffect(() => { //renders on any page load
             <Route path="/profile/editProfile" element={<EditProfile />} />
             {/*<Route path="*" element={<PageNotFound/>} />*/}
           </Routes>
-    
+          </ImageContext.Provider>
           </DropdownContext.Provider>
           </ScreenContext.Provider>
           </SuggestionsContext.Provider>
           </AuthContext.Provider>
+          
       }
     </div>
  );
@@ -212,8 +214,6 @@ function SearchBar(){
       setDropdownState(state)
     },"100");
     console.log(dropdownState);
-   
-
   }
  
   return(
@@ -256,21 +256,26 @@ function SearchBar(){
  function ProfileImage(){
   const[imgData, setImgData] = useState([])
   const { authState, setAuthState } = useContext(AuthContext);
+  const { imageState, setImageState } = useContext(ImageContext);
+
+  
 
   useEffect(()=>{ //authState.id to show self 
     axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
     .then(res=>setImgData(res.data[0]))
     .catch(err=>console.log(err))
-  },[])
+  },[imageState]) //need to render image instantly
 
   return(
     <AuthContext.Provider value={{ authState, setAuthState }}>
+    <ImageContext.Provider value={{ imageState, setImageState }}>
       {imgData?
       <img className='imgAvatar' src={`http://localhost:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
       //<></>
       :
       <></>
       }
+    </ImageContext.Provider>
     </AuthContext.Provider>
   );
  }
@@ -289,10 +294,20 @@ function SearchBar(){
   let location = useNavigate()
   const [open, setOpen] = useState(false);
   const { authState, setAuthState } = useContext(AuthContext);
- 
+  const [dropMenu, setDropMenu] = useState(false);
+
+  const dropThing = (state) => {
+    setTimeout(()=>{
+      setDropMenu(state)
+    },"100");
+    console.log(dropMenu);
+  }
+
   return (
      <AuthContext.Provider value={{ authState, setAuthState }}>
       <li
+     
+      //onBlurCapture={props.item=="Arrow"? dropThing(false) : dropThing(true)}
       //onBlurCapture={props.item=="Arrow" ? "" : ""}
       className={props.item=="Search" ? "nav-item offscreentwo" : props.item=="Arrow"?"arrowToEnd" : "nav-item"}>
         <a href={props.item=="Home"?"/postings": props.item=="Profile" ? `/profile/${authState.id}` : "#"} className="icon-button" onClick={() => setOpen(!open)}>
@@ -309,6 +324,7 @@ function SearchBar(){
   const [activeMenu, setActiveMenu] = useState('main');
   const [menuHeight, setMenuHeight] = useState(null);
   const dropdownRef = useRef(null);
+  
  
   useEffect(() => {
     setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
@@ -341,16 +357,23 @@ function SearchBar(){
         location(`/profile/editProfile/`);
       }
     }
+
+
+    
+   
  
     return (
       <AuthContext.Provider value={{ authState, setAuthState }}>  
        <div //href={props.children=="Settings"?`/settings/${authState.id}`: ""} 
        className="menu-item"
        onClick={out}
+       
+      
        /*onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}*/>
         <span className="icon-button">{props.leftIcon}</span>
         {props.children}
         <span className="icon-right">{props.rightIcon}</span>
+      
       </div>
       </AuthContext.Provider>
       /*

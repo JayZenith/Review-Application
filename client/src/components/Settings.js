@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import SettingsCSS from '../styles/Settings.module.css'; 
+
 
 
 function Settings() {
@@ -48,7 +50,7 @@ let location = useNavigate()
 
 
  return (
-   <div className="settings">
+   <div className={SettingsCSS.settings}>
      <h1>Change Your Password</h1>
      <input
        type="text"

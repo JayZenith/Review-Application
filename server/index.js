@@ -811,20 +811,24 @@ app.post("/addBio", validateToken, (req,res)=>{
           },
           (err)=>{
             if (err) throw new Error(err);
+            res.json("Bio Created!")
+            
           }
         )
       }
       else{
-        console.log(userID)
+        //console.log(userID)
         db.query(`UPDATE bio 
           SET bioText='${bioText}' 
           WHERE userID='${userID}'`,
           (err)=>{
             if (err) throw new Error(err);
+            res.json("Bio Updated!")
+            //res.json("Bio Updated!")
           }
         )
-
       }
+     
     })
     
 })

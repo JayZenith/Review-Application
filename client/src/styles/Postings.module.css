@@ -70,7 +70,10 @@
     flex-direction: row;
     padding: 10px;
     margin-top: 0px;
-    
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    overflow: auto;
     /*
     white-space: pre-wrap;
     overflow-wrap: break-word;
@@ -156,6 +159,7 @@
     padding: 10px;
     min-height: 90px;
     max-height: 400px;
+    width: 600px;
     overflow: auto;
     white-space: pre-wrap;
     overflow-wrap: break-word;
@@ -164,6 +168,7 @@
    
    .bodyAndFooter .body p{
     word-wrap: break-word;
+    
     color: white;
    }
 
