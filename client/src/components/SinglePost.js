@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
 import { AuthContext } from "../helpers/AuthContext";
+import SinglePostCSS from '../styles/SinglePost.module.css'; 
+
+
 
 function SinglePost() {
   let { id } = useParams();
@@ -90,23 +92,22 @@ function SinglePost() {
 
 
   return (
-    <div className="singlePostPage">
-        <div className="theSinglePost" id="individual">
-          <div className="singlePostBody">{postObject.postText}</div>
-          <div className="singlePostFooter">
-                <div className="singlePostUsername" onClick={()=> {
+    <div className={SinglePostCSS.singlePostPage}>
+        <div className={SinglePostCSS.theSinglePost} id="individual">
+          <div className={SinglePostCSS.singlePostBody}>{postObject.postText}</div>
+          <div className={SinglePostCSS.singlePostFooter}>
+                <div className={SinglePostCSS.singlePostUsername} onClick={()=> {
                                 navigate(`/profile/${postObject.userID}`);
                                 window.location.reload()
                                 }}
                 >
-                    <div className="singlePostAvatar">
+                    <div className={SinglePostCSS.singlePostAvatar}>
                       {postObject.ImageData? 
-                        <img className='imgAvatar' src={`http://localhost:3001/images/`+postObject.ImageData} width="150" height="80" alt="" />
+                        <img className={SinglePostCSS.imgAvatar} src={`http://localhost:3001/images/`+postObject.ImageData} width="150" height="80" alt="" />
                           //<></>
                         :
                         <></>
                       }
-
                     </div>
                     {postObject.firstname}
                 </div>
@@ -115,7 +116,7 @@ function SinglePost() {
             )}
           </div>
         </div>
-          <div className="addCommentContainer">
+          <div className={SinglePostCSS.addCommentContainer}>
           {commentSize == 100? <p>Character Limit Reached</p> : ""}
             <textarea
               type="text"
@@ -129,24 +130,25 @@ function SinglePost() {
             <p>{commentSize}/100</p>
             <button onClick={addComment}>Add Comment</button>
           </div>
-          <div className="listOfComments">
+          <div className={SinglePostCSS.listOfComments}>
+            
             {comments.slice(0).reverse().map((comment, key) => {
               return (
-                <div key={key} className="comment">
-                  <div className="singlePostAvatar">
+                <div key={key} className={SinglePostCSS.comment}>
+                  <div className={SinglePostCSS.singlePostAvatar}>
                       {comment.ImageData? 
-                        <img className='imgAvatar' src={`http://localhost:3001/images/`+comment.ImageData} width="150" height="80" alt="" />
+                        <img className={SinglePostCSS.imgAvatar} src={`http://localhost:3001/images/`+comment.ImageData} width="150" height="80" alt="" />
                           //<></>
                         :
                         <></>
                       }
 
                     </div>
-                  <div className="commentBody">
+                  <div className={SinglePostCSS.commentBody}>
                   {comment.commentBody}
                   </div>
                 
-                 <div className="commentFooter">
+                 <div className={SinglePostCSS.commentFooter}>
                   <div onClick={()=> {
                                 navigate(`/profile/${comment.userID}`);
                                 window.location.reload()
@@ -160,6 +162,7 @@ function SinglePost() {
                 </div>
               );
             })}
+
         </div>
     </div>
   );

@@ -144,6 +144,7 @@ useEffect(() => { //renders on any page load
  );
 }
 
+
 function SearchBar(){
   let location = useNavigate()
   const [users, setUsers] = useState([])
@@ -201,6 +202,15 @@ function SearchBar(){
     }
   }
   */
+
+  const dropState = (state) => {
+    setTimeout(()=>{
+      setDropdownState(state)
+    },"150");
+    console.log(dropdownState);
+   
+
+  }
  
   return(
     <>
@@ -209,12 +219,12 @@ function SearchBar(){
           placeholder='Search Users By Email...'
           value={input}
           onChange={(e)=>{onChangeHandler(e.target.value);}}
-          onFocusCapture={() => setDropdownState(true)}
+          onFocusCapture={() => dropState(true)}
           ref={searchRef}
-          onBlurCapture={() => setDropdownState(false)}
+          onBlurCapture={() => dropState(false)}
         />
       </div>
-      <div className="userSearchDropdown">
+      <div className={!dropdownState ? "userSearchDropdownHidden" : "userSearchDropdown"}>
         {suggestionsState && suggestionsState.map((userData, idx) => {
           return(
             <div key ={idx} className="userSearchDivs"

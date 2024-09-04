@@ -5,6 +5,7 @@ import { AuthContext } from "../helpers/AuthContext";
 import { DropdownContext } from "../helpers/DropdownContext";
 import { ScreenContext } from '../helpers/ScreenContext';
 import { SuggestionsContext } from "../helpers/SuggestionsContext";
+import EditProfileCSS from '../styles/EditProfile.module.css';
 
 function EditProfile() {
     let navigate = useNavigate();
@@ -47,23 +48,23 @@ function EditProfile() {
     
 
   return (
-    <div className='editProfile'>
-        
+    <div className={EditProfileCSS.editProfile}>
         <h1>Edit Bio</h1>
-        
-        <form>
-            {bioSize == 200 ? <p>Character Limit Reached</p> : ""}
-            <textarea
-                placeholder="..."
-                id = "bio"
-                name = "bio"
-                onChange={(e)=>handleBioChange(e)}
-                maxLength={200}
-            >
-            </textarea>
-            <p>{bioSize}/200</p>
-        </form>
-        <button onClick={addBio}>Submit</button>
+        <div className={EditProfileCSS.editBio}>
+            <form>
+                {bioSize == 200 ? <p>Character Limit Reached</p> : ""}
+                <textarea
+                    placeholder="..."
+                    id = "bio"
+                    name = "bio"
+                    onChange={(e)=>handleBioChange(e)}
+                    maxLength={200}
+                >
+                </textarea>
+                <p>{bioSize}/200</p>
+            </form>
+            <button onClick={addBio}>Submit</button>
+        </div>
         <SetImage></SetImage>
     </div>
   )
@@ -97,15 +98,13 @@ function SetImage(){
     }
 
     return(
-        <>
+        <div className={EditProfileCSS.upload}>
             <h1>Image Upload</h1>
-            <div>
-                <input type="file" name="file"
+            <input type="file" name="file"
                 onChange={handleImage}
-                ></input>
-                <button onClick={handleApi}>Submit File</button>
-            </div>
-        </>
+            ></input>
+            <button onClick={handleApi}>Submit File</button>
+        </div>
     )
 }
 
