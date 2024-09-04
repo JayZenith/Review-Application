@@ -160,9 +160,11 @@ function Profile() {
  return (
     <div className={ProfileCSS.profileApp}> {/*postings*/}
         <h1> {username} </h1>
+        {/*
         {authState.id == id ?
         <button className={ProfileCSS.profileBioBtn} onClick={editProfile}>Edit Profile</button>   
         : <></> }
+        */}
         <div className={ProfileCSS.profileBio}>{theBio}</div>
         {authState.id != id ?  ( //if user then hide review option
             <div className={ProfileCSS.profileReview}> 

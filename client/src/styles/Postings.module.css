@@ -37,6 +37,7 @@
     color: white;
     background-color: #161515;
     font-size: 16px;
+    font-family: monospace, monospace;
     resize: none;
    
    }
@@ -49,6 +50,7 @@
     color: white;
     border-radius: 10px;
     margin-top: 5px;
+    font-family: monospace, monospace;
  
   
    }

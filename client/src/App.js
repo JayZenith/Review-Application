@@ -337,6 +337,9 @@ function SearchBar(){
       else if(props.children=="Settings"){
         location(`/settings/${authState.id}`);
       }
+      else if(props.children=="Edit"){
+        location(`/profile/editProfile/`);
+      }
     }
  
     return (
@@ -372,6 +375,12 @@ function SearchBar(){
           {/*
           <DropdownItem >My Profile</DropdownItem>
           */}
+          <DropdownItem
+            leftIcon={<LogoutIcon />}
+            
+            goToMenu="settings">
+            Edit
+          </DropdownItem>
           <DropdownItem
             leftIcon={<SettingsIcon />}
             rightIcon={<SettingsIcon />}
