@@ -119,6 +119,7 @@ function Postings() {
      navigate(`/userSearch`);
    }
 
+    /*
     const onChangeHandler = (text) => {
      let matches = []
      if (text.length > 0){
@@ -132,22 +133,26 @@ function Postings() {
      setSuggestionsContext(matches);//to set useContext hook right away due to lag
      setInput(text) //set search input
    }
+     */
 
 
+   /*
    const handleKeyUp = (e) => {
     
      if(e.key === "Enter"){
        userSearch();
      }
    }
+    */
 
 
+  /*
    const logout = () => {
      localStorage.removeItem("accessToken");
      setAuthState({ username: "", id: 0, status: false });
      navigate("/"); //login page
    }
-
+*/
 
     const handleInputChange = (e)=>{
       //console.log(e.target.value.length)
@@ -169,8 +174,9 @@ function Postings() {
  return (
    <div className={PostingsCSS.postings}>
       <div className={PostingsCSS.createPostSection}>
+      {inputSize == 500 ? <p className={PostingsCSS.redInputSize}>Character Limit Reached</p> : ""}
           <form className={PostingsCSS.postForm} onSubmit={onSubmit}>
-            {inputSize == 500 ? <p>Character Limit Reached</p> : ""}
+            
             <textarea
               placeholder="Write Here"
               id = "posting"
@@ -179,7 +185,7 @@ function Postings() {
               maxLength={500}
             >
             </textarea>
-            <p>{inputSize}/500</p>
+            <p className={inputSize>=450 ? PostingsCSS.redInputSize : ""}>{inputSize}/500</p>
             <button type="submit">Post</button>
           </form>
       </div> {/*END createPostSection*/}
@@ -192,7 +198,7 @@ function Postings() {
                 <Link to={`/profile/${val.userID}`}>
                   <div className={PostingsCSS.avatar}>
                     {val.ImageData? 
-                      <img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} width="200" height="100" alt="" />
+                      <img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} alt="img" />
                     //<></>
                     :
                     <></>
@@ -202,7 +208,7 @@ function Postings() {
                 
              </div> {/*END USER-WRAPPER*/}
                {/*<div className="title"> {val.title} </div>*/}
-             <div className={PostingsCSS.bodyAndFooter}>
+             <div className={!val.targetID ? PostingsCSS.bodyAndFooter : PostingsCSS.bodyAndFooter2}>
                 <div className={PostingsCSS.nameAndRating}>
                   <div className={PostingsCSS.username}>
                     <Link to={`/profile/${val.userID}`}>{val.firstname} </Link>
@@ -212,19 +218,19 @@ function Postings() {
                   :<></>
                   }
                 </div>
-                <div className={PostingsCSS.body}
+                <div className={!val.targetID ? PostingsCSS.body : PostingsCSS.body2}
                   onClick={() => {
                       navigate(`/singlePost/${val.id}`);
                   }}
                 > 
-                  <p>{val.postText}</p>
+                  <p className={PostingsCSS.bodyText}>{val.postText}</p>
                </div> {/*END BODY*/}
-               <div className={PostingsCSS.footer}>
+               <div className={!val.targetID ? PostingsCSS.footer : PostingsCSS.footer2}>
                      {authState.email === val.email ? (
                        <i className="bi bi-trash" onClick={()=>{deletePost(val.id)}}>                 
                        </i>
                      ):(<i></i>)} {/*Need the latter icon to move like button to right*/}
-                     <p>{val.created_at}</p>
+                     <p className={PostingsCSS.createdAt}>{val.created_at}</p>
                      <div className="like-btn">
                        <i class="bi bi-hand-thumbs-up"
                          onClick={() => {

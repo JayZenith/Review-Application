@@ -212,7 +212,7 @@ db.connect((err) => {
                   db.query(
                     "INSERT INTO avatars SET ?",
                     {
-                      ImageData: "image_1725231104039.png", //default avatar
+                      ImageData: "avatar.jpg", //default avatar
                       userID: result[0].id,
                     },
                     (err) => {
