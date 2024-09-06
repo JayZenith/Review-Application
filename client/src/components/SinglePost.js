@@ -11,23 +11,30 @@ function SinglePost() {
   const [postObject, setPostObject] = useState({});
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-
   const { authState } = useContext(AuthContext);
-
+  const [commentPosted, setCommentPosted] = useState(false);
   let navigate = useNavigate();
 
   useEffect(() => {
     axios
       .get(`http://localhost:3001/singlePost/byId3/${id}`)
       .then((response) => {
-        console.log(response)
+        //console.log(response)
         setPostObject(response.data[0]);
       });
-    axios.get(`http://localhost:3001/comments3/${id}`).then((response) => {
-      setComments(response.data);
-    });
+    
   }, [comments]); //did this fix problem of having to rerender upon create/delete comment??
 //thought is rerender any change to comments and abovce gets send back comment details
+
+  useEffect(()=>{
+    axios.get(`http://localhost:3001/comments3/${id}`).then((response) => {
+      console.log(response.data)
+      setComments(response.data);
+      setCommentPosted(false);
+    });
+
+  },[commentPosted])
+
   const addComment = () => {
     axios
       .post(
@@ -56,6 +63,7 @@ function SinglePost() {
           };
           setComments([...comments, commentToAdd]);
           setNewComment(""); //to make the newComment value empty within input
+          setCommentPosted(true);
         }
       });
   };
@@ -109,15 +117,16 @@ function SinglePost() {
                         <></>
                       }
                     </div>
-                    {postObject.firstname}
+                    <p>{postObject.firstname}</p>
+                    
                 </div>
             {authState.email === postObject.email && (
               <i className="bi bi-trash" onClick={()=>{deletePost(postObject.id)}}></i>
             )}
           </div>
         </div>
-          <div className={SinglePostCSS.addCommentContainer}>
-          {commentSize == 100? <p>Character Limit Reached</p> : ""}
+        <div className={SinglePostCSS.addCommentContainer}>
+          {commentSize == 100? <p className={SinglePostCSS.charLimit}>Character Limit Reached</p> : <p className={SinglePostCSS.hidden}>""</p>}
             <textarea
               type="text"
               placeholder="Comment.."
@@ -127,38 +136,41 @@ function SinglePost() {
               }}
               maxLength={100}
             />
-            <p>{commentSize}/100</p>
+            <p className={commentSize >= 80 ? SinglePostCSS.redInput : ""}>{commentSize}/100</p>
             <button onClick={addComment}>Add Comment</button>
           </div>
           <div className={SinglePostCSS.listOfComments}>
-            
             {comments.slice(0).reverse().map((comment, key) => {
               return (
                 <div key={key} className={SinglePostCSS.comment}>
-                  <div className={SinglePostCSS.singlePostAvatar}>
+                  <div className={SinglePostCSS.commentAvatar}>
                       {comment.ImageData? 
                         <img className={SinglePostCSS.imgAvatar} src={`http://localhost:3001/images/`+comment.ImageData} width="150" height="80" alt="" />
-                          //<></>
-                        :
-                        <></>
+                        :<></>
                       }
 
+                  </div>
+
+                    <div className={SinglePostCSS.commentBodyAndFooter}>
+                      <div className={SinglePostCSS.commentBodyWrapper}>
+                        <div className={SinglePostCSS.commentBody}>
+                        {comment.commentBody}
+                        </div>
+                      
+                      </div>
+                      <div className={SinglePostCSS.commentFooter}>
+                            <div onClick={()=> {
+                                          navigate(`/profile/${comment.userID}`);
+                                          window.location.reload()
+                                          }}
+                            > {comment.firstname}
+                            </div>
+                              {authState.email === comment.email && (
+                                  <i className="bi bi-trash" onClick={() => {deleteComment(comment.id);}}>
+                                  </i>
+                              )}
+                        </div>
                     </div>
-                  <div className={SinglePostCSS.commentBody}>
-                  {comment.commentBody}
-                  </div>
-                
-                 <div className={SinglePostCSS.commentFooter}>
-                  <div onClick={()=> {
-                                navigate(`/profile/${comment.userID}`);
-                                window.location.reload()
-                                }}
-                  > {comment.firstname} </div>
-                    {authState.email === comment.email && (
-                        <i className="bi bi-trash" onClick={() => {deleteComment(comment.id);}}>
-                        </i>
-                    )}
-                  </div>
                 </div>
               );
             })}

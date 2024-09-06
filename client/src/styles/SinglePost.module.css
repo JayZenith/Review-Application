@@ -19,64 +19,104 @@
   
   
    .theSinglePost{
-
+    background-color: red;
     width: 700px;
     border: 1px solid white;
     height: auto; /*Need to stretch container */
     padding: 10px;
-    margin-top: 0px;
     color: white;
    }
   
    .singlePostBody{
-    border: 1px solid rgb(0, 0, 0);
+    min-height: 90px;
+    max-height: 400px;
+    overflow: auto;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
     padding: 10px;
    }
-  
-   .singlePostFooter{
-    padding: 10px;
+
+   .singlePostUsername{
+    background-color: purple;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    color: white;
+    align-items: center;
+    justify-content: start;
+    height: 50px;
+    min-width: 200px;
+    cursor: pointer;
+   }
+
+   .singlePostUsername p{
+    margin-left: 20px;
    }
   
    .singlePostAvatar{
       background-color: grey;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      color: white;
-  
+      display: flex;
+      align-items: center;
+      justify-content: center;
    }
-  
-   .singlePostUsername{
-    display: flex;
-    align-items: center;
-    border: 1px solid rgb(0, 0, 0);
+
+   .imgAvatar{
+    width: 50px;
     height: 50px;
-    width: 100px;
-    justify-content: space-around;
+    border-radius: 50%;
+  }
+  
+
+   .singlePostFooter{
+    background-color: blue;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+   }
+
+   .singlePostFooter i{
+    font-size: 20px;
+    cursor: pointer;
    }
   
+   
+
    .addCommentContainer{
+    background-color: purple;
     margin-top: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 150px;
-    width: 700px;
-    border: 1px solid rgb(0, 0, 0);
+    width: 720px;
+    
    }
   
    .singlePostPage .addCommentContainer textarea{
-    min-height: 10px;
-    height: auto;
-    font-size: 20px;
-    padding: 5px;
+    width: 100%;
+    height: 80px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    resize: none;
+    color: rgb(0, 0, 0);
  
    }
+
+   .addCommentContainer .charLimit{
+    color: red;
+   }
+
+   .addCommentContainer .hidden{
+    color: black;
+   }
   
+   .addCommentContainer .redInput{
+    color: red;
+   }
   
   .addCommentContainer button{
     margin-top: 10px;
@@ -84,38 +124,67 @@
     border-radius: 4px;
     background-color: rgb(197, 43, 43);
     color: white;
-  
   }
 
-  .imgAvatar{
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
-  
+ 
   .listOfComments{
     margin-top: 20px;
-    border: 1px solid rgb(255, 255, 255);
-    width: 780px;
+    width: 700px;
     padding: 20px;
     color: white;
   }
   
   .comment{
-    border: 1px solid rgb(0, 0, 0);
+    border: 1px solid rgb(255, 255, 255);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    padding: 10px;
+    min-height: 90px;
+    max-height: 400px;
+    overflow: auto;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    color: white;
+  }
+
+  .commentAvatar{
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: green;
+  }
+
+  .commentBodyAndFooter{
     display: flex;
     flex-direction: column;
-    padding: 10px;
-    color: white;
+    width: 100%;
+  }
+
+  .commentBodyWrapper{
+    display: flex;
+    flex-direction: column;
+    background-color: blue;
+    min-height: 90px;
+    max-height: 400px;
+    overflow: auto;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    width: 100%;
   }
   
   .commentBody{
+    background-color: red;
     padding: 20px;
     min-height: 60px;
     border: 1px solid rgb(0, 0, 0);
+    
   }
   
   .commentFooter{
+    background-color: purple;
     border: 1px solid rgb(0, 0, 0);
     display: flex;
     align-items: center;

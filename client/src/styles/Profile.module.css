@@ -52,7 +52,7 @@
     margin-top: 10px;
   }
 
-  .hidden{
+  .hidden{ /*blends in with background*/
     color: black;
   }
 
@@ -255,6 +255,36 @@
 
     .profileApp .profilePageContainer{
       width: 350px;
+      height: auto;
+      /*background-color: aqua;*/
+    }
+
+  }
+  
+  @media all and (max-width: 500px){
+    .profileApp .profileUsername{
+      /*background-color: rgb(134, 32, 112);*/
+      font-size: 40px;
+    }
+  
+    .profileApp .profileBio{
+      margin-top: 10px;
+      min-height: 100px;
+      width: 300px;
+      font-size: 20px;
+      padding: 4px;
+    }
+
+    .profileReview{
+      width: 300px;
+    }
+
+    .profileReview .writeReview{
+
+    }
+
+    .profileApp .profilePageContainer{
+      width: 300px;
       height: auto;
       /*background-color: aqua;*/
     }
