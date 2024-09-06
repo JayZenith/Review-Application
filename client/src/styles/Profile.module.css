@@ -43,15 +43,45 @@
     height: 350px;
   }
 
+  .profileReview .writeReview{
+    margin-bottom: 0px;
+
+  }
+
   .profileApp h2{
     margin-top: 10px;
   }
 
+  .hidden{
+    color: black;
+  }
+
   .profileReview form{
+
+    height: 300px;
+   
     display: flex;
     flex-direction: column;
     width: 100%;
    }
+
+   .redInputSize{
+    
+    color: red;
+ }
+
+ .profileReview form .charLimit{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: red;
+ }
+ 
+ .profileReview form p{
+  margin-top: 5px;
+  margin-bottom: 5px;
+ }
+
+
 
    .profileReview form textarea{
     width: 100%;

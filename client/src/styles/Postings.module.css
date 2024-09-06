@@ -35,8 +35,8 @@
     box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 4px;
-    color: white;
-    background-color: #161515;
+    color: rgb(0, 0, 0);
+    background-color: #ffffff;
     font-size: 16px;
     font-family: monospace, monospace;
     resize: none;

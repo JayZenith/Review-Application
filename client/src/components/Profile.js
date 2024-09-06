@@ -165,9 +165,9 @@ function Profile() {
         : <></>}
         {authState.id != id ?  ( //if user then hide review option
             <div className={ProfileCSS.profileReview}> 
-                <h2 className='writeReview'>WRITE A REVIEW</h2>
+                <h2 className={ProfileCSS.writeReview}>WRITE A REVIEW</h2>
                 <form  onSubmit={onSubmit}> 
-                    {reviewSize == 500 ? <p>Character Limit Reached</p> : ""}
+                    {reviewSize == 500 ? <p className={ProfileCSS.charLimit}>Character Limit Reached</p> : <p className={ProfileCSS.hidden}>""</p>}
                     <textarea
                        placeholder="..."
                        id = "posting"
@@ -176,7 +176,7 @@ function Profile() {
                        maxLength={500}
                     >
                     </textarea>
-                    <p>{reviewSize}/500</p>
+                    <p className={reviewSize >= 450 ? ProfileCSS.redInputSize: ""}>{reviewSize}/500</p>
                     <div className={ProfileCSS.rating}>
                         {[...Array(5)].map((star, idx)=>{
                             const currentRate = idx + 1
