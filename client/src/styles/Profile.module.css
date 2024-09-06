@@ -9,7 +9,7 @@
    }
 
   .profileApp .profileUsername{
-    background-color: blue;
+    /*background-color: blue;*/
     font-size: 100px;
   }
 
@@ -17,7 +17,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: red;
+    /*background-color: red;*/
     margin-top: 10px;
     min-height: 100px;
     width: 500px;
@@ -31,7 +31,7 @@
     width: 150px;
     height: 40px;
     border-radius: 10px;
-    background-color: rgb(204, 47, 47);
+    /*background-color: rgb(204, 47, 47);*/
     border: 1px solid rgb(255, 255, 255);
     color: white;
     cursor: pointer;
@@ -39,6 +39,8 @@
 
   .profileReview{
     width: 800px;
+    /*background-color: red;*/
+    height: 350px;
   }
 
   .profileApp h2{
@@ -68,7 +70,7 @@
   .profileReview form button{
       margin-top: 0px;
       width: 100%;
-      background-color: rgb(204, 47, 47);
+      /*background-color: rgb(204, 47, 47);*/
       border: 1px solid black;
       color: white;
   }
@@ -79,23 +81,97 @@
   }
 
   .profileApp .profilePageContainer{
-      width: 500px;
+  
+      width: 800px;
       height: auto;
-      background-color: aqua;
+      /*background-color: aqua;*/
   }
 
   .profileApp .profilePageContainer .listOfPosts{
     width: 100%;
-    background-color: bisque;
+    /*background-color: bisque;*/
   }
 
+  .profileApp .profilePageContainer .listOfPosts .profilePost{
+    /*background-color: purple;*/
+    margin-top: 20px;
+    border: 1px solid white;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    color: white;
+    height: auto; /*Need to stretch container */
+   }
+
+   .userWrapper{
+    border: 0px solid rgb(255, 255, 255);
+    width: 80px;
+    /*background-color: red;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+   }
+
+   .username{
+    color: white;
+   }
    
+  .imgAvatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: grey;
+   }
+
+   .listOfPosts .profilePost .profileBodyAndFooter{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    color: white;
+   }
    
+   .reviewStarRating{
+    /*background-color: rgb(184, 184, 71);*/
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3px;
+
+   }
+   
+   .ratingStars{
+
+   }
+
+   .profileApp .profileBodyAndFooter .profileBody{
+    padding: 10px;
+    /*activates scroll bar which is styled in index.css*/
+    min-height: 90px;
+    max-height: 400px;
+    color: white;
+    /*TO KEEP WHITE SPACES */
+    overflow: auto;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+   }
+
+   .listOfPosts .profilePost .profileFooter{
+
+    display: flex;
+    padding: 2px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+   }
    
 
    @media all and (max-width: 805px){
     .profileApp .profileUsername{
-      background-color: green;
+      /*background-color: green;*/
       font-size: 70px;
     }
   
@@ -114,14 +190,20 @@
     .profileApp h2{
      
       font-size: 20px;
-      background-color: rgb(211, 211, 53);
+      /*background-color: rgb(211, 211, 53);*/
+    }
+
+    .profileApp .profilePageContainer{
+      width: 600px;
+      height: auto;
+      /*background-color: aqua;*/
     }
 
   }
 
   @media all and (max-width: 600px){
     .profileApp .profileUsername{
-      background-color: rgb(134, 32, 112);
+      /*background-color: rgb(134, 32, 112);*/
       font-size: 50px;
     }
   
@@ -141,89 +223,25 @@
 
     }
 
+    .profileApp .profilePageContainer{
+      width: 350px;
+      height: auto;
+      /*background-color: aqua;*/
+    }
+
   }
   
   
-  
-   .profilePost{
-    margin-top: 20px;
-    border: 1px solid white;
-    display: flex;
-    flex-direction: row;
-    padding: 20px;
-    color: white;
-   }
-
-
+   
+   
+   
   
   
-   .listOfPosts .profilePost .userWrapper{
-    border: 0px solid rgb(255, 255, 255);
-    width: 90px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    color: white;
-   }
-
-   .username{
-    color: white;
-   }
-   
-   
-   .listOfPosts .profilePost .profileBodyAndFooter{
-    border: 0px solid rgb(255, 255, 255);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-    color: white;
-   }
-  
-   .profileApp .profileBodyAndFooter .profileBody{
-    border: 1px solid rgb(255, 255, 255);
-    padding: 10px;
-    min-height: 90px;
-    color: white;
-   }
    
    
    
-   .listOfPosts .profilePost .profileFooter{
-    display: flex;
-    padding: 1px;
-    justify-content: space-between;
-    border: 1px solid rgb(0, 0, 0);
-    color: white;
-   }
+   
    
    
 
-.rating{
-    margin-top: 15px;
-    width: 200px;
-    height: 80px;
-  }
-  
-  .radioBtn{
-    display: none;
-  }
-  
-  .star{
-    cursor: pointer;
-  }
-  
-  .reviewStarRating{
-    height: 40px;
-    width: 40px;
-    color: rgb(255, 255, 255);
-  }
-  
-  
-  .ratingStars{
-    width: 200px;
-    height: 80px;
-  
-  }
-  
+

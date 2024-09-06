@@ -58,7 +58,7 @@ function Profile() {
                 console.log(response.data)
                 setListOfPosts(response.data)
                 setNumOfReviews(response.data.length);
-                //setPosted(false)
+                setPosted(false)
             })
    },[posted])
 
@@ -212,12 +212,11 @@ function Profile() {
                {listOfPosts.slice(0).reverse().map((val, key) => {
                return (
                     <div className={ProfileCSS.profilePost}> {/*post*/}
-                        <div className="userWrapper"
+                        <div className={ProfileCSS.userWrapper}
                             onClick={()=> {
                                 navigate(`/profile/${val.userID}`);
                                 window.location.reload()
                             }}
-                            
                         >
                             <div className={ProfileCSS.avatar}>
                             {val.ImageData? 
@@ -227,15 +226,14 @@ function Profile() {
                                 <></>
                             }
                             </div>
-                            <div className={ProfileCSS.username}>
-                                    {val.firstname} 
-                            </div>
+                            
                         </div> {/*END USER-WRAPPER*/}
                         <div className={ProfileCSS.profileBodyAndFooter}>
-                            <div className="reviewStarRating">
-                          
-
-                                <div className={"ratingStars"} >
+                            <div className={ProfileCSS.reviewStarRating}>
+                                <div className={ProfileCSS.username}>
+                                        {val.firstname} 
+                                </div>
+                                <div className={ProfileCSS.ratingStars} >
                                     {[...Array(5)].map((star, idx)=>{
                                         //console.log(props.children)
                                         const currentRate = idx + 1;
@@ -269,7 +267,7 @@ function Profile() {
                                 <p>{val.postText}</p>
                             </div>
                             <div className={ProfileCSS.profileFooter}> 
-                                {authState.username === val.username? (
+                                {authState.email === val.email? (
                                      <i className="bi bi-trash" onClick={()=>{deletePost(val.id)}}>                 
                                     </i>
                                 ):(<i></i>)}

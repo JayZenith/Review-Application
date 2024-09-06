@@ -548,7 +548,7 @@ db.connect((err) => {
 
   app.get("/profilePosts/:id",(req,res)=>{
     id=req.params.id;
-    db.query(`SELECT posts.*, COUNT(distinct likes.id) as dt, avatars.ImageData, users.firstname `+
+    db.query(`SELECT posts.*, COUNT(distinct likes.id) as dt, avatars.ImageData, users.firstname, users.email `+
        `FROM posts LEFT OUTER JOIN avatars ON posts.userID=avatars.userID `+
        `LEFT JOIN likes ON posts.id=likes.postID LEFT OUTER JOIN users ON posts.userID=users.id `+
        `WHERE targetID=${id} GROUP BY posts.id, avatars.id, users.id`,(err, result)=>{
