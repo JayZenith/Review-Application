@@ -421,7 +421,7 @@
      
         
         .postings .createPostSection{
-         width: 350px;
+         width: 270px;
          height: 250px;
          color: white;
          display: flex;
@@ -439,7 +439,7 @@
         }
 
         .post{
-         width: 350px;
+         width: 280px;
          border: 1px solid white;
          height: auto; /*Need to stretch container */
          display: flex;
@@ -484,7 +484,7 @@
          display: flex;
          flex-direction: column;
          justify-content: space-between;
-         width: 290px;
+         width: 270px;
          /*background-color: purple;*/
       }
 

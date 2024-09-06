@@ -1,19 +1,30 @@
-/****************************************
- *********************************************
- ****************PROFILE*************************8
- *******************************************8
- ******************************************888
- ***********************************/
- 
- 
- .profileApp{
+
+  .profileApp{
     padding-top: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: #ffffff;
    }
+
+  .profileApp .profileUsername{
+    background-color: blue;
+    font-size: 100px;
+  }
+
+  .profileApp .profileBio{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+    margin-top: 10px;
+    min-height: 100px;
+    width: 500px;
+    font-size: 30px;
+    padding: 4px;
+  }
+
 
   .profileApp .profileBioBtn{
     margin-top: 0px;
@@ -24,59 +35,115 @@
     border: 1px solid rgb(255, 255, 255);
     color: white;
     cursor: pointer;
-   
-    
   }
-   
-   
-   .profileApp h1{
-    font-size: 100px;
-    color: white;
-   
-   }
-  
-   .profileReview form{
-    color: white;
+
+  .profileReview{
+    width: 800px;
+  }
+
+  .profileApp h2{
+    margin-top: 10px;
+  }
+
+  .profileReview form{
     display: flex;
     flex-direction: column;
-    padding: 0px;
-    width: 800px;
+    width: 100%;
    }
-  
-  
+
    .profileReview form textarea{
-      width: 100%;
-      height: 150px;
-      padding: 12px 20px;
-      box-sizing: border-box;
-      border: 2px solid #ccc;
-      border-radius: 4px;
-      background-color: #f8f8f8;
-      font-size: 16px;
-      resize: none;
-      color: rgb(0, 0, 0);
-  
-   }
-  
-   .profileReview form button{
+    width: 100%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    resize: none;
+    color: rgb(0, 0, 0);
+
+ }
+
+  .profileReview form button{
       margin-top: 0px;
       width: 100%;
       background-color: rgb(204, 47, 47);
       border: 1px solid black;
       color: white;
-   }
-  
-   .profileReview form button:hover{
+  }
+
+  .profileReview form button:hover{
       border: 1px solid rgb(83, 15, 15);
       transition: all .7s ease-in;
-   }
+  }
+
+  .profileApp .profilePageContainer{
+      width: 500px;
+      height: auto;
+      background-color: aqua;
+  }
+
+  .profileApp .profilePageContainer .listOfPosts{
+    width: 100%;
+    background-color: bisque;
+  }
+
+   
+   
+   
+
+   @media all and (max-width: 805px){
+    .profileApp .profileUsername{
+      background-color: green;
+      font-size: 70px;
+    }
   
-   .listOfPosts{
-    margin-top: 0px;
-    margin-bottom: 15px;
-    width: 800px;
-    color: white;
-   }
+    .profileApp .profileBio{
+      margin-top: 10px;
+      min-height: 100px;
+      width: 400px;
+      font-size: 25px;
+      padding: 4px;
+    }
+
+    .profileReview{
+      width: 600px;
+    }
+
+    .profileApp h2{
+     
+      font-size: 20px;
+      background-color: rgb(211, 211, 53);
+    }
+
+  }
+
+  @media all and (max-width: 600px){
+    .profileApp .profileUsername{
+      background-color: rgb(134, 32, 112);
+      font-size: 50px;
+    }
+  
+    .profileApp .profileBio{
+      margin-top: 10px;
+      min-height: 100px;
+      width: 300px;
+      font-size: 20px;
+      padding: 4px;
+    }
+
+    .profileReview{
+      width: 320px;
+    }
+
+    .profileReview .writeReview{
+
+    }
+
+  }
+  
+  
   
    .profilePost{
     margin-top: 20px;
@@ -88,16 +155,7 @@
    }
 
 
-   .profileApp .profileBio{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    min-height: 100px;
-    width: 500px;
-    font-size: 30px;
-    padding: 4px;
-  }
+  
   
    .listOfPosts .profilePost .userWrapper{
     border: 0px solid rgb(255, 255, 255);

@@ -219,7 +219,8 @@ function SearchBar(){
   return(
     <>
       <div className='searchBar'>
-        <input
+        <input 
+          className='specify'
           placeholder='Search Users By Name or Email...'
           value={input}
           onChange={(e)=>{onChangeHandler(e.target.value);}}

@@ -159,16 +159,13 @@ function Profile() {
 
  return (
     <div className={ProfileCSS.profileApp}> {/*postings*/}
-        <h1> {username} </h1>
-        {/*
-        {authState.id == id ?
-        <button className={ProfileCSS.profileBioBtn} onClick={editProfile}>Edit Profile</button>   
-        : <></> }
-        */}
+        <h1 className={ProfileCSS.profileUsername}> {username} </h1>
+        {theBio ? 
         <div className={ProfileCSS.profileBio}>{theBio}</div>
+        : <></>}
         {authState.id != id ?  ( //if user then hide review option
             <div className={ProfileCSS.profileReview}> 
-                <h2>WRITE A REVIEW</h2>
+                <h2 className='writeReview'>WRITE A REVIEW</h2>
                 <form  onSubmit={onSubmit}> 
                     {reviewSize == 500 ? <p>Character Limit Reached</p> : ""}
                     <textarea
@@ -202,21 +199,13 @@ function Profile() {
                                 </>  
                             )
                         })}
-                     </div>
+                     </div> {/*rating*/}
                     <button type="submit">Post</button>
                </form>
             </div>
         ) : <></>}
 
         <div className={ProfileCSS.profilePageContainer}>
-           {/*
-           <div className='basicInfo'>
-              
-               {authState.username === username && (
-                   <button onClick={() => {navigate(`/Settings/${id}`)}}> Settings </button>
-               )}
-           </div>
-           */}
             <h2>REVIEWS</h2>
             <p># of reviews: {numOfReviews}</p>
             <div className={ProfileCSS.listOfPosts}> {/*NEEDED TO SEPERATE FROM ABOVE?*/}

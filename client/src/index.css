@@ -12,6 +12,8 @@
   font-family: monospace, monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  
  }
  
  code {
@@ -25,11 +27,12 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
+  
  }
  
  
  .AppX{
- 
+  position: relative;
  
  }
  
@@ -72,74 +75,7 @@
   border-bottom: var(--border);
   color: white;
  }
- 
- 
- /*
- @media all and (max-width: 767px){
-  .navbar {
-    position: fixed;
-    bottom: 0;
-    width: 100vw;
-    height: 70px;
-    background-color: var(--bg);
-    padding: 0 1rem;
-    border-bottom: var(--border);
-    color: white;
-   
-  }
- 
- 
-  .navbar ul{
-    display: flex;
-    flex-direction: row;
-    background-color: gold;
-  }
- 
- 
-  .nav-item a {
-    width: 300px;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    background-color: blue;
-  }
- 
- 
-  .nav-item {
-    --button-size: calc(var(--nav-size) * 0.8);
-    width: var(--button-size);
-    height: var(--button-size);
-    background-color: #484a4d;
-    border-radius: 50%;
-    padding: 5px;
-    margin: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: filter 300ms;
-  }
- 
- 
-  .navbar .navbar-nav .dropdown {
-    position: absolute;
-    top: -162px;
-    width: 300px;
-    transform: translateX(50%);
-    background-color: var(--bg);
-    border: var(--border);
-    border-radius: var(--border-radius);
-    padding: 1rem;
-    overflow: hidden;
-    transition: height var(--speed) ease;
-  }
-   .offscreentwo {
-    position: absolute;
-    left: -9999px;
-  } 
- }
- */
- 
+
  
  /* <ul> */
  .navbar-nav {
@@ -157,6 +93,40 @@
   display: flex;
   align-items: center;
   justify-content: center;
+ }
+
+ @media all and (max-width: 780px){
+  .nav-item{
+    background-color: aquamarine;
+
+  }
+
+   .searchBar .specify{
+   
+    left: -0;
+    width: 280px;
+    margin-left: 200px;
+   }
+   
+ }
+
+ @media all and (max-width: 600px){
+
+  .nav-item{
+    background-color: blue;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+   .searchBar .specify{
+    font-size: 12px;
+    width: 208px;
+    margin-left: 150px;
+   }
+   
  }
  
  
@@ -283,10 +253,10 @@
   position: absolute;
   left: 0;
   top: 18px;
-  width: 450px;
+  width: 430px;
   height: 10px;
   margin-left: 250px;
-  border-radius: 20px;
+  border-radius: 2px;
   padding: 10px;
   font-size: 16px;
  }
@@ -296,7 +266,7 @@
   position: absolute;
   background-color: rgb(0, 0, 0);
   color: rgb(255, 255, 255);
-  left: 256px;
+  left: 246px;
   top: 52px;
   width: 460px;
   border: 1px solid black;
