@@ -271,6 +271,7 @@ function Profile() {
                                      <i className="bi bi-trash" onClick={()=>{deletePost(val.id)}}>                 
                                     </i>
                                 ):(<i></i>)}
+                                <p className={ProfileCSS.createdAt}>{val.created_at}</p>
                                 <div className='likeBtn'>
                                     <i class="bi bi-hand-thumbs-up"
                                         onClick={() => {
