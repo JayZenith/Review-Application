@@ -409,7 +409,7 @@
 
    }
 
-   @media all and (max-width: 680px){
+   @media all and (max-width: 394px){
       .postings{
          /*background-color: rgb(182, 197, 45);*/
          padding-top: 140px;
@@ -421,7 +421,7 @@
      
         
         .postings .createPostSection{
-         width: 270px;
+         width: 350px;
          height: 250px;
          color: white;
          display: flex;
@@ -439,7 +439,7 @@
         }
 
         .post{
-         width: 280px;
+         width: 350px;
          border: 1px solid white;
          height: auto; /*Need to stretch container */
          display: flex;

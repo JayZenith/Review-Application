@@ -7,15 +7,26 @@
 
  .editProfile{
     padding-top: 120px;
-    margin-left: 40px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     color: white;
+    /*background-color: red;*/
    }
 
    .editProfile h1{
     font-size: 50px;
+
+   }
+
+   .editBio{
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /*background-color: blue;*/
    }
 
    .editProfile form{
@@ -24,11 +35,11 @@
    }
 
    .editProfile form textarea{
-      width: 500px;
+      width: 100%;
       height: 130px;
       padding: 12px 20px;
       box-sizing: border-box;
-      border: 2px solid #ccc;
+      border: 1px solid #ccc;
       border-radius: 4px;
       background-color: #f8f8f8;
       font-size: 16px;
@@ -38,7 +49,7 @@
    .editBio button{ 
         margin-top: 0px;
         height: 40px;
-        width: 200px;
+        width: 100%;
         background-color: rgb(204, 47, 47);
         border-radius: 10px;
         border: 1px solid black;
@@ -47,17 +58,19 @@
     }
 
     .upload{
-        
-        margin-top: 50px;
+        /*background-color: purple;*/
         display: flex;
         flex-direction: column;
-        width: 600px;
+        align-items: center;
+        justify-content: center;
+        width: 500px;
         height: 200px;
     }
 
     .upload input[name=file]{
         height: 40px;
-        width: 500px;
+        margin-top: 10px;
+        margin-left: 80px;
     }
 
     .upload button{
@@ -68,8 +81,42 @@
         color: white;
         cursor: pointer;
     }
+
+    .charLimit{
+        color: red;
+    }
+
+    .hidden{
+        color: black;
+    }
  
 
   
   
-   
+    @media all and (max-width: 374px){
+
+        .editProfile h1{
+            font-size: 35px;
+        
+        }
+
+        .editBio{
+            width: 340px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            /*background-color: blue;*/
+           }
+
+        .upload{
+            /*background-color: purple;*/
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 340px;
+            height: 200px;
+        }
+
+    }

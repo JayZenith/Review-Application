@@ -19,7 +19,7 @@
   
   
    .theSinglePost{
-    background-color: red;
+    /*background-color: red;*/
     width: 700px;
     border: 1px solid white;
     height: auto; /*Need to stretch container */
@@ -37,7 +37,7 @@
    }
 
    .singlePostUsername{
-    background-color: purple;
+    /*background-color: purple;*/
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -66,7 +66,7 @@
   
 
    .singlePostFooter{
-    background-color: blue;
+    /*background-color: blue;*/
     padding: 10px;
     display: flex;
     flex-direction: row;
@@ -83,7 +83,7 @@
    
 
    .addCommentContainer{
-    background-color: purple;
+    /*background-color: purple;*/
     margin-top: 20px;
     display: flex;
     flex-direction: column;
@@ -124,6 +124,7 @@
     border-radius: 4px;
     background-color: rgb(197, 43, 43);
     color: white;
+    cursor: pointer;
   }
 
  
@@ -132,6 +133,10 @@
     width: 700px;
     padding: 20px;
     color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   
   .comment{
@@ -154,7 +159,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: green;
+    /*background-color: green;*/
   }
 
   .commentBodyAndFooter{
@@ -166,7 +171,7 @@
   .commentBodyWrapper{
     display: flex;
     flex-direction: column;
-    background-color: blue;
+    /*background-color: blue;*/
     min-height: 90px;
     max-height: 400px;
     overflow: auto;
@@ -176,7 +181,7 @@
   }
   
   .commentBody{
-    background-color: red;
+    /*background-color: red;*/
     padding: 20px;
     min-height: 60px;
     border: 1px solid rgb(0, 0, 0);
@@ -184,7 +189,7 @@
   }
   
   .commentFooter{
-    background-color: purple;
+    /*background-color: purple;*/
     border: 1px solid rgb(0, 0, 0);
     display: flex;
     align-items: center;
@@ -195,4 +200,64 @@
   
   
   
-  
+  @media all and (max-width: 780px){
+    .theSinglePost{
+      /*background-color: red;*/
+      width: 500px;
+      border: 1px solid white;
+      height: auto; /*Need to stretch container */
+      padding: 10px;
+      color: white;
+     }
+
+     .addCommentContainer{
+      /*background-color: purple;*/
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 520px;
+      
+     }
+
+     .listOfComments{
+      margin-top: 20px;
+      width: 500px;
+      padding: 20px;
+      color: white;
+    }
+
+  }
+
+  @media all and (max-width: 374px){
+    .theSinglePost{
+      /*background-color: red;*/
+      width: 310px;
+      border: 1px solid white;
+      height: auto; /*Need to stretch container */
+      padding: 10px;
+      color: white;
+     }
+
+
+
+     .addCommentContainer{
+      margin-top: 20px;
+      /*background-color: green;*/
+      width: 300px;
+      padding: 20px;
+      color: white;
+    }
+
+    .listOfComments{
+      margin-top: 20px;
+      width: 320px;
+      padding: 20px;
+      color: white;
+      display: flex;
+      
+
+    }
+    
+
+  }

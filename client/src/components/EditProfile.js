@@ -58,20 +58,21 @@ function EditProfile() {
         <h1>Edit Bio</h1>
         <div className={EditProfileCSS.editBio}>
             <form>
-                {bioSize == 200 ? <p>Character Limit Reached</p> : ""}
+                {bioSize == 150 ? <p className={EditProfileCSS.charLimit}>Character Limit Reached</p> : <p className={EditProfileCSS.hidden}>""</p>}
                 <textarea
                     placeholder="..."
                     id = "bio"
                     name = "bio"
                     onChange={(e)=>handleBioChange(e)}
-                    maxLength={200}
+                    maxLength={150}
                 >
                 </textarea>
-                <p>{bioSize}/200</p>
+                <p className={bioSize >= 130 ? EditProfileCSS.charLimit : ""}>{bioSize}/150</p>
             </form>
             <button onClick={addBio}>Submit</button>
+            <SetImage></SetImage>
         </div>
-        <SetImage></SetImage>
+        
     </div>
     </ImageContext.Provider>
   )

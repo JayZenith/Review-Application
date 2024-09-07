@@ -17,12 +17,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /*background-color: red;*/
+    color: rgb(255, 255, 255);
+    border-radius: 10px;
     margin-top: 10px;
     min-height: 100px;
-    width: 500px;
-    font-size: 30px;
+    width: 700px;
+    font-size: 25px;
     padding: 4px;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    overflow: auto;
+
   }
 
 
@@ -209,7 +215,7 @@
       margin-top: 10px;
       min-height: 100px;
       width: 400px;
-      font-size: 25px;
+      font-size: 20px;
       padding: 4px;
     }
 
@@ -271,12 +277,12 @@
       margin-top: 10px;
       min-height: 100px;
       width: 300px;
-      font-size: 20px;
+      font-size: 17px;
       padding: 4px;
     }
 
     .profileReview{
-      width: 300px;
+      width: 350px;
     }
 
     .profileReview .writeReview{
@@ -284,7 +290,7 @@
     }
 
     .profileApp .profilePageContainer{
-      width: 300px;
+      width: 350px;
       height: auto;
       /*background-color: aqua;*/
     }
