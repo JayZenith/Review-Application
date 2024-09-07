@@ -47,6 +47,11 @@ function App() {
  const [dropdownState, setDropdownState] = useState(false) //Dropdown toggle
  const [imageState, setImageState] = useState(false) //
 
+
+ const [burger_class, setBurgerClass] = useState("burger-bar clicked")
+ const [menu_class, setMenuClass] = useState("menu hidden")
+ const [isMenuClicked, setIsMenuClicked] = useState(false)
+
  
 
  useEffect(()=>{ //Check for acccessToken
@@ -217,7 +222,7 @@ function SearchBar(){
   }
  
   return(
-    <>
+    <div>
       <div className='searchBar'>
         <input 
           className='specify'
@@ -249,7 +254,7 @@ function SearchBar(){
           )
         })}
       </div> {/*END user-search-results*/}
-    </>
+    </div>
   );
  }
 
