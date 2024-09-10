@@ -229,7 +229,7 @@
 
   }
 
-  @media all and (max-width: 374px){
+  @media all and (max-width: 400px){
     .theSinglePost{
       /*background-color: red;*/
       width: 310px;

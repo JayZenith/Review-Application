@@ -17,7 +17,8 @@ function SinglePost() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/singlePost/byId3/${id}`)
+      //.get(`http://localhost:3001/singlePost/byId3/${id}`)
+      .get(`http://3.143.203.151:3001/singlePost/byId3/${id}`)
       .then((response) => {
         //console.log(response)
         setPostObject(response.data[0]);
@@ -27,7 +28,8 @@ function SinglePost() {
 //thought is rerender any change to comments and abovce gets send back comment details
 
   useEffect(()=>{
-    axios.get(`http://localhost:3001/comments3/${id}`).then((response) => {
+    //axios.get(`http://localhost:3001/comments3/${id}`).then((response) => {
+    axios.get(`http://3.143.203.151:3001/comments3/${id}`).then((response) => {
       console.log(response.data)
       setComments(response.data);
       setCommentPosted(false);
@@ -37,8 +39,10 @@ function SinglePost() {
 
   const addComment = () => {
     axios
+      //.post(
+        //"http://localhost:3001/comments",
       .post(
-        "http://localhost:3001/comments",
+        "http://3.143.203.151:3001/comments",
         {
           commentBody: newComment,
           postID: id,
@@ -69,7 +73,8 @@ function SinglePost() {
   };
 
   const deleteComment = (id) => {
-    axios.delete(`http://localhost:3001/deleteComment/${id}`, {
+    //axios.delete(`http://localhost:3001/deleteComment/${id}`, {
+    axios.delete(`http://3.143.203.151:3001/deleteComment/${id}`, {
       headers: {
         accessToken: localStorage.getItem("accessToken"),
       },
@@ -81,7 +86,8 @@ function SinglePost() {
   };
 
   const deletePost = (id) => {
-    axios.delete(`http://localhost:3001/deletePost/${id}`, {
+    //axios.delete(`http://localhost:3001/deletePost/${id}`, {
+    axios.delete(`http://3.143.203.151:3001/deletePost/${id}`, {
       headers: {
         accessToken: localStorage.getItem("accessToken"),
       },
@@ -111,8 +117,9 @@ function SinglePost() {
                 >
                     <div className={SinglePostCSS.singlePostAvatar}>
                       {postObject.ImageData? 
-                        <img className={SinglePostCSS.imgAvatar} src={`http://localhost:3001/images/`+postObject.ImageData} width="150" height="80" alt="" />
-                          //<></>
+                        //<img className={SinglePostCSS.imgAvatar} src={`http://localhost:3001/images/`+postObject.ImageData} width="150" height="80" alt="" />
+                        <img className={SinglePostCSS.imgAvatar} src={`http://3.143.203.151:3001/images/`+postObject.ImageData} width="150" height="80" alt="" />
+                          //http://3.143.203.151:3001<></>
                         :
                         <></>
                       }
@@ -145,7 +152,9 @@ function SinglePost() {
                 <div key={key} className={SinglePostCSS.comment}>
                   <div className={SinglePostCSS.commentAvatar}>
                       {comment.ImageData? 
-                        <img className={SinglePostCSS.imgAvatar} src={`http://localhost:3001/images/`+comment.ImageData} width="150" height="80" alt="" />
+                      //http://3.143.203.151:3001
+                        //<img className={SinglePostCSS.imgAvatar} src={`http://localhost:3001/images/`+comment.ImageData} width="150" height="80" alt="" />
+                        <img className={SinglePostCSS.imgAvatar} src={`http://3.143.203.151:3001/images/`+comment.ImageData} width="150" height="80" alt="" />
                         :<></>
                       }
 

@@ -44,7 +44,8 @@ function Profile() {
    useEffect(()=>{
         //setPosted(true);
        //setSuggestionsContext([]);
-       axios.get(`http://localhost:3001/getBio/${id}`)
+       //axios.get(`http://localhost:3001/getBio/${id}`)
+       axios.get(`http://3.143.203.151:3001/getBio/${id}`)
         .then((response)=>{
             console.log(response)
             if(response.data[0])
@@ -53,7 +54,8 @@ function Profile() {
     },[])
 
    useEffect(()=>{
-        axios.get(`http://localhost:3001/profilePosts/${id}`)
+        //axios.get(`http://localhost:3001/profilePosts/${id}`)
+        axios.get(`http://3.143.203.151:3001/profilePosts/${id}`)
             .then((response)=>{
                 console.log(response.data)
                 setListOfPosts(response.data)
@@ -65,7 +67,8 @@ function Profile() {
 
    useEffect(()=>{
         isLoading(true);
-        axios.get(`http://localhost:3001/basicInfo/${id}`)
+        //axios.get(`http://localhost:3001/basicInfo/${id}`)
+        axios.get(`http://3.143.203.151:3001/basicInfo/${id}`)
         .then((response) => {
                //console.log(response.data[0].username)
                //setUsername(response.data[0].username)
@@ -77,7 +80,8 @@ function Profile() {
 
 
    const likePost = (postId) => {
-       axios.post("http://localhost:3001/likes", {
+       //axios.post("http://localhost:3001/likes", {
+        axios.post("http://3.143.203.151:3001/likes", {
            postID: postId
            //console.log(response.data.listOfPosts)
            //console.log(response.data.userLikes)
@@ -113,7 +117,8 @@ function Profile() {
    const onSubmit = (event) => {
        //console.log(rating)
        event.preventDefault(); //dosent work without
-       axios.post("http://localhost:3001/posts", {
+       //axios.post("http://localhost:3001/posts", {
+        axios.post("http://3.143.203.151:3001/posts", {
          postText, id, rating, username //username?
        }, {
          headers: {accessToken: localStorage.getItem("accessToken")},
@@ -135,7 +140,8 @@ function Profile() {
 
 
       const deletePost = (id) => {
-        axios.delete(`http://localhost:3001/deletePost/${id}`, {
+        //axios.delete(`http://localhost:3001/deletePost/${id}`, {
+        axios.delete(`http://3.143.203.151:3001/deletePost/${id}`, {
           headers: {
             accessToken: localStorage.getItem("accessToken"),
           },
@@ -220,7 +226,9 @@ function Profile() {
                         >
                             <div className={ProfileCSS.avatar}>
                             {val.ImageData? 
-                                <img className={ProfileCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} width="200" height="100" alt="" />
+                            //http://3.143.203.151:3001
+                                <img className={ProfileCSS.imgAvatar} src={`http://3.143.203.151:3001/images/`+val.ImageData} width="200" height="100" alt="" />
+                                //<img className={ProfileCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} width="200" height="100" alt="" />
                                 //<></>
                                 :
                                 <></>

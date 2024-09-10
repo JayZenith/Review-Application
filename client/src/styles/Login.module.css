@@ -29,6 +29,42 @@
     transform: translate(-50%, -50%);
     background: rgba(5, 5, 5, 0.75);
    }
+
+   @media all and (max-width: 400px){
+
+      .loginWrapper{
+         width: 300px;
+      }
+     
+      form .loginField input{
+         height: 50px;
+         width: 300px;
+         background: #333;
+         border: none;
+         outline: none;
+         border-radius: 4px;
+         color: #fff;
+         font-size: 1rem;
+         padding: 4px;
+         margin: 0px;
+        }
+
+      .loginWrapper button{
+         width: 309px;
+         padding: 16px 0;
+         font-size: 1rem;
+         background: #c53232;
+         color: #fff;
+         font-weight: 500;
+         border-radius: 4px;
+         border: none;
+         outline: none;
+         cursor: pointer;
+         transition: 0.1s ease;
+        }
+      
+
+   }
    
    
    .loginWrapper h1{

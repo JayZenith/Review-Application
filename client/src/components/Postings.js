@@ -34,7 +34,8 @@ function Postings() {
 
    useEffect(()=>{ //Load the Users
      const loadUsers = async () => {
-       const response = await axios.get("http://localhost:3001/users");
+       //const response = await axios.get("http://localhost:3001/users");
+       const response = await axios.get("http://3.143.203.151:3001/users");
        //console.log(response.data);
        setUsers(response.data)
      }
@@ -43,7 +44,8 @@ function Postings() {
 
 
   useEffect(()=>{
-    axios.get("http://localhost:3001/posts4", {
+    //axios.get("http://localhost:3001/posts4", {
+    axios.get("http://3.143.203.151:3001/posts4", {
       headers: {accessToken: localStorage.getItem("accessToken")}
     }).then((res) => {
      console.log(res.data)
@@ -61,7 +63,8 @@ function Postings() {
   }, [posted])
 
    const likePost = (postId) => {
-       axios.post("http://localhost:3001/likes", {
+       //axios.post("http://localhost:3001/likes", {
+        axios.post("http://3.143.203.151:3001/likes", {
            postID: postId
        }, {
            headers: {accessToken: localStorage.getItem("accessToken")}
@@ -90,7 +93,8 @@ function Postings() {
   
    const onSubmit = (event) => {
      event.preventDefault(); //without will redirect incorreclty
-     axios.post("http://localhost:3001/posts", {
+     //axios.post("http://localhost:3001/posts", {
+      axios.post("http://3.143.203.151:3001/posts", {
        postText, 
      }, {
        headers: {accessToken: localStorage.getItem("accessToken")},
@@ -103,7 +107,8 @@ function Postings() {
    } 
   
    const deletePost = (id) => {
-     axios.delete(`http://localhost:3001/deletePost/${id}`, {
+     //axios.delete(`http://localhost:3001/deletePost/${id}`, {
+      axios.delete(`http://3.143.203.151:3001/deletePost/${id}`, {
        headers: {
          accessToken: localStorage.getItem("accessToken"),
        },
@@ -198,7 +203,8 @@ function Postings() {
                 <Link to={`/profile/${val.userID}`}>
                   <div className={PostingsCSS.avatar}>
                     {val.ImageData? 
-                      <img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} alt="img" />
+                      //<img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} alt="img" />
+                      <img className={PostingsCSS.imgAvatar} src={`http://3.143.203.151:3001/images/`+val.ImageData} alt="img" />
                     //<></>
                     :
                     <></>
@@ -252,9 +258,11 @@ function Postings() {
                     window.location.reload()
                 }}
               >
+          
                 <div className={PostingsCSS.avatar}>
                     {aTarget.ImageData ?
-                    <img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
+                    //<img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
+                    <img className={PostingsCSS.imgAvatar} src={`http://3.143.203.151:3001images/`+aTarget.ImageData} width="200" height="100" alt="" />
                     : <></>
                     }
                 </div>
