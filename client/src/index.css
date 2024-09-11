@@ -430,6 +430,15 @@
 .bi{
   color: white;
   margin-left: 10px;
+  cursor: pointer;
+}
+
+.bi:hover{
+  border-radius: 2px;
+}
+
+.like-btn{
+  cursor: pointer;
 }
 
 

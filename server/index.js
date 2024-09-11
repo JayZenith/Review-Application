@@ -34,10 +34,12 @@ const upload = multer({
 
 
 const db = mysql.createConnection({
+  
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     database: "", //have to do this as or else Unknown Database
     password: process.env.DB_PASSWORD,
+    
 });
   
 
