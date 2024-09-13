@@ -26,16 +26,16 @@ function EditProfile() {
 
 
     useEffect(()=>{
-        //axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
-        axios.get(`http://3.143.203.151:3001/getAvatar/${authState.id}`)
+        axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
+        //axios.get(`http://3.143.203.151:3001/getAvatar/${authState.id}`)
         .then(res=>setImgData(res.data[0]))
         .catch(err=>console.log(err))
     },[])
 
 
     const addBio = () => {
-        //axios.post("http://localhost:3001/addBio",{
-        axios.post("http://3.143.203.151:3001/addBio",{
+        axios.post("http://localhost:3001/addBio",{
+        //axios.post("http://3.143.203.151:3001/addBio",{
             bioText
         },{
             headers: {accessToken: localStorage.getItem("accessToken")}
@@ -57,7 +57,7 @@ function EditProfile() {
   return (
     <ImageContext.Provider value={{ imageState, setImageState }}>
     <div className={EditProfileCSS.editProfile}>
-        <h1>Edit Bio</h1>
+        <h2>Edit Bio</h2>
         <div className={EditProfileCSS.editBio}>
             <form>
                 {bioSize == 150 ? <p className={EditProfileCSS.charLimit}>Character Limit Reached</p> : <p className={EditProfileCSS.hidden}>""</p>}
@@ -96,8 +96,8 @@ function SetImage(){
         const formData = new FormData()
         formData.append('image', file)
         //console.log(formData);
-        //axios.post('http://localhost:3001/upload', formData, {
-        axios.post('http://3.143.203.151:3001/upload', formData, {
+        axios.post('http://localhost:3001/upload', formData, {
+        //axios.post('http://3.143.203.151:3001/upload', formData, {
             headers: {
                 accessToken: localStorage.getItem("accessToken"),
               },
@@ -115,7 +115,7 @@ function SetImage(){
 
     return(
         <div className={EditProfileCSS.upload}>
-            <h1>Image Upload</h1>
+            <h2>Image Upload</h2>
             <input type="file" name="file"
                 onChange={handleImage}
             ></input>

@@ -45,8 +45,9 @@ function Signup() {
 
 
  //const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
- const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{0,28}$/;
- const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{0,28}$/;
+ const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{1,28}$/;
+ //const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{1,28}$/;
+ const PWD_REGEX= /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
  const EMAIL_REGEX = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
 
 
@@ -106,8 +107,8 @@ function Signup() {
 
 
    try{
-       //await axios.post("http://localhost:3001/signupFour", {
-       await axios.post("http://3.143.203.151:3001/signupFour", {
+       await axios.post("http://localhost:3001/signupFour", {
+       //await axios.post("http://3.143.203.151:3001/signupFour", {
         fname, lname, pwd, email
        })
        .then(res=>{
@@ -166,7 +167,7 @@ function Signup() {
                 <p id="uidnote" className={fnameFocus && fname &&
                     !validFname ? SignupCSS.instructions : SignupCSS.offscreen}>
                     <i class="bi bi-x-circle"></i>
-                        1 to 29 characters.
+                        2 to 29 characters.
                         Must begin wtih a letter.
                         Letters, numbers, underscores, hyphens allowed.
                 </p>
@@ -196,7 +197,7 @@ function Signup() {
                 <p id="uidnote" className={lnameFocus && lname &&
                     !validLname ? SignupCSS.instructions : SignupCSS.offscreen}>
                     <i class="bi bi-x-circle"></i>
-                    1 to 29 characters.
+                    2 to 29 characters.
                     Must begin wtih a letter.
                     Letters, numbers, underscores, hyphens allowed.
                 </p>

@@ -410,7 +410,7 @@
 
    }
 
-   @media all and (max-width: 394px){
+   @media all and (max-width: 500px){
       .postings{
          /*background-color: rgb(182, 197, 45);*/
          padding-top: 140px;

@@ -166,7 +166,7 @@ db.connect((err) => {
     const post = req.body;
     var created = new Date().toLocaleString().replace(',','')
 
-    console.log(created)
+    //console.log(created)
     //console.log(post.rating)
     db.query(
       "INSERT INTO posts SET ?",
@@ -184,7 +184,7 @@ db.connect((err) => {
       },
       (err) => {
         if (err) throw new Error(err);
-        console.log("1 post inserted");
+        //console.log("1 post inserted");
         res.json(post);
       }
     );
@@ -344,7 +344,7 @@ db.connect((err) => {
 
   app.get("/users/:usern", (req, res) => {
     const name = req.params.usern;
-    console.log(name)
+    //console.log(name)
     db.query(`SELECT * FROM users WHERE username = '${name}'`, (err, result) => {
       if (err) throw new Error(err);
       res.json(result);
@@ -500,7 +500,7 @@ db.connect((err) => {
       `LEFT OUTER JOIN users ON posts.userID=users.id `+
       `WHERE posts.id=${id} GROUP BY posts.id, avatars.id, users.id`, (err, result) => {
       if (err) throw new Error(err);
-      console.log(result);
+      //console.log(result);
       res.json(result);
       //res.end();
     });
@@ -608,8 +608,8 @@ db.connect((err) => {
       },
       (err, resp) => {
         if (err) throw new Error(err);
-        console.log("1 comment inserted");
-        console.log(resp.insertId);
+        //console.log("1 comment inserted");
+        //console.log(resp.insertId);
         res.json({
           commentBody: cmt.commentBody,
           postID: cmt.postID,
@@ -659,7 +659,7 @@ app.post("/signup", (req, res) => {
       },
       (err) => {
         if (err) throw new Error(err);
-        console.log("1 user inserted");
+        //console.log("1 user inserted");
       }
     );
   });
@@ -739,7 +739,7 @@ app.post("/", (req, res) => {
 
 app.get("/basicInfo/:id", (req,res) => {
   const id = req.params.id;
-  console.log("here",id);
+  //console.log("here",id);
   //db.query(`SELECT users.id, users.username, users.firstname, users.lastname, users.email FROM users WHERE id='${id}'`, (err,result)=>{
     db.query(`SELECT users.* FROM users WHERE id='${id}'`, (err,result)=>{
     if(err) throw new Error(err);
@@ -775,14 +775,16 @@ app.post("/upload", upload.single('image'), validateToken, (req,res)=>{
           `UPDATE avatars SET ImageData=? WHERE userID=${req.user.id}`, [image],
           (err) => {
             if (err) throw new Error(err);
-            fs.unlink(`./public/images/${result[0].ImageData}`,(err)=>{
-              if(err){
-                console.error(`Error removing file: ${err}`);
-                return;
-              }
-              console.log(`File ${result[0].ImageData} has been successfully removed.`);
-            })
+            if(result[0].ImageData != "avatar.jpg"){
+              fs.unlink(`./public/images/${result[0].ImageData}`,(err)=>{
+                if(err){
+                  console.error(`Error removing file: ${err}`);
+                  return;
+                }
+                console.log(`File ${result[0].ImageData} has been successfully removed.`);
+              })
             res.json({Status:"Image Upload Success"})
+            }
           }
         )
 
@@ -923,7 +925,7 @@ app.put("/changepassword", validateToken, (req,res) => {
               //},
               (err) => {
                 if (err) throw new Error(err);
-                console.log("password updated");
+                //console.log("password updated");
               }
             );
           });

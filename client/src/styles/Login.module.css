@@ -30,7 +30,7 @@
     background: rgba(5, 5, 5, 0.75);
    }
 
-   @media all and (max-width: 400px){
+   @media all and (max-width: 500px){
 
       .loginWrapper{
          width: 300px;

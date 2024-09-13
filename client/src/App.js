@@ -11,6 +11,8 @@ import { SuggestionsContext } from "./helpers/SuggestionsContext";
 import { ScreenContext } from "./helpers/ScreenContext";
 import { DropdownContext } from "./helpers/DropdownContext";
 import { ImageContext } from "./helpers/ImageContext";
+import { RenderContext } from "./helpers/RenderContext";
+
 
 //SVGs
 import { ReactComponent as DownIcon } from './icons/down.svg';
@@ -46,6 +48,7 @@ function App() {
  const [arrowState, setArrowState] = useState(false) //Arrow toggle 
  const [dropdownState, setDropdownState] = useState(false) //Dropdown toggle
  const [imageState, setImageState] = useState(false) //
+ const [render, setRenderState] = useState(false) //
 
 
  const [burger_class, setBurgerClass] = useState("burger-bar clicked")
@@ -66,8 +69,8 @@ function App() {
 useEffect(() => { //renders on any page load
   isLoading(true);
   axios
-    //.get("http://localhost:3001/auth", {
-    .get("http://3.143.203.151:3001/auth", {
+    .get("http://localhost:3001/auth", {
+    //.get("http://3.143.203.151:3001/auth", {
       headers: {
         accessToken: localStorage.getItem("accessToken"), //validate the token
       },
@@ -115,6 +118,7 @@ useEffect(() => { //renders on any page load
         <ScreenContext.Provider value={{ arrowState, setArrowState }}>
         <DropdownContext.Provider value={{ dropdownState, setDropdownState }}>
         <ImageContext.Provider value={{ imageState, setImageState }}>
+        <RenderContext.Provider value={{render, setRenderState }}>
         {authState.status ? (  //if authenticated 
           <Navbar>
                 <NavItem icon={<HomeIcon />} item="Home" />
@@ -141,6 +145,7 @@ useEffect(() => { //renders on any page load
             <Route path="/profile/editProfile" element={<EditProfile />} />
             {/*<Route path="*" element={<PageNotFound/>} />*/}
           </Routes>
+          </RenderContext.Provider>
           </ImageContext.Provider>
           </DropdownContext.Provider>
           </ScreenContext.Provider>
@@ -160,6 +165,7 @@ function SearchBar(){
   const [input, setInput] = useState(''); //input in search field
   const [isFocused, setIsFocused] = useState(false);
   const [dropdownState, setDropdownState] = useState(false);
+  const [render, setRenderState] = useState(false);
   const searchRef = useRef();
 
   useEffect(() => {
@@ -169,8 +175,8 @@ function SearchBar(){
  
   useEffect(()=>{ //Load the Users for searching 
     const loadUsers = async () => {
-      //const response = await axios.get("http://localhost:3001/users2");
-      const response = await axios.get("http://3.143.203.151:3001/users2");
+      const response = await axios.get("http://localhost:3001/users2");
+      //const response = await axios.get("http://3.143.203.151:3001/users2");
       setUsers(response.data)
       //console.log(response.data)
     }
@@ -220,7 +226,7 @@ function SearchBar(){
     setTimeout(()=>{
       setDropdownState(state)
     },"100");
-    console.log(dropdownState);
+    //console.log(dropdownState);
   }
  
   return(
@@ -247,11 +253,12 @@ function SearchBar(){
             >
               <div className="avatar">
                 {userData.ImageData ?
-                    <img className='imgAvatar' src={`http://3.143.203.151:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
+                  <img className='imgAvatar' src={`http://localhost:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
+                    //<img className='imgAvatar' src={`http://3.143.203.151:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
                   : <></>
                 }
               </div>
-              <p>{userData.firstname+ " " +userData.lastname}</p>
+              <p className='userSearchNames'>{userData.firstname+ " " +userData.lastname}</p>
             </div> 
           )
         })}
@@ -268,8 +275,8 @@ function SearchBar(){
 
 
   useEffect(()=>{ //authState.id to show self 
-    //axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
-    axios.get(`http://3.143.203.151:3001/getAvatar/${authState.id}`)
+    axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
+    //axios.get(`http://3.143.203.151:3001/getAvatar/${authState.id}`)
     .then(res=>setImgData(res.data[0]))
     .catch(err=>console.log(err))
   },[imageState]) //need to render image instantly
@@ -278,8 +285,8 @@ function SearchBar(){
     <AuthContext.Provider value={{ authState, setAuthState }}>
     <ImageContext.Provider value={{ imageState, setImageState }}>
       {imgData?
-      //<img className='imgAvatar' src={`http://localhost:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
-      <img className='imgAvatar' src={`http://3.143.203.151:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
+      <img className='imgAvatar' src={`http://localhost:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
+      //<img className='imgAvatar' src={`http://3.143.203.151:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
       //<></>
       :
       <></>
@@ -309,7 +316,7 @@ function SearchBar(){
     setTimeout(()=>{
       setDropMenu(state)
     },"100");
-    console.log(dropMenu);
+    //console.log(dropMenu);
   }
 
   return (
