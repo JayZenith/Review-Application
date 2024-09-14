@@ -177,7 +177,7 @@ function SinglePost() {
                                             window.location.reload()
                                             }}
                               > {comment.firstname}
-                            </div>
+                              </div>
                             </div>
                               {authState.email === comment.email && (
                                   <i className="bi bi-trash" onClick={() => {deleteComment(comment.id);}}>

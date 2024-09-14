@@ -21,7 +21,7 @@ import { ReactComponent as ProfileIcon } from './icons/profile.svg';
 import { ReactComponent as SettingsIcon } from './icons/settings.svg';
 import { ReactComponent as UndefinedIcon } from './icons/undefined.svg';
 import { ReactComponent as UpIcon } from './icons/up.svg';
-import home from './icons/home.svg';
+import home from './icons/newhome.svg';
 import downicon from './icons/down.svg';
 
 //Components
@@ -58,20 +58,7 @@ function App() {
 
  const [openSettings, setOpenSettings] = useState(false)
  let menuRef = useRef();
- 
- useEffect(()=>{ 
-  let handler = (e)=>{
-    //console.log(menuRef.current.contains(e.target))
-    if(!menuRef.current?.contains(e.target)){
-        setOpenSettings(false);
-    }
-  }
-  document.addEventListener("mousedown", handler);
-  return()=>{
-    document.removeEventListener("mousedown", handler);
-  }
- })
-  
+
  useEffect(()=>{ //Check for acccessToken
   if (!localStorage.getItem("accessToken")){
     if(!window.location.pathname==="/signup"){
@@ -81,11 +68,25 @@ function App() {
     }
   }, []);
  
+ useEffect(()=>{ 
+  let handler = (e)=>{
+    //console.log(menuRef.current.contains(e.target))
+    if(!menuRef.current?.contains(e.target)){ //? allows it to work in / and /signup
+        setOpenSettings(false);
+    }
+  }
+  document.addEventListener("mousedown", handler);
+  return()=>{
+    document.removeEventListener("mousedown", handler);
+  }
+ })
+  
+ 
 useEffect(() => { //renders on any page load
   isLoading(true);
   axios
-    //.get("http://localhost:3001/auth", {
-    .get("http://3.143.203.151:3001/auth", {
+    .get("http://localhost:3001/auth", {
+    //.get("http://3.143.203.151:3001/auth", {
       headers: {
         accessToken: localStorage.getItem("accessToken"), //validate the token
       },
@@ -119,7 +120,7 @@ useEffect(() => { //renders on any page load
     location("/"); //login page
   }
   */
-  const out =(value)=>{
+  const arrowClicked =(value)=>{ //takes care of Logout, Settings, Edit 
     if(value === "Logout"){
       localStorage.removeItem("accessToken");
       setAuthState({ username: "", id: 0, status: false });
@@ -149,30 +150,29 @@ useEffect(() => { //renders on any page load
         {authState.status ? (  //if authenticated 
         <nav className="navbar" ref={menuRef}>
           <ul className="navbar-nav">
-            <div className='navWrap'>
-              <li className="home">
-                <a href="/postings">
-                 <div className='navicon'><img src={home} alt={"home"} width="30" height="30"/> </div>
+            <div key="0" className='navWrap'>
+              <li key="1" className="home">
+                <a key="1.5" href="/postings">
+                 <div key="1.6" className='navicon'><img src={home} alt={"home"} width="30" height="30"/> </div>
                 </a>
               </li>
-              <li className="profilePic">
-                <a href={`/profile/${authState.id}`}><ProfileImage /></a>
+              <li key="2" className="profilePic">
+                <a key="2.1" href={`/profile/${authState.id}`}><ProfileImage /></a>
               </li>
             </div>
             
-            <li className="arrow" onClick={()=>setOpenSettings(!openSettings) }     
+            <li key="3" className="arrow" onClick={()=>setOpenSettings(!openSettings) }     
               >
-               <div className='navicon'><img src={downicon} alt={"arrow"} width="30" height="30"/> </div>
-               
+               <div key="3.1" className='navicon'><img src={downicon} alt={"arrow"} width="30" height="30"/> </div>   
             </li>
-            <SearchBar />
-            <div className={openSettings ? 'dropDownSettings' : 'dropDownHidden'} >
-                <ul className='theUL'>
-                  <li onClick={()=>out("Edit")}>Edit</li>
-                  <li onClick={()=>out("Settings")}>Settings</li>
-                  <li onClick={()=>out("Logout")}>Logout</li>
+            <SearchBar key="3.4" />
+            <div key="3.5" className={openSettings ? 'dropDownSettings' : 'dropDownHidden'} >
+                <ul key="3.6" className='theUL'>
+                  <li key="4" onClick={()=>arrowClicked("Edit")}>Edit Profile</li>
+                  <li key="5" onClick={()=>arrowClicked("Settings")}>Settings</li>
+                  <li key="6" onClick={()=>arrowClicked("Logout")}>Logout</li>
                 </ul>
-              </div>
+            </div>
           </ul>
         </nav>
 
@@ -209,7 +209,6 @@ function SearchBar(){
   const [users, setUsers] = useState([])
   const [suggestionsState, setSuggestionsContext] = useState([]); //used for search suggestions
   const [input, setInput] = useState(''); //input in search field
-  const [isFocused, setIsFocused] = useState(false);
   const [dropdownState, setDropdownState] = useState(false);
   const [render, setRenderState] = useState(false);
   const searchRef = useRef();
@@ -221,8 +220,8 @@ function SearchBar(){
  
   useEffect(()=>{ //Load the Users for searching 
     const loadUsers = async () => {
-      //const response = await axios.get("http://localhost:3001/users2");
-      const response = await axios.get("http://3.143.203.151:3001/users2");
+      const response = await axios.get("http://localhost:3001/users2");
+      //const response = await axios.get("http://3.143.203.151:3001/users2");
       setUsers(response.data)
     }
     loadUsers();
@@ -247,11 +246,10 @@ function SearchBar(){
         //return user.email.match(regex); //search by email
       })
     }
-    //console.log('matches ',matches)
-    //setSuggestionsContext(matches)
     setSuggestionsContext(matches);//to set useContext hook right away due to lag
     setInput(text) //set search input
   }
+
  /*
   const userSearch = () => {
     location(`/userSearch`);
@@ -292,14 +290,14 @@ function SearchBar(){
                 window.location.reload()
               }}
             >
-              <div className="avatar">
+              <div key={idx} className="avatar">
                 {userData.ImageData ?
                   //<img className='imgAvatar' src={`http://localhost:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
-                    <img className='imgAvatar' src={`http://3.143.203.151:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
+                    <img key={idx} className='imgAvatar' src={`http://3.143.203.151:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
                   : <></>
                 }
               </div>
-              <p className='userSearchNames'>{userData.firstname+ " " +userData.lastname}</p>
+              <p key={idx} className='userSearchNames'>{userData.firstname+ " " +userData.lastname}</p>
             </div> 
           )
         })}
@@ -316,8 +314,8 @@ function SearchBar(){
 
 
   useEffect(()=>{ //authState.id to show self 
-    //axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
-    axios.get(`http://3.143.203.151:3001/getAvatar/${authState.id}`)
+    axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
+    //axios.get(`http://3.143.203.151:3001/getAvatar/${authState.id}`)
     .then(res=>setImgData(res.data[0]))
     .catch(err=>console.log(err))
   },[imageState]) //need to render image instantly
@@ -326,8 +324,8 @@ function SearchBar(){
     <AuthContext.Provider value={{ authState, setAuthState }}>
     <ImageContext.Provider value={{ imageState, setImageState }}>
       {imgData?
-      //<img className='imgAvatar' src={`http://localhost:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
-      <img className='imgAvatar' src={`http://3.143.203.151:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
+      <img className='imgAvatar' src={`http://localhost:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
+      //<img className='imgAvatar' src={`http://3.143.203.151:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
       //<></>
       :
       <></>

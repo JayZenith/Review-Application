@@ -5,12 +5,10 @@
  }
  
  body {
-  margin: 0;
   background: rgb(0, 0, 0);
   font-family: monospace, monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
   
  }
  
@@ -28,6 +26,7 @@
  }
  
  .AppX{
+  
  
  }
  
@@ -48,8 +47,8 @@
  }
  
  a {
-  color: var(--text-color);
-  text-decoration: none;;
+  color: white;
+  text-decoration: none;
  }
  
  
@@ -57,11 +56,11 @@
  .navbar {
   z-index: 100; /*For absolute stars hovering over*/
   position: fixed;
-  height: var(--nav-size);
-  width: 100vw;
+  height: 50px;
+  width: 100%;
   background-color: var(--bg);
-  padding: 10px 1rem;
-  border-bottom: var(--border);
+  padding: 10px 1rem; 
+  border-bottom: 1px solid white;
   color: white;
  }
 
@@ -73,30 +72,92 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
  }
 
- .searchBarWrap{
+ .navWrap{ /*home and profile pic */
   position: fixed;
+  left: 0;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
 
+ .navicon{
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: rgb(68, 68, 68);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navicon:hover{
+    background-color: rgb(204, 12, 12);
+    transition: all .9s ease;
+
+}
+
+.profilePic{
+  margin-left: 20px;
+}
+
+.imgAvatar{
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ }
+
+.arrow{
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  position: fixed;
+  right: 0;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.arrow:hover{
+  background-color: rgb(204, 12, 12);
+  transition: all .9s ease;
+
+}
+
+
+ .searchBarWrap{
+   /*encapsulates entire search bar*/
  }
  
 
-.searchBarWrap .searchBar{
-  position: fixed;
+.searchBarWrap .searchBar{ /*holds search input*/
+  position: absolute;
+  left: 0; 
+  right: 0; 
+  top: 0;
+  margin-top: 20px;
+  margin-inline: auto; 
+  width: fit-content;
+  /*
   top: 0;
   left: 0;
+  right: 0;
   margin-left: 20%;
   margin-top: 20px;
+  */
  
 }
 
 .searchBarWrap .searchBar input{
   width: 430px;
-  height: 10px;
-  border-radius: 2px;
-  padding: 10px;
-  font-size: 16px;
+  height: 20px;
+  padding: 5px;
+  font-size: 20px;
 
 }
 
@@ -106,34 +167,21 @@
 }
 
 
- 
- 
- .userSearchDropdown{
-  left: 0;
-  margin-left: 20%;
-  /*
+.userSearchDropdown{
   position: absolute;
-  background-color: rgb(0, 0, 0);
-  color: rgb(255, 255, 255);
-  left: 246px;
-  top: 52px;
-  width: 460px;
-  border: 1px solid black;
-  max-height: 300px;
-  height: auto;
-  overflow-y: scroll;
-  cursor: pointer;
-  */
-  position: fixed;
+  left: 0; 
+  right: 0; 
   top: 0;
+  margin-top: 60px;
+  width: 440px;
   background-color: black;
-  width: 455px;
-  border: 1px solid black;
+  margin-inline: auto; 
   max-height: 300px;
   height: auto;
   overflow-y: scroll;
   cursor: pointer;
-  margin-top: 55px;
+  /*width: fit-content;*/
+  
  }
  
  .userSearchDropdownHidden{
@@ -156,38 +204,25 @@
   background-color: rgb(204, 12, 12);
  }
  
- 
- .imgAvatar{
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
- }
-
 
  .userSearchNames{
   margin-left: 5px;
  }
 
- .navWrap{
-  position: fixed;
-  left: 0;
-  margin-left: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
-}
+ 
+
+ /*UNIVERSAL STUFF*/
  
  .bi{
   color: white;
   margin-left: 10px;
+  font-size: 17px;
   cursor: pointer;
 }
 
 .bi:hover{
+  color: rgb(204, 12, 12);
+  transition: all .9s ease;
   border-radius: 2px;
 }
 
@@ -197,7 +232,7 @@
 
 
 
-
+/*FOR ratings */
 .rating{
   margin-top: 15px;
   width: 200px;
@@ -226,16 +261,6 @@
 }
 
 
-/*
-.theTarget .avatar{
-  background-color: grey;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-  
-
-*/
 
 
 
@@ -279,125 +304,130 @@
   color: white;
   top: 4.4rem;
   right: 0;
-  height: 110px;
-  width: 120px;
+  height: 120px;
+  width: 167x;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 1px solid white;
 }
 
 .theUL li{
   margin-bottom: 15px;
+  padding: 3px;
   font-size: 20px;
   cursor: pointer;
 }
 
 .theUL li:hover{
   background-color:rgb(204, 12, 12);
-  transition: ease-in .3s;
+  transition: ease-in .5s;
   border-radius: 4px;
   padding: 3px;
 }
-/*
-.dropDownSettings::before{
-  content: '';
-  position: absolute;
-  top: -.8rem;
-  right:1rem;
-  width: 20px;
-  height: 20px;
-  transform: rotate(45deg);
-  background-color: black;
-  border-top: 1px solid white;
-  border-left: 1px solid white;
-}
-*/
+
 .dropDownHidden{
   display: none;
 }
 
 
 
-.profilePic{
-  margin-left: 20px;
-}
 
-.arrow{
-  position: fixed;
-  right: 0;
-  margin-right: 10px;
-}
-
-@media all and (max-width: 630px){
+@media all and (max-width: 660px){
   .navbar{
-
+    position: absolute;
     bottom: 0;
   }
 
-  .searchBarWrap .searchBar {
-    top:0;
-    margin-left: 15%;
+  .searchBarWrap .searchBar{ /*holds search input*/
+    position: fixed;
+    left: 0; 
+    right: 0; 
+    top: -9px;
+    margin-inline: auto; 
+    width: fit-content;
+   
   }
 
   .searchBarWrap .searchBar .specify{
     width: 350px;
-  
+    font-size: 15px;
   }
 
-
    .searchBarWrap .userSearchDropdown {
-    top:0;
-    margin-left: 15%;
-    width: 375px;
-    /*
-    position: absolute;
-    top: -690px;
-    left: 195px;
-    */
+    position:fixed;
+    left: 0; 
+    right: 0px; 
+    /*top: -880px;*/
+    top:-12px;
+    width: 368px;
+    background-color: black;
+    margin-inline: auto; 
+    max-height: 300px;
+    height: auto;
+    overflow-y: scroll;
+    cursor: pointer;
 
    }
-   
+
+   .userSearchDivs{
+    font-size: 16px;
+    height: 40px;
+   }
+
+   .imgAvatar{
+    width: 40px;
+    height: 40px;
+   }
    
  }
 
  @media all and (max-width: 450px){
 
   .navbar{
-
+    position: absolute;
     bottom: 0;
   }
 
-  .searchBarWrap .searchBar {
-    top:0;
-    margin-left: 8%;
+  .searchBarWrap .searchBar{ /*holds search input*/
+    position: fixed;
+    left: 0; 
+    right: 0; 
+    top: -9px;
+    margin-inline: auto; 
+    width: fit-content;
+   
   }
 
   .searchBarWrap .searchBar .specify{
-    width: 280px;
-  
+    width: 300px;
+    font-size: 15px;
   }
 
+  .searchBarWrap .userSearchDropdown {
+    position:fixed;
+    left: 0; 
+    right: 0px; 
+    /*top: -880px;*/
+    top:-12px;
+    width: 315px;
+    background-color: black;
+    margin-inline: auto; 
+    max-height: 300px;
+    height: auto;
+    overflow-y: scroll;
+    cursor: pointer;
 
-   .searchBarWrap .userSearchDropdown {
-    top:0;
-    margin-left: 8%;
-    width: 300px;
-    /*
-    position: absolute;
-    top: -690px;
-    left: 195px;
-    */
+   }
 
+   .userSearchDivs{
+    font-size: 16px;
+    height: 40px;
+   }
+
+   .imgAvatar{
+    width: 40px;
+    height: 40px;
    }
    
  }
 
-.navicon{
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background-color: rgb(63, 60, 60);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
