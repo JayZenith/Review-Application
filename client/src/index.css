@@ -378,6 +378,17 @@
     width: 40px;
     height: 40px;
    }
+
+   .dropDownSettings{
+    position: absolute;
+    right: 31px;
+    top: -140px;
+    height: 120px;
+    width: 167x;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid white;
+  }
    
  }
 
@@ -428,6 +439,18 @@
     width: 40px;
     height: 40px;
    }
+
+   .dropDownSettings{
+    position: absolute;
+    right: 31px;
+    top: -140px;
+    height: 120px;
+    width: 167x;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid white;
+  }
+   
    
  }
 
