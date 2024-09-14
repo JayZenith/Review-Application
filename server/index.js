@@ -741,7 +741,9 @@ app.get("/basicInfo/:id", (req,res) => {
   const id = req.params.id;
   //console.log("here",id);
   //db.query(`SELECT users.id, users.username, users.firstname, users.lastname, users.email FROM users WHERE id='${id}'`, (err,result)=>{
-    db.query(`SELECT users.* FROM users WHERE id='${id}'`, (err,result)=>{
+    db.query(`SELECT users.*, avatars.ImageData FROM users `+
+      `LEFT OUTER JOIN avatars ON users.id=avatars.userID `+
+      `WHERE users.id='${id}' GROUP BY users.id, avatars.id`, (err,result)=>{
     if(err) throw new Error(err);
     res.json(result);
   });

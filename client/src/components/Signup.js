@@ -107,8 +107,8 @@ function Signup() {
 
 
    try{
-       //await axios.post("http://localhost:3001/signupFour", {
-       await axios.post("http://3.143.203.151:3001/signupFour", {
+       await axios.post("http://localhost:3001/signupFour", {
+       //await axios.post("http://3.143.203.151:3001/signupFour", {
         fname, lname, pwd, email
        })
        .then(res=>{
@@ -225,11 +225,13 @@ function Signup() {
                     />
                               
                 </div>
+                    {/*
                     <p id="emailnote" className={emailFocus && !validEmail ? SignupCSS.instructions :
                         SignupCSS.offscreen}>
                         <i class="bi bi-x-circle"></i>
                             Enter your e-mail. 
                     </p>
+                    */}
                     <div className={SignupCSS.signupField}>
                         <label htmlFor='password'>
                             <span className={validPwd ? SignupCSS.valid : SignupCSS.hide}>

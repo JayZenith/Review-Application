@@ -26,16 +26,16 @@ function EditProfile() {
 
 
     useEffect(()=>{
-        //axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
-        axios.get(`http://3.143.203.151:3001/getAvatar/${authState.id}`)
+        axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
+        //axios.get(`http://3.143.203.151:3001/getAvatar/${authState.id}`)
         .then(res=>setImgData(res.data[0]))
         .catch(err=>console.log(err))
     },[])
 
 
     const addBio = () => {
-        //axios.post("http://localhost:3001/addBio",{
-        axios.post("http://3.143.203.151:3001/addBio",{
+        axios.post("http://localhost:3001/addBio",{
+        //axios.post("http://3.143.203.151:3001/addBio",{
             bioText
         },{
             headers: {accessToken: localStorage.getItem("accessToken")}
@@ -96,8 +96,8 @@ function SetImage(){
         const formData = new FormData()
         formData.append('image', file)
         //console.log(formData);
-        //axios.post('http://localhost:3001/upload', formData, {
-        axios.post('http://3.143.203.151:3001/upload', formData, {
+        axios.post('http://localhost:3001/upload', formData, {
+        //axios.post('http://3.143.203.151:3001/upload', formData, {
             headers: {
                 accessToken: localStorage.getItem("accessToken"),
               },
