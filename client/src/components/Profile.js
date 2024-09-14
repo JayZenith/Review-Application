@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import { AuthContext } from "../helpers/AuthContext";
@@ -36,6 +36,7 @@ function Profile() {
    const [theBio, setTheBio] = useState('');
 
    const [loading, isLoading]=useState(false)
+   const avgRating = useRef(0)
 
    
 
@@ -48,20 +49,30 @@ function Profile() {
    useEffect(()=>{
         //setPosted(true);
        //setSuggestionsContext([]);
-       axios.get(`http://localhost:3001/getBio/${id}`)
-       //axios.get(`http://3.143.203.151:3001/getBio/${id}`)
+       //axios.get(`http://localhost:3001/getBio/${id}`)
+       axios.get(`http://3.143.203.151:3001/getBio/${id}`)
         .then((response)=>{
-            console.log(response)
+            //console.log(response)
             if(response.data[0])
                 setTheBio(response.data[0].bioText)
         })
     },[])
 
    useEffect(()=>{
-        axios.get(`http://localhost:3001/profilePosts/${id}`)
-        //axios.get(`http://3.143.203.151:3001/profilePosts/${id}`)
+        avgRating.current=0;
+        //axios.get(`http://localhost:3001/profilePosts/${id}`)
+        axios.get(`http://3.143.203.151:3001/profilePosts/${id}`)
             .then((response)=>{
-                console.log(response.data)
+                //console.log(response.data)
+                response.data.forEach(function(fruit){
+                    console.log(fruit.rating);
+                    avgRating.current = avgRating.current + fruit.rating;
+                });
+                console.log(avgRating.current)
+                avgRating.current = avgRating.current/(5*response.data.length);
+                avgRating.current = (5*(avgRating.current*100)) / 100;
+                avgRating.current = Math.ceil(avgRating.current)
+                console.log("Average: ", avgRating);
                 setListOfPosts(response.data)
                 setNumOfReviews(response.data.length);
                 setPosted(false)
@@ -72,8 +83,8 @@ function Profile() {
    useEffect(()=>{
         //console.log(render);
         isLoading(true);
-        axios.get(`http://localhost:3001/basicInfo/${id}`)
-        //axios.get(`http://3.143.203.151:3001/basicInfo/${id}`)
+        //axios.get(`http://localhost:3001/basicInfo/${id}`)
+        axios.get(`http://3.143.203.151:3001/basicInfo/${id}`)
         .then((response) => {
                //console.log(response.data[0].username)
                //setUsername(response.data[0].username)
@@ -86,8 +97,8 @@ function Profile() {
 
 
    const likePost = (postId) => {
-       axios.post("http://localhost:3001/likes", {
-        //axios.post("http://3.143.203.151:3001/likes", {
+       //axios.post("http://localhost:3001/likes", {
+        axios.post("http://3.143.203.151:3001/likes", {
            postID: postId
            //console.log(response.data.listOfPosts)
            //console.log(response.data.userLikes)
@@ -123,8 +134,8 @@ function Profile() {
    const onSubmit = (event) => {
        //console.log(rating)
        event.preventDefault(); //dosent work without
-       axios.post("http://localhost:3001/posts", {
-        //axios.post("http://3.143.203.151:3001/posts", {
+       //axios.post("http://localhost:3001/posts", {
+        axios.post("http://3.143.203.151:3001/posts", {
          postText, id, rating, username //username?
        }, {
          headers: {accessToken: localStorage.getItem("accessToken")},
@@ -146,8 +157,8 @@ function Profile() {
 
 
       const deletePost = (id) => {
-        axios.delete(`http://localhost:3001/deletePost/${id}`, {
-        //axios.delete(`http://3.143.203.151:3001/deletePost/${id}`, {
+        //axios.delete(`http://localhost:3001/deletePost/${id}`, {
+        axios.delete(`http://3.143.203.151:3001/deletePost/${id}`, {
           headers: {
             accessToken: localStorage.getItem("accessToken"),
           },
@@ -172,6 +183,38 @@ function Profile() {
  return (
     <div className={ProfileCSS.profileApp}> {/*postings*/}
         <h1 className={ProfileCSS.profileUsername}> {username} </h1>
+        {!isNaN(avgRating.current) ? <p>{avgRating.current}/5</p> : <p>No Ratings</p> }
+
+        <div className={ProfileCSS.ratingStars} >
+                                    {[...Array(5)].map((star, idx)=>{
+                                        //console.log(props.children)
+                                        const currentRate = idx + 1;
+                                        return(
+                                            <>
+                                                <label>
+                                                <input className="radioBtn" type="radio" name="rating"  
+                                                    value={currentRate}                                                
+                                                />
+                                                    <FaStar className='ratingStar' size={20}
+                                                        color={currentRate <= (hover || avgRating.current) ?
+                                                            "red"
+                                                            : "white"
+                                                        }
+                                                        //onMouseEnter={()=>setHover(currentRate)}
+                                                        //onMouseLeave={()=>setHover(null)}
+                                                    />
+                                                </label>
+                                            </>  
+                                        )
+                                    })}
+                                </div>  
+
+
+
+
+
+
+
         {theBio ? 
         <div className={ProfileCSS.profileBio}>{theBio}</div>
         : <></>}
@@ -233,8 +276,8 @@ function Profile() {
                             <div className={ProfileCSS.avatar}>
                             {val.ImageData? 
                             //http://3.143.203.151:3001
-                                //<img className={ProfileCSS.imgAvatar} src={`http://3.143.203.151:3001/images/`+val.ImageData} width="200" height="100" alt="" />
-                                <img className={ProfileCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} width="200" height="100" alt="" />
+                                <img className={ProfileCSS.imgAvatar} src={`http://3.143.203.151:3001/images/`+val.ImageData} width="200" height="100" alt="" />
+                                //<img className={ProfileCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} width="200" height="100" alt="" />
                                 //<></>
                                 :
                                 <></>

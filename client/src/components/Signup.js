@@ -107,8 +107,8 @@ function Signup() {
 
 
    try{
-       await axios.post("http://localhost:3001/signupFour", {
-       //await axios.post("http://3.143.203.151:3001/signupFour", {
+       //await axios.post("http://localhost:3001/signupFour", {
+       await axios.post("http://3.143.203.151:3001/signupFour", {
         fname, lname, pwd, email
        })
        .then(res=>{
@@ -256,10 +256,13 @@ function Signup() {
                     <p id="pwdnote" className={pwdFocus && !validPwd ? SignupCSS.instructions :
                         SignupCSS.offscreen}>
                         <i class="bi bi-x-circle"></i>
-                        8 to 24 characters. Must include uppercase and 
-                        lowercase letters, a number and one of: <span aria-label="exclamation mark">!</span>
+                        At least 8 characters. Must include uppercase and 
+                        lowercase letters, and a number.
+                        {/*
+                         and one of: <span aria-label="exclamation mark">!</span>
                         <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span>
                         <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
+                        */}
                     </p>
                     <div className={SignupCSS.signupField}>
                         <label htmlFor='confirm_pwd'>

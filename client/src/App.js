@@ -13,7 +13,6 @@ import { DropdownContext } from "./helpers/DropdownContext";
 import { ImageContext } from "./helpers/ImageContext";
 import { RenderContext } from "./helpers/RenderContext";
 
-
 //SVGs
 import { ReactComponent as DownIcon } from './icons/down.svg';
 import { ReactComponent as HomeIcon } from './icons/home.svg';
@@ -22,6 +21,8 @@ import { ReactComponent as ProfileIcon } from './icons/profile.svg';
 import { ReactComponent as SettingsIcon } from './icons/settings.svg';
 import { ReactComponent as UndefinedIcon } from './icons/undefined.svg';
 import { ReactComponent as UpIcon } from './icons/up.svg';
+import home from './icons/home.svg';
+import downicon from './icons/down.svg';
 
 //Components
 import Login from './components/Login';
@@ -33,7 +34,6 @@ import ClipLoader from "react-spinners/ClipLoader";
 import SinglePost from './components/SinglePost';
 import EditProfile from './components/EditProfile';
 import PageNotFound from './components/PageNotFound';
-
 
 function App() {
  let location = useNavigate()
@@ -50,13 +50,28 @@ function App() {
  const [imageState, setImageState] = useState(false) //
  const [render, setRenderState] = useState(false) //
 
-
+ /*
  const [burger_class, setBurgerClass] = useState("burger-bar clicked")
  const [menu_class, setMenuClass] = useState("menu hidden")
  const [isMenuClicked, setIsMenuClicked] = useState(false)
+ */
 
+ const [openSettings, setOpenSettings] = useState(false)
+ let menuRef = useRef();
  
-
+ useEffect(()=>{ 
+  let handler = (e)=>{
+    //console.log(menuRef.current.contains(e.target))
+    if(!menuRef.current?.contains(e.target)){
+        setOpenSettings(false);
+    }
+  }
+  document.addEventListener("mousedown", handler);
+  return()=>{
+    document.removeEventListener("mousedown", handler);
+  }
+ })
+  
  useEffect(()=>{ //Check for acccessToken
   if (!localStorage.getItem("accessToken")){
     if(!window.location.pathname==="/signup"){
@@ -69,8 +84,8 @@ function App() {
 useEffect(() => { //renders on any page load
   isLoading(true);
   axios
-    .get("http://localhost:3001/auth", {
-    //.get("http://3.143.203.151:3001/auth", {
+    //.get("http://localhost:3001/auth", {
+    .get("http://3.143.203.151:3001/auth", {
       headers: {
         accessToken: localStorage.getItem("accessToken"), //validate the token
       },
@@ -78,8 +93,7 @@ useEffect(() => { //renders on any page load
     .then((res) => {
       if (res.data.error) { //if theres an error then user not authorized
         setAuthState({ ...authState, status: false });
-      } else {
-        
+      } else {      
         setAuthState({ //can also use res.data.email
           firstname: res.data.firstname,
           lastname: res.data.lastname,
@@ -98,11 +112,25 @@ useEffect(() => { //renders on any page load
      });
   }, []);
 
-
+  /*
   const logout = () => {
     localStorage.removeItem("accessToken");
     setAuthState({ username: "", id: 0, status: false });
     location("/"); //login page
+  }
+  */
+  const out =(value)=>{
+    if(value === "Logout"){
+      localStorage.removeItem("accessToken");
+      setAuthState({ username: "", id: 0, status: false });
+      location("/"); //login page
+    }
+    else if(value ==="Settings"){
+      location(`/settings/${authState.id}`);
+    }
+    else if(value ==="Edit"){
+      location(`/profile/editProfile/`);
+    }
   }
 
   return ( //AppX is not defined
@@ -112,7 +140,6 @@ useEffect(() => { //renders on any page load
        <ClipLoader color={"#DC143C"} loading={loading} size={100} aria-label="Loading Spinner" data-testid="loader"
        />
        : //else show navbar 
-
         <AuthContext.Provider value={{ authState, setAuthState }}>
         <SuggestionsContext.Provider value={{ suggestionsState, setSuggestionsContext }}>
         <ScreenContext.Provider value={{ arrowState, setArrowState }}>
@@ -120,15 +147,35 @@ useEffect(() => { //renders on any page load
         <ImageContext.Provider value={{ imageState, setImageState }}>
         <RenderContext.Provider value={{render, setRenderState }}>
         {authState.status ? (  //if authenticated 
-          <Navbar>
-                <NavItem icon={<HomeIcon />} item="Home" />
-                {/*<NavItem icon={<ProfileIcon />} item="Profile" />*/}
-                <NavItem icon={<ProfileImage />} item="Profile" />
-                <SearchBar />
-                <NavItem icon={<DownIcon />} item="Arrow">
-                  <DropdownMenu></DropdownMenu>
-                </NavItem>
-          </Navbar>
+        <nav className="navbar" ref={menuRef}>
+          <ul className="navbar-nav">
+            <div className='navWrap'>
+              <li className="home">
+                <a href="/postings">
+                 <div className='navicon'><img src={home} alt={"home"} width="30" height="30"/> </div>
+                </a>
+              </li>
+              <li className="profilePic">
+                <a href={`/profile/${authState.id}`}><ProfileImage /></a>
+              </li>
+            </div>
+            
+            <li className="arrow" onClick={()=>setOpenSettings(!openSettings) }     
+              >
+               <div className='navicon'><img src={downicon} alt={"arrow"} width="30" height="30"/> </div>
+               
+            </li>
+            <SearchBar />
+            <div className={openSettings ? 'dropDownSettings' : 'dropDownHidden'} >
+                <ul className='theUL'>
+                  <li onClick={()=>out("Edit")}>Edit</li>
+                  <li onClick={()=>out("Settings")}>Settings</li>
+                  <li onClick={()=>out("Logout")}>Logout</li>
+                </ul>
+              </div>
+          </ul>
+        </nav>
+
           ) : ( //Figure out 
             <>
               {/*Login/Signup Page*/}
@@ -151,7 +198,6 @@ useEffect(() => { //renders on any page load
           </ScreenContext.Provider>
           </SuggestionsContext.Provider>
           </AuthContext.Provider>
-          
       }
     </div>
  );
@@ -175,21 +221,17 @@ function SearchBar(){
  
   useEffect(()=>{ //Load the Users for searching 
     const loadUsers = async () => {
-      const response = await axios.get("http://localhost:3001/users2");
-      //const response = await axios.get("http://3.143.203.151:3001/users2");
+      //const response = await axios.get("http://localhost:3001/users2");
+      const response = await axios.get("http://3.143.203.151:3001/users2");
       setUsers(response.data)
-      //console.log(response.data)
     }
     loadUsers();
   }, [])
  
- 
   const onChangeHandler = (text) => { ///Set the suggestions 
     let matches = []
-
     if (text.length > 0){
        matches = users.filter(user=>{
-        //const regex = new RegExp(`^${text}`,"gi");
         try{
           const regex = new RegExp(`^${text}`,"gi");
           if(user.fullname.match(regex)){
@@ -214,7 +256,6 @@ function SearchBar(){
   const userSearch = () => {
     location(`/userSearch`);
   }
- 
   const handleKeyUp = (e) => { //dont need as we dont load results on sep page
     if(e.key === "Enter"){
       userSearch();
@@ -230,7 +271,7 @@ function SearchBar(){
   }
  
   return(
-    <div>
+    <div className='searchBarWrap'>
       <div className='searchBar'>
         <input 
           className='specify'
@@ -253,8 +294,8 @@ function SearchBar(){
             >
               <div className="avatar">
                 {userData.ImageData ?
-                  <img className='imgAvatar' src={`http://localhost:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
-                    //<img className='imgAvatar' src={`http://3.143.203.151:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
+                  //<img className='imgAvatar' src={`http://localhost:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
+                    <img className='imgAvatar' src={`http://3.143.203.151:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
                   : <></>
                 }
               </div>
@@ -275,8 +316,8 @@ function SearchBar(){
 
 
   useEffect(()=>{ //authState.id to show self 
-    axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
-    //axios.get(`http://3.143.203.151:3001/getAvatar/${authState.id}`)
+    //axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
+    axios.get(`http://3.143.203.151:3001/getAvatar/${authState.id}`)
     .then(res=>setImgData(res.data[0]))
     .catch(err=>console.log(err))
   },[imageState]) //need to render image instantly
@@ -285,8 +326,8 @@ function SearchBar(){
     <AuthContext.Provider value={{ authState, setAuthState }}>
     <ImageContext.Provider value={{ imageState, setImageState }}>
       {imgData?
-      <img className='imgAvatar' src={`http://localhost:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
-      //<img className='imgAvatar' src={`http://3.143.203.151:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
+      //<img className='imgAvatar' src={`http://localhost:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
+      <img className='imgAvatar' src={`http://3.143.203.151:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
       //<></>
       :
       <></>
@@ -296,190 +337,6 @@ function SearchBar(){
   );
  }
  
- 
- function Navbar(props) {
-  return (
-    <nav className="navbar">
-      <ul className="navbar-nav">{props.children}</ul>
-    </nav>
-  );
- }
- 
- 
- function NavItem(props) {
-  let location = useNavigate()
-  const [open, setOpen] = useState(false);
-  const { authState, setAuthState } = useContext(AuthContext);
-  const [dropMenu, setDropMenu] = useState(false);
-
-  const dropThing = (state) => {
-    setTimeout(()=>{
-      setDropMenu(state)
-    },"100");
-    //console.log(dropMenu);
-  }
-
-  return (
-     <AuthContext.Provider value={{ authState, setAuthState }}>
-      <li
-     
-      //onBlurCapture={props.item=="Arrow"? dropThing(false) : dropThing(true)}
-      //onBlurCapture={props.item=="Arrow" ? "" : ""}
-      className={props.item=="Search" ? "nav-item offscreentwo" : props.item=="Arrow"?"arrowToEnd" : "nav-item"}>
-        <a href={props.item=="Home"?"/postings": props.item=="Profile" ? `/profile/${authState.id}` : "#"} className="icon-button" onClick={() => setOpen(!open)}>
-          {props.icon}
-        </a>
-        {open && props.children}
-      </li>
-    </AuthContext.Provider>
-  );
- }
- 
- 
- function DropdownMenu() {
-  const [activeMenu, setActiveMenu] = useState('main');
-  const [menuHeight, setMenuHeight] = useState(null);
-  const dropdownRef = useRef(null);
-  
- 
-  useEffect(() => {
-    setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
-  }, [])
- 
-  function calcHeight(el) {
-    const height = el.offsetHeight;
-    setMenuHeight(height);
-  }
- 
-  function DropdownItem(props) {
-    let location = useNavigate()
-    const { authState, setAuthState } = useContext(AuthContext);
-    const logout = () => {
-      localStorage.removeItem("accessToken");
-      setAuthState({ username: "", id: 0, status: false });
-      location("/"); //login page
-    }
- 
-    const out =()=>{
-      if(props.children == "Logout"){
-        localStorage.removeItem("accessToken");
-        setAuthState({ username: "", id: 0, status: false });
-        location("/"); //login page
-      }
-      else if(props.children=="Settings"){
-        location(`/settings/${authState.id}`);
-      }
-      else if(props.children=="Edit"){
-        location(`/profile/editProfile/`);
-      }
-    }
-
-
-    
-   
- 
-    return (
-      <AuthContext.Provider value={{ authState, setAuthState }}>  
-       <div //href={props.children=="Settings"?`/settings/${authState.id}`: ""} 
-       className="menu-item"
-       onClick={out}
-       
-      
-       /*onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}*/>
-        <span className="icon-button">{props.leftIcon}</span>
-        {props.children}
-        <span className="icon-right">{props.rightIcon}</span>
-      
-      </div>
-      </AuthContext.Provider>
-      /*
-      <a href="#" className="menu-item" onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
-        <span className="icon-button">{props.leftIcon}</span>
-        {props.children}
-        <span className="icon-right">{props.rightIcon}</span>
-      </a>
-      */
-    );
-  }
- 
-  return (
-    <div className="dropdown" style={{ height: menuHeight }} ref={dropdownRef}>
-      <CSSTransition
-        in={activeMenu === 'main'}
-        timeout={500}
-        classNames="menu-primary"
-        unmountOnExit
-        onEnter={calcHeight}>
-        <div className="menu">
-          {/*
-          <DropdownItem >My Profile</DropdownItem>
-          */}
-          <DropdownItem
-            leftIcon={<LogoutIcon />}
-            
-            goToMenu="settings">
-            Edit
-          </DropdownItem>
-          <DropdownItem
-            leftIcon={<SettingsIcon />}
-            rightIcon={<SettingsIcon />}
-            goToMenu="settings">
-            Settings
-          </DropdownItem>
-         
-          <DropdownItem
-            leftIcon={<LogoutIcon />}
-            //rightIcon={<LogoutIcon />}
-            goToMenu="animals">
-            Logout
-          </DropdownItem>
-         
- 
- 
-        </div>
-      </CSSTransition>
- 
- 
-      <CSSTransition
-        in={activeMenu === 'settings'}
-        timeout={500}
-        classNames="menu-secondary"
-        unmountOnExit
-        onEnter={calcHeight}>
-        <div className="menu">
-          <DropdownItem goToMenu="main" leftIcon={<DownIcon />}>
-            <h2>My Tutorial</h2>
-          </DropdownItem>
-          <DropdownItem leftIcon={<UndefinedIcon />}>HTML</DropdownItem>
-          <DropdownItem leftIcon={<UndefinedIcon />}>CSS</DropdownItem>
-          <DropdownItem leftIcon={<UndefinedIcon />}>JavaScript</DropdownItem>
-          <DropdownItem leftIcon={<UndefinedIcon />}>Awesome!</DropdownItem>
-        </div>
-      </CSSTransition>
- 
-      {/*
-      <CSSTransition
-        in={activeMenu === 'animals'}
-        timeout={500}
-        classNames="menu-secondary"
-        unmountOnExit
-        onEnter={calcHeight}>
-        <div className="menu">
-          {/*
-          <DropdownItem goToMenu="main" leftIcon={<ArrowIcon />}>
-            <h2>Animals</h2>
-          </DropdownItem>
-          <DropdownItem leftIcon="🦘">Kangaroo</DropdownItem>
-          <DropdownItem leftIcon="🐸">Frog</DropdownItem>
-          <DropdownItem leftIcon="🦋">Horse?</DropdownItem>
-          <DropdownItem leftIcon="🦔">Hedgehog</DropdownItem>
-         
-        </div>
-      </CSSTransition>
-      */}
-    </div>
-  );
- }
  
  
  export default App;

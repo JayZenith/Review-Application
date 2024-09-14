@@ -169,6 +169,10 @@
     color: white;
    }
    
+   .radioBtn{
+    display: none;
+  }
+   
    .reviewStarRating{
     /*background-color: rgb(184, 184, 71);*/
     display: flex;
