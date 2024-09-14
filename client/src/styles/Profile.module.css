@@ -1,6 +1,6 @@
 
   .profileApp{
-    padding-top: 100px;
+    padding-top: 75px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -13,17 +13,21 @@
     font-size: 100px;
   }
 
+  .profileApp .userRating{
+    margin-top: 10px;
+  }
+
   .profileApp .profileBio{
     display: flex;
     align-items: center;
     justify-content: center;
     color: rgb(255, 255, 255);
     border-radius: 10px;
-    margin-top: 10px;
+    margin-top: 0px;
     min-height: 100px;
     width: 700px;
-    font-size: 25px;
-    padding: 4px;
+    font-size: 21px;
+    padding: 2px;
 
     white-space: pre-wrap;
     overflow-wrap: anywhere;
@@ -104,9 +108,9 @@
  }
 
   .profileReview form button{
-      margin-top: 0px;
+      margin-top: 10px;
       width: 100%;
-      /*background-color: rgb(204, 47, 47);*/
+      background-color: rgb(204, 12, 12);
       border: 1px solid black;
       color: white;
   }
@@ -125,12 +129,13 @@
 
   .profileApp .profilePageContainer .listOfPosts{
     width: 100%;
+    margin-top: 10px;
     /*background-color: bisque;*/
   }
 
   .profileApp .profilePageContainer .listOfPosts .profilePost{
     /*background-color: purple;*/
-    margin-top: 20px;
+    margin-top: 0px;
     border: 1px solid white;
     display: flex;
     flex-direction: row;
@@ -152,6 +157,7 @@
 
    .username{
     color: white;
+    font-weight: 800;
    }
    
   .imgAvatar{
@@ -168,11 +174,8 @@
     width: 100%;
     color: white;
    }
-   
-   .radioBtn{
-    display: none;
-  }
-   
+
+
    .reviewStarRating{
     /*background-color: rgb(184, 184, 71);*/
     display: flex;
@@ -207,8 +210,8 @@
     align-items: center;
     color: white;
    }
-   
 
+  
    @media all and (max-width: 805px){
     .profileApp .profileUsername{
       /*background-color: green;*/

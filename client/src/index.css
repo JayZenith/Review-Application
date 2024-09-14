@@ -153,7 +153,7 @@
  
  .userSearchDivs:hover{
   transition: all .9s ease;
-  background-color: rgb(204, 47, 47);
+  background-color: rgb(204, 12, 12);
  }
  
  
@@ -293,7 +293,7 @@
 }
 
 .theUL li:hover{
-  background-color:rgb(204, 47, 47);
+  background-color:rgb(204, 12, 12);
   transition: ease-in .3s;
   border-radius: 4px;
   padding: 3px;

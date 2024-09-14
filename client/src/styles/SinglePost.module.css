@@ -66,7 +66,7 @@
   
 
    .singlePostFooter{
-    /*background-color: blue;*/
+ 
     padding: 10px;
     display: flex;
     flex-direction: row;
@@ -155,11 +155,18 @@
   }
 
   .commentAvatar{
+   
     width: 80px;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
     /*background-color: green;*/
+  }
+
+  .commentAvatarAndPic{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
   }
 
   .commentBodyAndFooter{
@@ -196,6 +203,11 @@
     padding: 5px;
     justify-content: space-between;
     color: white;
+  }
+
+  .commentFooter i{
+    font-size: 20px;
+    cursor: pointer;
   }
   
   

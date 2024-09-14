@@ -183,7 +183,9 @@ function Profile() {
  return (
     <div className={ProfileCSS.profileApp}> {/*postings*/}
         <h1 className={ProfileCSS.profileUsername}> {username} </h1>
-        {!isNaN(avgRating.current) ? <p>{avgRating.current}/5</p> : <p>No Ratings</p> }
+        {!isNaN(avgRating.current) ? <p className={ProfileCSS.userRating}>Rating: {avgRating.current}/5</p> : <p className={ProfileCSS.userRating}>No Ratings</p> }
+
+
 
         <div className={ProfileCSS.ratingStars} >
                                     {[...Array(5)].map((star, idx)=>{
@@ -195,7 +197,7 @@ function Profile() {
                                                 <input className="radioBtn" type="radio" name="rating"  
                                                     value={currentRate}                                                
                                                 />
-                                                    <FaStar className='ratingStar' size={20}
+                                                    <FaStar className='ratingStar' size={30}
                                                         color={currentRate <= (hover || avgRating.current) ?
                                                             "red"
                                                             : "white"
@@ -207,11 +209,7 @@ function Profile() {
                                             </>  
                                         )
                                     })}
-                                </div>  
-
-
-
-
+        </div>  
 
 
 

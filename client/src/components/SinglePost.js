@@ -150,15 +150,7 @@ function SinglePost() {
             {comments.slice(0).reverse().map((comment, key) => {
               return (
                 <div key={key} className={SinglePostCSS.comment}>
-                  <div className={SinglePostCSS.commentAvatar}>
-                      {comment.ImageData? 
-                      //http://3.143.203.151:3001
-                        //<img className={SinglePostCSS.imgAvatar} src={`http://localhost:3001/images/`+comment.ImageData} width="150" height="80" alt="" />
-                        <img className={SinglePostCSS.imgAvatar} src={`http://3.143.203.151:3001/images/`+comment.ImageData} width="150" height="80" alt="" />
-                        :<></>
-                      }
-
-                  </div>
+                  
 
                     <div className={SinglePostCSS.commentBodyAndFooter}>
                       <div className={SinglePostCSS.commentBodyWrapper}>
@@ -168,11 +160,24 @@ function SinglePost() {
                       
                       </div>
                       <div className={SinglePostCSS.commentFooter}>
-                            <div onClick={()=> {
-                                          navigate(`/profile/${comment.userID}`);
-                                          window.location.reload()
-                                          }}
-                            > {comment.firstname}
+                            <div className={SinglePostCSS.commentAvatarAndPic}>
+                              <div className={SinglePostCSS.commentAvatar} onClick={()=> {
+                                                  navigate(`/profile/${comment.userID}`);
+                                                  window.location.reload()
+                                                  }}>
+                                {comment.ImageData?
+                                //http://3.143.203.151:3001
+                                  //<img className={SinglePostCSS.imgAvatar} src={`http://localhost:3001/images/`+comment.ImageData} width="150" height="80" alt="" />
+                                  <img className={SinglePostCSS.imgAvatar} src={`http://3.143.203.151:3001/images/`+comment.ImageData} width="150" height="80" alt="" />
+                                  :<></>
+                                }
+                              </div>
+                              <div onClick={()=> {
+                                            navigate(`/profile/${comment.userID}`);
+                                            window.location.reload()
+                                            }}
+                              > {comment.firstname}
+                            </div>
                             </div>
                               {authState.email === comment.email && (
                                   <i className="bi bi-trash" onClick={() => {deleteComment(comment.id);}}>
