@@ -10,10 +10,15 @@ let location = useNavigate()
  const [oldPassword, setOldPassword] = useState("");
  const [newPassword, setNewPassword] = useState("");
 
+ const [dialog, setDialog] = useState({
+  message:'Are you sure?',
+  isLoading: false,
+})
+
 
  const changePassword = () => {
-   //axios.put("http://localhost:3001/changepassword", {
-    axios.put("http://3.143.203.151:3001/changepassword", {
+   axios.put("http://localhost:3001/changepassword", {
+  //axios.put("http://3.143.203.151:3001/changepassword", {
        oldPassword: oldPassword,
        newPassword: newPassword,
      }, {
@@ -30,8 +35,8 @@ let location = useNavigate()
  };
 
  const deleteAccount = () => {
-  //axios.delete("http://localhost:3001/deleteAccount", {
-    axios.delete("http://3.143.203.151:3001/deleteAccount", {
+    axios.delete("http://localhost:3001/deleteAccount", {
+    //axios.delete("http://3.143.203.151:3001/deleteAccount", {
       headers: {
         accessToken: localStorage.getItem("accessToken"),
       },
@@ -48,7 +53,14 @@ let location = useNavigate()
   })
 };
 
+const youSure = (choose) => {
+  if(choose){
+    deleteAccount();
+  }else{
 
+  }
+
+}
 
 
  return (
@@ -76,8 +88,27 @@ let location = useNavigate()
        <button onClick={deleteAccount}>Delete Account</button>
 
      </div>
+     { dialog.isLoading && <Dialog onDialog={youSure} message={dialog.message}/> }
    </div>
  );
+}
+
+
+function Dialog({message, onDialog}){
+
+  return(
+    <div className={SettingsCSS.dialogBox}> 
+      <div className={SettingsCSS.innerDialogBox}>
+        <h3>{message}</h3>
+        <div className={SettingsCSS.btnContainer}>
+          <button onClick={()=>onDialog(true)} className={SettingsCSS.yes}>Yes</button>
+          <button onClick={()=>onDialog(false)} className={SettingsCSS.no}>No</button>
+        </div>
+
+      </div>
+
+    </div>
+  )
 }
 
 

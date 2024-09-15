@@ -17,17 +17,24 @@
     margin-top: 10px;
   }
 
+
+
   .profileApp .profileBio{
+    
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
     color: rgb(255, 255, 255);
+  
     border-radius: 10px;
     margin-top: 0px;
     min-height: 100px;
     width: 700px;
     font-size: 21px;
     padding: 2px;
+
+    
 
     white-space: pre-wrap;
     overflow-wrap: anywhere;
@@ -261,7 +268,7 @@
       margin-top: 10px;
       min-height: 100px;
       width: 300px;
-      font-size: 20px;
+      font-size: 13px;
       padding: 4px;
     }
 
@@ -291,7 +298,7 @@
       margin-top: 10px;
       min-height: 100px;
       width: 300px;
-      font-size: 17px;
+      font-size: 12px;
       padding: 4px;
     }
 

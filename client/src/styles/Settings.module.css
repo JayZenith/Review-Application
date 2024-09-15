@@ -1,3 +1,67 @@
 .settings{
     padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.settings input{
+    height: 20px;
+    width: 300px;
+    margin-top: 10px;
+}
+
+.settings button{
+    margin-top: 10px;
+    width: 300px;
+    height: 30px;
+    background-color: red;
+    border-radius: 10px;
+    color: white;
+
+}
+
+
+.dialogBox{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.innerDialogBox{
+    background-color: darkgray;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.btnContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 200px;
+}
+
+.btnContainer .yes{
+    background-color: rgb(255, 69, 69);
+    width: 100px;
+    cursor: pointer;
+}
+
+.btnContainer .no{
+    background-color: blue;
+    width: 100px;
+    cursor: pointer;
 }

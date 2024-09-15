@@ -102,7 +102,17 @@
 
 .profilePic{
   margin-left: 20px;
+  padding: 3px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
 }
+
+.profilePic:hover{
+  background-color: red;
+  transition: ease-in .4s;
+}
+
 
 .imgAvatar{
   width: 45px;
@@ -111,7 +121,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
  }
+
+
 
 .arrow{
   height: 45px;
@@ -340,7 +353,7 @@
 
 @media all and (max-width: 660px){
   .navbar{
-    position: absolute;
+    position: fixed;
     bottom: 0;
   }
 
@@ -401,7 +414,7 @@
  @media all and (max-width: 450px){
 
   .navbar{
-    position: absolute;
+    position: fixed;
     bottom: 0;
   }
 

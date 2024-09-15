@@ -292,8 +292,8 @@ function SearchBar(){
             >
               <div key={idx} className="avatar">
                 {userData.ImageData ?
-                  //<img className='imgAvatar' src={`http://localhost:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
-                    <img key={idx} className='imgAvatar' src={`http://3.143.203.151:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
+                  <img className='imgAvatar' src={`http://localhost:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
+                  //<img key={idx} className='imgAvatar' src={`http://3.143.203.151:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
                   : <></>
                 }
               </div>

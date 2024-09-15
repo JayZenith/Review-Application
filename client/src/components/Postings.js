@@ -194,6 +194,7 @@ function Postings() {
             <button type="submit">Post</button>
           </form>
       </div> {/*END createPostSection*/}
+
       {listOfPosts.slice(0).reverse().map((val, key) => {
         const aTarget = theTargets[listOfPosts.length -(key+1)];
         //console.log(listOfPosts.length -(key+1));
@@ -203,9 +204,13 @@ function Postings() {
                 <Link to={`/profile/${val.userID}`}>
                   <div className={PostingsCSS.avatar}>
                     {val.ImageData? 
+                    <>
                       <img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} alt="img" />
-                      //<img className={PostingsCSS.imgAvatar} src={`http://3.143.203.151:3001/images/`+val.ImageData} alt="img" />
-                    //<></>
+                      <div className={PostingsCSS.profileDropDown}>
+                        {/*Store the avg in database for user, grab it and display with stars */}
+                      </div>
+                      {/*<img className={PostingsCSS.imgAvatar} src={`http://3.143.203.151:3001/images/`+val.ImageData} alt="img" />*/}
+                    </>
                     :
                     <></>
                     }
