@@ -337,7 +337,9 @@ db.connect((err) => {
     db.query("SELECT users.*, avatars.ImageData, SUM(rating) as ratingSum, "+
       "COUNT(distinct posts.id) as numOfReviews, SUM(rating)*1.0/COUNT(distinct posts.id) as theavg "+
       "FROM posts LEFT OUTER JOIN users ON posts.targetID=users.id "+
-      "LEFT OUTER JOIN avatars ON posts.targetID=avatars.userID GROUP BY posts.targetID, avatars.id, users.id "+
+      "LEFT OUTER JOIN avatars ON posts.targetID=avatars.userID "+
+      " WHERE date(posts.created_at)=date(now()) "+
+      "GROUP BY posts.targetID, avatars.id, users.id "+
       "ORDER BY theavg DESC", (err, result) => {
       if (err) throw new Error(err);
       res.json(result);

@@ -199,7 +199,7 @@ function Postings() {
         <h2>Highest Reviewed Today</h2>
         <div className={PostingsCSS.topUsers}>
           
-          {topusers && topusers.map((item, i) => {
+          {topusers.slice(0, 3).map((item, i) => {
             return(
               <>
               <div className={PostingsCSS.avatar}>
