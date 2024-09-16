@@ -11,12 +11,13 @@ let location = useNavigate()
  const [newPassword, setNewPassword] = useState("");
 
  const [dialog, setDialog] = useState({
-  message:'Are you sure?',
+  message:'',
   isLoading: false,
 })
 
 
  const changePassword = () => {
+  setDialog({message:'Are you sure you want to change password?', isLoading:true})
    axios.put("http://localhost:3001/changepassword", {
   //axios.put("http://3.143.203.151:3001/changepassword", {
        oldPassword: oldPassword,
@@ -35,6 +36,8 @@ let location = useNavigate()
  };
 
  const deleteAccount = () => {
+  setDialog({message:'Are you sure you want to delete account?', isLoading:true})
+  /*
     axios.delete("http://localhost:3001/deleteAccount", {
     //axios.delete("http://3.143.203.151:3001/deleteAccount", {
       headers: {
@@ -48,16 +51,18 @@ let location = useNavigate()
     localStorage.removeItem("accessToken");
     //setAuthState({ username: "", id: 0, status: false });
     location("/"); //login page
-
+  
 
   })
+
+  */
 };
 
-const youSure = (choose) => {
+const confirmDeleteAccount = (choose) => {
   if(choose){
-    deleteAccount();
+    setDialog({message:'', isLoading:true})
   }else{
-
+    setDialog({message:'', isLoading:false})
   }
 
 }
@@ -88,7 +93,7 @@ const youSure = (choose) => {
        <button onClick={deleteAccount}>Delete Account</button>
 
      </div>
-     { dialog.isLoading && <Dialog onDialog={youSure} message={dialog.message}/> }
+     { dialog.isLoading && <Dialog onDialog={confirmDeleteAccount} message={dialog.message}/> }
    </div>
  );
 }

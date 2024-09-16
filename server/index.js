@@ -885,7 +885,7 @@ app.post("/likes", validateToken, (req, res) => {
 
 app.delete("/deleteAccount", validateToken, (req,res)=>{
   console.log(req.user.id)
-  db.query(`DELETE FROM users WHERE username='${req.user.username}'`, (err,result) => {
+  db.query(`DELETE FROM users WHERE email='${req.user.email}'`, (err,result) => {
     if (err) throw new Error(err);
     db.query(`DELETE FROM posts where userID=${req.user.id}`,(err,result)=>{
       if (err) throw new Error(err);
@@ -907,7 +907,7 @@ app.delete("/deleteAccount", validateToken, (req,res)=>{
 
 app.put("/changepassword", validateToken, (req,res) => {
   const {oldPassword, newPassword} = req.body;
-  db.query(`SELECT * FROM users WHERE username='${req.user.username}'`, (err, result) => {
+  db.query(`SELECT * FROM users WHERE email='${req.user.email}'`, (err, result) => {
     if (err) throw new Error(err);
     //res.json(!result[0]);
     if (!result[0]) {
