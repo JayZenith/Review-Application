@@ -25,6 +25,7 @@ function Postings() {
    const [inputSize, setInputSize] = useState(0)
    const [theTargets, setTheTargets] = useState([])
    const [hover, setHover] = useState(null)
+   const [topusers, setTopUsers] = useState([])
   
    useEffect(()=>{ //Check for acccessToken
      if (!localStorage.getItem("accessToken")){
@@ -42,6 +43,22 @@ function Postings() {
      loadUsers();
    }, [])
 
+
+
+  useEffect(()=>{
+    axios.get("http://localhost:3001/topusers", {
+    }).then((response) => {
+    setTimeout(()=>{
+      setTopUsers(response.data)
+      console.log(response.data)
+      //console.log(response.data[0].id);
+
+    },20)
+    
+    });
+  }, [])
+
+  
 
   useEffect(()=>{
     axios.get("http://localhost:3001/posts4", {
@@ -178,107 +195,132 @@ function Postings() {
 
  return (
    <div className={PostingsCSS.postings}>
-      <div className={PostingsCSS.createPostSection}>
-      {inputSize == 500 ? <p className={PostingsCSS.redInputSize}>Character Limit Reached</p> : ""}
-          <form className={PostingsCSS.postForm} onSubmit={onSubmit}>
-            
-            <textarea
-              placeholder="Write Here"
-              id = "posting"
-              name = "posting"
-              onChange={(e)=>handleInputChange(e)}
-              maxLength={500}
-            >
-            </textarea>
-            <p className={inputSize>=450 ? PostingsCSS.redInputSize : ""}>{inputSize}/500</p>
-            <button type="submit">Post</button>
-          </form>
-      </div> {/*END createPostSection*/}
-
-      {listOfPosts.slice(0).reverse().map((val, key) => {
-        const aTarget = theTargets[listOfPosts.length -(key+1)];
-        //console.log(listOfPosts.length -(key+1));
-        return (
-        <div className={PostingsCSS.post}>       
-             <div className={PostingsCSS.userWrapper}>
-                <Link to={`/profile/${val.userID}`}>
-                  <div className={PostingsCSS.avatar}>
-                    {val.ImageData? 
-                    <>
-                      <img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} alt="img" />
-                      <div className={PostingsCSS.profileDropDown}>
-                        {/*Store the avg in database for user, grab it and display with stars */}
-                      </div>
-                      {/*<img className={PostingsCSS.imgAvatar} src={`http://3.143.203.151:3001/images/`+val.ImageData} alt="img" />*/}
-                    </>
-                    :
-                    <></>
-                    }
-                  </div>
-                </Link>
-                
-             </div> {/*END USER-WRAPPER*/}
-               {/*<div className="title"> {val.title} </div>*/}
-             <div className={!val.targetID ? PostingsCSS.bodyAndFooter : PostingsCSS.bodyAndFooter2}>
-                <div className={PostingsCSS.nameAndRating}>
-                  <div className={PostingsCSS.username}>
-                    <Link to={`/profile/${val.userID}`}>{val.firstname} </Link>
-                  </div>
-                  {val.targetID ? //then show rating for them
-                  <StarRating>{val.rating}</StarRating>
-                  :<></>
-                  }
-                </div>
-                <div className={!val.targetID ? PostingsCSS.body : PostingsCSS.body2}
-                  onClick={() => {
-                      navigate(`/singlePost/${val.id}`);
-                  }}
-                > 
-                  <p className={PostingsCSS.bodyText}>{val.postText}</p>
-               </div> {/*END BODY*/}
-               <div className={!val.targetID ? PostingsCSS.footer : PostingsCSS.footer2}>
-                     {authState.email === val.email ? (
-                       <i className="bi bi-trash" onClick={()=>{deletePost(val.id)}}>                 
-                       </i>
-                     ):(<i></i>)} {/*Need the latter icon to move like button to right*/}
-                     <p className={PostingsCSS.createdAt}>{val.created_at}</p>
-                     <div className="like-btn">
-                       <i class="bi bi-hand-thumbs-up"
-                         onClick={() => {
-                             likePost(val.id);
-                         }}
-                         className={likedPosts.includes(val.id) ? "bi bi-hand-thumbs-up" : "bi bi-hand-thumbs-up red"
-                         }
-                       ></i>
-                       <label> 
-                           {val.dt}
-                       </label>
-                     </div>
-                 </div> {/*END FOOTER*/}
-             </div>
-             {val.targetID ? (
-             <div className={PostingsCSS.theTarget}
-                onClick={()=> {
-                    navigate(`/profile/${val.targetID}`);
-                    window.location.reload()
-                }}
-              >
+      <div className={PostingsCSS.postingsLeft}>
+        <h2>Highest Reviewed Today</h2>
+        <div className={PostingsCSS.topUsers}>
           
-                <div className={PostingsCSS.avatar}>
-                    {aTarget.ImageData ?
-                    <img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
-                    //<img className={PostingsCSS.imgAvatar} src={`http://3.143.203.151:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
-                    : <></>
-                    }
-                </div>
-                {/*aTarget.firstname*/}
+          {topusers && topusers.map((item, i) => {
+            return(
+              <>
+              <div className={PostingsCSS.avatar}>
+                <img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+item.ImageData} alt="img" />
               </div>
-              ) : (
-                ""
-              )}
-          </div>
-         );
-       })}
+              <StarRating>{item.theavg}</StarRating>
+              
+              <p>{item.firstname}</p>
+              <p>{item.ratingSum}</p>
+              </>
+            )
+          
+          })}
+        </div>
+        
+      </div>
+      
+
+      <div className={PostingsCSS.listOfPostsWrapper}>
+        <div className={PostingsCSS.createPostSection}>
+          {inputSize == 500 ? <p className={PostingsCSS.redInputSize}>Character Limit Reached</p> : ""}
+              <form className={PostingsCSS.postForm} onSubmit={onSubmit}>
+                
+                <textarea
+                  placeholder="Write Here"
+                  id = "posting"
+                  name = "posting"
+                  onChange={(e)=>handleInputChange(e)}
+                  maxLength={500}
+                >
+                </textarea>
+                <p className={inputSize>=450 ? PostingsCSS.redInputSize : ""}>{inputSize}/500</p>
+                <button type="submit">Post</button>
+              </form>
+        </div> {/*END createPostSection*/}
+        {listOfPosts.slice(0).reverse().map((val, key) => {
+          const aTarget = theTargets[listOfPosts.length -(key+1)];
+          //console.log(listOfPosts.length -(key+1));
+          return (
+          <div className={PostingsCSS.post}>
+               <div className={PostingsCSS.userWrapper}>
+                  <Link to={`/profile/${val.userID}`}>
+                    <div className={PostingsCSS.avatar}>
+                      {val.ImageData?
+                      <>
+                        <img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} alt="img" />
+                        <div className={PostingsCSS.profileDropDown}>
+                          {/*Store the avg in database for user, grab it and display with stars */}
+                        </div>
+                        {/*<img className={PostingsCSS.imgAvatar} src={`http://3.143.203.151:3001/images/`+val.ImageData} alt="img" />*/}
+                      </>
+                      :
+                      <></>
+                      }
+                    </div>
+                  </Link>
+        
+               </div> {/*END USER-WRAPPER*/}
+                 {/*<div className="title"> {val.title} </div>*/}
+               <div className={!val.targetID ? PostingsCSS.bodyAndFooter : PostingsCSS.bodyAndFooter2}>
+                  <div className={PostingsCSS.nameAndRating}>
+                    <div className={PostingsCSS.username}>
+                      <Link to={`/profile/${val.userID}`}>{val.firstname} </Link>
+                    </div>
+                    {val.targetID ? //then show rating for them
+                    <StarRating>{val.rating}</StarRating>
+                    :<></>
+                    }
+                  </div>
+                  <div className={!val.targetID ? PostingsCSS.body : PostingsCSS.body2}
+                    onClick={() => {
+                        navigate(`/singlePost/${val.id}`);
+                    }}
+                  >
+                    <p className={PostingsCSS.bodyText}>{val.postText}</p>
+                 </div> {/*END BODY*/}
+                 <div className={!val.targetID ? PostingsCSS.footer : PostingsCSS.footer2}>
+                       {authState.email === val.email ? (
+                         <i className="bi bi-trash" onClick={()=>{deletePost(val.id)}}>
+                         </i>
+                       ):(<i></i>)} {/*Need the latter icon to move like button to right*/}
+                       <p className={PostingsCSS.createdAt}>{val.created_at}</p>
+                       <div className="like-btn">
+                         <i class="bi bi-hand-thumbs-up"
+                           onClick={() => {
+                               likePost(val.id);
+                           }}
+                           className={likedPosts.includes(val.id) ? "bi bi-hand-thumbs-up" : "bi bi-hand-thumbs-up red"
+                           }
+                         ></i>
+                         <label>
+                             {val.dt}
+                         </label>
+                       </div>
+                   </div> {/*END FOOTER*/}
+               </div>
+               {val.targetID ? (
+               <div className={PostingsCSS.theTarget}
+                  onClick={()=> {
+                      navigate(`/profile/${val.targetID}`);
+                      window.location.reload()
+                  }}
+                >
+        
+                  <div className={PostingsCSS.avatar}>
+                      {aTarget.ImageData ?
+                      <img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
+                      //<img className={PostingsCSS.imgAvatar} src={`http://3.143.203.151:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
+                      : <></>
+                      }
+                  </div>
+                  {/*aTarget.firstname*/}
+                </div>
+                ) : (
+                  ""
+                )}
+            </div>
+           );
+         })}
+      </div>
+
    </div>
  );
 }

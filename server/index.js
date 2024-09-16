@@ -65,7 +65,7 @@ db.connect((err) => {
     db.query(
       `CREATE TABLE IF NOT EXISTS posts (
           id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-          created_at VARCHAR(30),
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
           userID INT, 
           targetID INT,
@@ -164,7 +164,7 @@ db.connect((err) => {
 
   app.post("/posts", validateToken, (req, res) => {
     const post = req.body;
-    var created = new Date().toLocaleString().replace(',','')
+    //var created = new Date().toLocaleString().replace(',','')
 
     //console.log(created)
     //console.log(post.rating)
@@ -178,7 +178,7 @@ db.connect((err) => {
         targetID: post.id,
         targetName: post.username,
         rating: post.rating,
-        created_at: created,
+        //created_at: created,
         
        // username: post.username,
       },
@@ -330,58 +330,22 @@ db.connect((err) => {
       //res.end();
     });
   });
-  
+
+  app.get("/topusers", (req, res) => {
+    const name = req.params.usern;
+    console.log(name)
+    db.query("SELECT users.*, avatars.ImageData, SUM(rating) as ratingSum, "+
+      "COUNT(distinct posts.id) as numOfReviews, SUM(rating)*1.0/COUNT(distinct posts.id) as theavg "+
+      "FROM posts LEFT OUTER JOIN users ON posts.targetID=users.id "+
+      "LEFT OUTER JOIN avatars ON posts.targetID=avatars.userID GROUP BY posts.targetID, avatars.id, users.id "+
+      "ORDER BY theavg DESC", (err, result) => {
+      if (err) throw new Error(err);
+      res.json(result);
+      //res.end();
+    });
+  });
   
 
-  app.get("/posts", validateToken, (req, res) => {
-    //console.log(req.user.id)
-    db.query(
-      "select posts.title, posts.created_at, posts.targetID, posts.targetName, posts.postText, posts.username, posts.id, posts.userID, count(distinct likes.id) as dt from posts left join likes on posts.id = likes.postID group by posts.id",
-      (err, result) => {
-        if (err) throw new Error(err);
-        //console.log(result[0].dt);
-        db.query(
-          `select posts.id from posts inner join likes on posts.id=likes.postID inner join users on ${req.user.id} = likes.userID`,
-          (err, resultant) => {
-              if(err) throw new Error(err);
-              //console.log(resultant);
-              resultant = resultant.filter((value, index, self) =>
-                index === self.findIndex((t) => (
-                  t.id === value.id 
-                ))
-              )
-              res.json({ listOfPosts: result, userLikes: resultant });
-          }
-        )
-        //const userLikes = 10;
-        //res.json({ listOfPosts: result, userLikes: userLikes });
-        //res.json(result);
-        //res.end();
-      }
-    );
-  
-  });
-
-  app.get("/posts2", validateToken, (req, res) => {
-    //console.log(req.user.id)
-    db.query(   
-      "SELECT posts.*, count(distinct likes.id) as dt, avatars.ImageData " +
-      "FROM posts LEFT OUTER JOIN avatars ON posts.userID=avatars.userID " +
-      "LEFT OUTER JOIN likes ON posts.id=likes.postID GROUP BY posts.id, avatars.id",
-      (err, result) => {
-        if (err) throw new Error(err);
-        db.query("SELECT posts.*, avatars.* "+
-          "FROM posts LEFT OUTER JOIN avatars "+
-          "ON posts.targetID=avatars.userID",(err,result2)=>{
-            if(err) throw new Error(err);
-            res.json({array1: result, array2:result2});
-          })
-        //res.json(result);
-        
-      }
-    );
-  
-  });
 
 
   app.get("/posts4", validateToken, (req, res) => {
@@ -410,26 +374,7 @@ db.connect((err) => {
   
   });
   
-  app.get("/posts3", validateToken, (req,res)=>{
-    db.query("SELECT posts.*, avatars.* "+
-      "FROM posts LEFT OUTER JOIN avatars "+
-      "ON posts.targetID=avatars.userID",(err,result)=>{
-        if(err) throw new Error(err);
-        res.json(result);
-      })
-  })
-
   
-  
-  app.get("/singlePost/byId/:id", (req, res) => {
-    id = req.params.id;
-    db.query(`SELECT * FROM posts WHERE id = ${id}`, (err, result) => {
-      if (err) throw new Error(err);
-      res.json(result);
-      //res.end();
-    });
-  });
-
   
   app.get("/singlePost/byId3/:id", (req, res) => {
     id = req.params.id;
@@ -446,17 +391,6 @@ db.connect((err) => {
   });
 
 
-  app.get("/singlePost/byId2/:id", (req, res) => {
-    id = req.params.id;
-    db.query(`SELECT posts.*, COUNT(distinct likes.id) as dt, `+
-      `avatars.ImageData FROM posts LEFT OUTER JOIN avatars ON `+
-      `posts.userID=avatars.userID LEFT JOIN likes ON posts.id=likes.postID `+
-      `WHERE posts.id = ${id} GROUP BY posts.id, avatars.id`, (err, result) => {
-      if (err) throw new Error(err);
-      res.json(result);
-      //res.end();
-    });
-  });
   
   app.get("/byuserId/:id", (req, res) => {
     id = req.params.id;
@@ -499,27 +433,6 @@ db.connect((err) => {
   })
 
 
-
-  app.get("/comments/:postId", (req, res) => {
-    postId = req.params.postId;
-    db.query(`SELECT * FROM comments WHERE postID = ${postId}`, (err, result) => {
-      if (err) throw new Error(err);
-      res.json(result);
-      //res.end();
-    });
-  });
-
-
-  app.get("/comments2/:postId", (req, res) => {
-    postId = req.params.postId;
-    db.query(`SELECT comments.*, avatars.ImageData FROM comments LEFT OUTER JOIN `+
-      `avatars ON comments.userID=avatars.userID WHERE comments.postID=${postId} `+
-      `GROUP BY comments.id, avatars.id`, (err, result) => {
-      if (err) throw new Error(err);
-      res.json(result);
-      //res.end();
-    });
-  });
 
   app.get("/comments3/:postId", (req, res) => {
     postId = req.params.postId;
@@ -586,75 +499,7 @@ db.connect((err) => {
   /* USERS */
 
 
-app.post("/signup", (req, res) => {
-  const user = req.body;
-  bcrypt.hash(user.pwd, 10).then((hash) => {
-    db.query(
-      "INSERT INTO users SET ?",
-      {
-        username: user.user,
-        password: hash,
-        email: user.email,
-      },
-      (err) => {
-        if (err) throw new Error(err);
-        //console.log("1 user inserted");
-      }
-    );
-  });
-  res.json("success");
-});
 
-app.post("/signupTwo", (req, res) => {
-  const user = req.body;
-  db.query(`SELECT * FROM users WHERE email='${user.email}'`, (err, result) => {
-    if (err) throw new Error(err);
-    console.log(result);
-    if (!result[0]) {
-      //res.json({ error: "User dosen't exist" });
-      bcrypt.hash(user.pwd, 10).then((hash) => {
-        db.query(
-          "INSERT INTO users SET ?",
-          {
-            username: user.user,
-            password: hash,
-            email: user.email,
-          },
-          (err, result) => {
-            if (err) throw new Error(err);
-            console.log("1 user inserted");
-            console.log(result[0]);
-            db.query(`SELECT * FROM users WHERE email='${user.email}'`, (err, result) => {
-              if(err) throw new Error;
-              console.log(result[0]);
-
-              const accessToken = sign(
-                {
-                  email: user.email,
-                  id: result[0].id,
-                  username: result[0].username,
-                },
-                process.env.ACCESS_TOKEN
-              );
-              res.json({
-                token: accessToken,
-                username: result[0].username,
-                id: result[0].id,
-                email: user.email,
-              });
-
-
-            })
-          }
-        );
-      });
-    } else {
-      //console.log("user exist")
-      res.json({ error: "User already exists!"});
-    }
-  }); //end of Select Query
-  //res.json("success");
-});
 
 
 app.post("/", (req, res) => {
