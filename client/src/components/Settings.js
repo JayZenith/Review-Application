@@ -36,7 +36,7 @@ let location = useNavigate()
  };
 
  const deleteAccount = () => {
-  setDialog({message:'Are you sure you want to delete account?', isLoading:true})
+  
   /*
     axios.delete("http://localhost:3001/deleteAccount", {
     //axios.delete("http://3.143.203.151:3001/deleteAccount", {
@@ -57,6 +57,11 @@ let location = useNavigate()
 
   */
 };
+
+const deleteDialog = () => {
+  setDialog({message:'Are you sure you want to delete account?', isLoading:true})
+
+}
 
 const confirmDeleteAccount = (choose) => {
   if(choose){

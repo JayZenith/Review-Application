@@ -248,63 +248,6 @@ db.connect((err) => {
       //res.json("success");
     });
 
-/*
-  app.post("/signupThree", (req, res) => {
-    const user = req.body;
-    //db.query(`SELECT * FROM users WHERE email='${user.email}' OR username='${user.user}'`, (err, result) => {
-      db.query(`SELECT * FROM users WHERE email='${user.email}'`, (err, result) => {
-      if (err) throw new Error(err);
-      //console.log(result);
-      if (!result[0]) { //if no such user exists
-        bcrypt.hash(user.pwd, 10).then((hash) => {
-          db.query(
-            "INSERT INTO users SET ?",
-            {
-              //username: user.user,
-              firstname: user.fname,
-              lastname: user.lname,
-              password: hash,
-              email: user.email,
-            },
-            (err, result) => {
-              if (err) throw new Error(err);
-              //console.log("1 user inserted");
-              //console.log(result[0]);
-              db.query(`SELECT * FROM users WHERE email='${user.email}'`, (err, result) => {
-                if(err) throw new Error;
-                //console.log(result[0]);
-  
-                const accessToken = sign(
-                  {
-                    email: user.email,
-                    id: result[0].id,
-                    firstname: user.fname,
-                    lastname: user.lname,
-                    //username: result[0].username,
-                  },
-                  process.env.ACCESS_TOKEN
-                );
-                res.json({
-                  token: accessToken,
-                  //username: result[0].username,
-                  firstname: result[0].firstname,
-                  lastname: result[0].lastname,
-                  id: result[0].id,
-                  email: user.email,
-                });
-              })
-            }
-          );
-        });
-      } else {
-        //console.log("user exist")
-        res.json({ error: "User already exists!"});
-      }
-    }); //end of Select Query
-    //res.json("success");
-  });
-
-  */
   
   app.post("/login", (req, res) => {
     const user = req.body;
@@ -476,10 +419,6 @@ db.connect((err) => {
       })
   })
 
-
-
-
-  
   
   
   app.get("/singlePost/byId/:id", (req, res) => {
