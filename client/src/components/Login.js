@@ -27,11 +27,11 @@ function Login() {
  async function submit(e){
    e.preventDefault();
    try{
-       await axios.post("http://localhost:3001/login", {
-       //await axios.post("http://3.143.203.151:3001/login", {
+       //await axios.post("http://localhost:3001/login", {
+       await axios.post("http://3.15.215.98:3001/login", {
            email,password
        })
-       .then(res=>{
+       .then(res=>{ 
            if(res.data.error==="User dosen't exist"){
             setUserExists(res.data.error);
            }

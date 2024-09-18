@@ -18,8 +18,8 @@ let location = useNavigate()
 
  const changePassword = () => {
   setDialog({message:'Are you sure you want to change password?', isLoading:true})
-   axios.put("http://localhost:3001/changepassword", {
-  //axios.put("http://3.143.203.151:3001/changepassword", {
+   //axios.put("http://localhost:3001/changepassword", {
+  axios.put("http://3.15.215.98:3001/changepassword", {
        oldPassword: oldPassword,
        newPassword: newPassword,
      }, {

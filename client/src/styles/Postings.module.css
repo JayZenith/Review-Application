@@ -11,38 +11,9 @@
  
    }
 
-   .listOfPostsWrapper{
-      display: flex;
-      flex-direction: column;
-      margin-right: 400px;
+  
 
-   }
-
-   .postingsLeft{
-      margin-top: -20px;
-      padding-top: 0px;
-      height: 500px;
-      width: 400px;
-      color: white;
-      border: 1px solid white;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-   }
-
-   .topUsers{
-      color: white;
-      height: 100%;
-      width: 100%;
-     
-   }
-
-   .postings .postingsLeft .topUsers .imgAvatar{
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-   } 
-
+   
    
    .postings .createPostSection{
     width: 700px;
@@ -62,6 +33,8 @@
     height: 300px;
     width: 100%; /*takes width of above*/
    }
+
+   
   
    .postings .createPostSection form textarea{
     width: 100%; /*takes width of container*/
@@ -70,8 +43,8 @@
     box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 4px;
-    color: rgb(0, 0, 0);
-    background-color: #ffffff;
+    color: rgb(255, 255, 255);
+    background-color: #000000;
     font-size: 16px;
     font-family: monospace, monospace;
     resize: none;
@@ -164,7 +137,7 @@
    }
 
    .post .userWrapper .imgAvatar:hover{
-      background-color: red;
+      background-color: rgb(75, 73, 73);
       transition: ease-in .4s;
      }
 
@@ -179,7 +152,7 @@
    }
 
    .post .theTarget .avatar .imgAvatar:hover {
-      background-color: red;
+      background-color: rgb(75, 73, 73);
       transition: ease-in .4s;
    }
 
@@ -230,7 +203,7 @@
    }
 
    .bodyAndFooter2 .nameAndRating .username a:hover{
-      color: red;
+      color: rgb(129, 114, 114);
       transition: ease-in .4s;
    }
 
@@ -253,7 +226,7 @@
    }
 
    .bodyAndFooter .username a:hover{
-      color: red;
+      color: rgb(153, 123, 123);
       transition: ease-in .4s;
       
      }
@@ -304,7 +277,7 @@
 
 
    .bodyAndFooter .footer{
-      position: sticky;
+      /*position: sticky;*/
       bottom: 0;
       display: flex;
       padding: 1px;
@@ -314,7 +287,7 @@
    }  
 
    .bodyAndFooter2 .footer2{
-      position: sticky;
+      /*position: sticky;*/
       bottom: 0;
       display: flex;
       padding: 1px;
@@ -349,14 +322,19 @@
    
   
 
-   
-   
+   @media all and (max-width: 1450px){
+      .postingsLeft{
+         display: none;
+        
+      }
+
+   }
  
 
    @media all and (max-width: 780px){
       .postings{
          /*background-color: red;*/
-         padding-top: 140px;
+         padding-top: 130px;
          display: flex;
          flex-direction: column;
          justify-content: center;
@@ -490,7 +468,7 @@
    @media all and (max-width: 500px){
       .postings{
          /*background-color: rgb(182, 197, 45);*/
-         padding-top: 140px;
+         padding-top: 100px;
          display: flex;
          flex-direction: column;
          justify-content: center;

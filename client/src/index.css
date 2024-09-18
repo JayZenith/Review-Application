@@ -95,9 +95,14 @@
 }
 
 .navicon:hover{
-    background-color: rgb(204, 12, 12);
+    background-color: rgb(129, 114, 114);
     transition: all .9s ease;
 
+}
+
+
+.staricon:hover{
+  background-color: red;
 }
 
 .profilePic{
@@ -108,8 +113,17 @@
   border-radius: 50%;
 }
 
+.starMeButton{
+  margin-left: 20px;
+  padding: 3px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
 .profilePic:hover{
-  background-color: red;
+  background-color: rgb(75, 73, 73);
   transition: ease-in .4s;
 }
 
@@ -167,8 +181,8 @@
 }
 
 .searchBarWrap .searchBar input{
-  width: 430px;
-  height: 20px;
+  width: 630px;
+  height: 25px;
   padding: 5px;
   font-size: 20px;
 
@@ -186,7 +200,7 @@
   right: 0; 
   top: 0;
   margin-top: 60px;
-  width: 440px;
+  width: 640px;
   background-color: black;
   margin-inline: auto; 
   max-height: 300px;
@@ -233,6 +247,10 @@
   cursor: pointer;
 }
 
+.bi-trash{
+  color: white;
+}
+
 .bi:hover{
   color: rgb(204, 12, 12);
   transition: all .9s ease;
@@ -242,6 +260,106 @@
 .like-btn{
   cursor: pointer;
 }
+
+
+.starMeSpotlight{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.8);
+  /*
+  margin-top: -20px;
+  margin-right: 20px;
+  padding-top: 0px;
+  height: 250px;
+  width: 400px;
+  color: white;
+  border: 1px solid white;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  */
+}
+
+.innerSpotlight{
+  position: absolute; 
+  left: 0; 
+  right: 0; 
+  margin-top: 20%;
+  margin-inline: auto; 
+  width: fit-content;
+  height: 250px;
+  width: 400px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  background-color: black;
+  border: 1px solid white;
+}
+
+
+
+@media all and (max-width: 500px){
+  .innerSpotlight{
+    width: 300px;
+  }
+}
+
+.likebtn{
+  cursor: pointer;
+}
+
+
+.innerSpotlight h2{
+  margin-top: 10px;
+}
+
+.topUsers{
+  color: white;
+  height: 100%;
+  width: 100%;
+  
+}
+
+.bi{
+  color: white;
+  margin-left: 10px;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.topuserWrap{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 15px;
+  margin-left: 10px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.topuserWrap:hover{
+  background-color: rgb(204, 12, 12);
+  margin-right: 10px;
+  border-radius: 10px;
+  transition: ease-in .6s;
+}
+
+.topuserWrap p{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.postings .postingsLeft .topUsers .imgAvatar{
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+} 
 
 
 
@@ -468,6 +586,10 @@
     padding: 10px;
     border-radius: 5px;
     border: 1px solid white;
+  }
+
+  .bi-check, .bi-x{
+    margin-left: -90px;
   }
    
    

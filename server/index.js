@@ -34,7 +34,6 @@ const upload = multer({
 
 
 const db = mysql.createConnection({
-  
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     database: "", //have to do this as or else Unknown Database
@@ -298,7 +297,7 @@ db.connect((err) => {
 
   app.get("/users", (req, res) => {
     const name = req.params.usern;
-    console.log(name)
+    //console.log(name)
     db.query(`SELECT * FROM users`, (err, result) => {
       if (err) throw new Error(err);
       res.json(result);
@@ -309,7 +308,7 @@ db.connect((err) => {
 
   app.get("/users2", (req, res) => {
     const name = req.params.usern;
-    console.log(name)
+    //console.log(name)
     db.query("SELECT users.*, avatars.ImageData "+
       "FROM users LEFT OUTER JOIN avatars ON "+
       "users.id=avatars.userID GROUP BY users.id, avatars.id", (err, result) => {
@@ -321,7 +320,7 @@ db.connect((err) => {
 
   app.get("/users3", (req, res) => {
     const name = req.params.usern;
-    console.log(name)
+    //console.log(name)
     db.query("SELECT users.*, avatars.ImageData, bio.bioText"+
       "FROM users LEFT OUTER JOIN avatars ON users.id=avatars.userID "+
       "LEFT JOIN bio ON users.id=avatars.userID GROUP BY users.id, avatars.id, bio.id", (err, result) => {
@@ -333,14 +332,14 @@ db.connect((err) => {
 
   app.get("/topusers", (req, res) => {
     const name = req.params.usern;
-    console.log(name)
+    //console.log(name)
     db.query("SELECT users.*, avatars.ImageData, SUM(rating) as ratingSum, "+
       "COUNT(distinct posts.id) as numOfReviews, SUM(rating)*1.0/COUNT(distinct posts.id) as theavg "+
       "FROM posts LEFT OUTER JOIN users ON posts.targetID=users.id "+
       "LEFT OUTER JOIN avatars ON posts.targetID=avatars.userID "+
       " WHERE date(posts.created_at)=date(now()) "+
       "GROUP BY posts.targetID, avatars.id, users.id "+
-      "ORDER BY theavg DESC", (err, result) => {
+      "ORDER BY numOfReviews DESC", (err, result) => {
       if (err) throw new Error(err);
       res.json(result);
       //res.end();
@@ -569,7 +568,7 @@ app.post("/upload", upload.single('image'), validateToken, (req,res)=>{
                   console.error(`Error removing file: ${err}`);
                   return;
                 }
-                console.log(`File ${result[0].ImageData} has been successfully removed.`);
+                //console.log(`File ${result[0].ImageData} has been successfully removed.`);
               })
             res.json({Status:"Image Upload Success"})
             }
@@ -723,9 +722,6 @@ app.put("/changepassword", validateToken, (req,res) => {
     }
   });
 })
-
-
-
 
 
 

@@ -21,6 +21,8 @@ import { ReactComponent as ProfileIcon } from './icons/profile.svg';
 import { ReactComponent as SettingsIcon } from './icons/settings.svg';
 import { ReactComponent as UndefinedIcon } from './icons/undefined.svg';
 import { ReactComponent as UpIcon } from './icons/up.svg';
+
+import starIcon from './icons/starMe.svg'
 import home from './icons/newhome.svg';
 import downicon from './icons/down.svg';
 
@@ -34,6 +36,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import SinglePost from './components/SinglePost';
 import EditProfile from './components/EditProfile';
 import PageNotFound from './components/PageNotFound';
+import { FaStar } from 'react-icons/fa'
 
 function App() {
  let location = useNavigate()
@@ -49,6 +52,8 @@ function App() {
  const [dropdownState, setDropdownState] = useState(false) //Dropdown toggle
  const [imageState, setImageState] = useState(false) //
  const [render, setRenderState] = useState(false) //
+ const [topusers, setTopUsers] = useState([])
+  const [starMe, setStarMe] = useState(false);
 
  /*
  const [burger_class, setBurgerClass] = useState("burger-bar clicked")
@@ -85,8 +90,8 @@ function App() {
 useEffect(() => { //renders on any page load
   isLoading(true);
   axios
-    .get("http://localhost:3001/auth", {
-    //.get("http://3.143.203.151:3001/auth", {
+    //.get("http://localhost:3001/auth", {
+    .get("http://3.15.215.98:3001/auth", {
       headers: {
         accessToken: localStorage.getItem("accessToken"), //validate the token
       },
@@ -113,6 +118,23 @@ useEffect(() => { //renders on any page load
      });
   }, []);
 
+  useEffect(()=>{
+    //axios.get("http://localhost:3001/topusers", {
+      axios.get("http://3.15.215.98:3001/topusers", {
+    }).then((response) => {
+    setTimeout(()=>{
+      setTopUsers(response.data.filter((item)=>{
+        return item.id != null;
+      }))
+      
+      //console.log(response.data[0].id);
+
+    },20)
+    setRenderState(false);
+    });
+  }, [render])
+
+  console.log(topusers)
   /*
   const logout = () => {
     localStorage.removeItem("accessToken");
@@ -147,9 +169,11 @@ useEffect(() => { //renders on any page load
         <DropdownContext.Provider value={{ dropdownState, setDropdownState }}>
         <ImageContext.Provider value={{ imageState, setImageState }}>
         <RenderContext.Provider value={{render, setRenderState }}>
-        {authState.status ? (  //if authenticated 
+        {authState.status ? (  <>
         <nav className="navbar" ref={menuRef}>
-          <ul className="navbar-nav">
+
+
+        <ul className="navbar-nav">
             <div key="0" className='navWrap'>
               <li key="1" className="home">
                 <a key="1.5" href="/postings">
@@ -159,7 +183,12 @@ useEffect(() => { //renders on any page load
               <li key="2" className="profilePic">
                 <a key="2.1" href={`/profile/${authState.id}`}><ProfileImage /></a>
               </li>
+              <li key="2" className="starMeButton">
+          
+                <div key="1.6" onClick={()=>setStarMe((prev)=>(!prev))} className='navicon staricon'><img src={starIcon} alt={"home"} width="40" height="40"/> </div>
+              </li>
             </div>
+            
             
             <li key="3" className="arrow" onClick={()=>setOpenSettings(!openSettings) }     
               >
@@ -176,6 +205,38 @@ useEffect(() => { //renders on any page load
           </ul>
         </nav>
 
+        {starMe && (
+        <div className="starMeSpotlight">
+          <div className="innerSpotlight">
+            <h2>Most Reviews Today</h2>
+            <div className="topUsers">
+            
+              {topusers.slice(0, 3).map((item, i) => {
+                return(
+                  <div className="topuserWrap" >
+                    <div className="avatar"
+                    onClick={()=> {
+                      location(`/profile/${item.id}`);
+                      window.location.reload()
+                  }}
+                    >
+                      <img className="imgAvatar" src={`http://3.15.215.98:3001/images/`+item.ImageData} alt="img" />
+                    </div>
+                    <p>{item.fullname}</p>
+                    {/*<StarRating>{item.theavg}</StarRating>*/}
+                  </div>
+                )
+            
+              })}
+            </div>
+          </div>
+        </div>
+ 
+        )}
+
+
+        
+          </>
           ) : ( //Figure out 
             <>
               {/*Login/Signup Page*/}
@@ -220,8 +281,8 @@ function SearchBar(){
  
   useEffect(()=>{ //Load the Users for searching 
     const loadUsers = async () => {
-      const response = await axios.get("http://localhost:3001/users2");
-      //const response = await axios.get("http://3.143.203.151:3001/users2");
+      //const response = await axios.get("http://localhost:3001/users2");
+      const response = await axios.get("http://3.15.215.98:3001/users2");
       setUsers(response.data)
     }
     loadUsers();
@@ -292,8 +353,8 @@ function SearchBar(){
             >
               <div key={idx} className="avatar">
                 {userData.ImageData ?
-                  <img className='imgAvatar' src={`http://localhost:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
-                  //<img key={idx} className='imgAvatar' src={`http://3.143.203.151:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
+                  //<img className='imgAvatar' src={`http://localhost:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
+                  <img key={idx} className='imgAvatar' src={`http://3.15.215.98:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
                   : <></>
                 }
               </div>
@@ -314,8 +375,8 @@ function SearchBar(){
 
 
   useEffect(()=>{ //authState.id to show self 
-    axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
-    //axios.get(`http://3.143.203.151:3001/getAvatar/${authState.id}`)
+    //axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
+    axios.get(`http://3.15.215.98:3001/getAvatar/${authState.id}`)
     .then(res=>setImgData(res.data[0]))
     .catch(err=>console.log(err))
   },[imageState]) //need to render image instantly
@@ -324,8 +385,8 @@ function SearchBar(){
     <AuthContext.Provider value={{ authState, setAuthState }}>
     <ImageContext.Provider value={{ imageState, setImageState }}>
       {imgData?
-      <img className='imgAvatar' src={`http://localhost:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
-      //<img className='imgAvatar' src={`http://3.143.203.151:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
+      //<img className='imgAvatar' src={`http://localhost:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
+      <img className='imgAvatar' src={`http://3.15.215.98:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
       //<></>
       :
       <></>
@@ -334,7 +395,38 @@ function SearchBar(){
     </AuthContext.Provider>
   );
  }
+
+ function StarRating(props){
  
+  const [hover, setHover] = useState(null)
+
+  return(
+  <div className='starRating'>
+                {[...Array(5)].map((star, idx)=>{
+                const currentRate = idx + 1;
+                //val.rating is key here 
+                return(
+                    <>
+                        <label>
+                        <input className="radioBtn" type="radio" name="rating"  
+                            value={currentRate}  
+                        />
+                            <FaStar className='ratingStar' size={20}
+                                color={currentRate <= (hover || props.children) ? 
+                                    "red"
+                                    : "white"
+                                }
+                                //onMouseEnter={()=>setHover(currentRate)}
+                                //onMouseLeave={()=>setHover(null)}
+                            />
+                        </label>
+                        </>  
+                    )
+                })}
+    </div>
+  );
+  
+}
  
  
  export default App;

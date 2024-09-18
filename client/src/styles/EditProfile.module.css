@@ -36,7 +36,7 @@
 
    .editProfile form textarea{
       width: 100%;
-      height: 90px;
+      height: 70px;
       padding: 12px 20px;
       box-sizing: border-box;
       border: 1px solid #ccc;
@@ -47,7 +47,7 @@
    }
 
    .editBio button{ 
-        margin-top: 0px;
+        margin-top:15px;
         height: 40px;
         width: 100%;
         background-color: rgb(204, 47, 47);
@@ -59,6 +59,7 @@
 
     .upload{
         /*background-color: purple;*/
+        margin-top: 40px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -95,7 +96,7 @@
   
     @media all and (max-width: 500px){
         .editProfile{
-            padding-top: 70px;
+            padding-top: 60px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -104,29 +105,30 @@
             /*background-color: red;*/
            }
 
-        .editProfile h1{
-            font-size: 35px;
+          
+
+        .editProfile h2{
+            font-size: 22px;
         
         }
 
         .editBio{
             width: 300px;
-            height: 320px;
+            height: 296px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            /*background-color: blue;*/
+           
            }
 
         .upload{
-            /*background-color: purple;*/
+          
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+           
             width: 340px;
-            height: 200px;
+            height: 100px;
         }
 
     }

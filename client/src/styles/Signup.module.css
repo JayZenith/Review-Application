@@ -29,7 +29,8 @@
     transform: translate(-50%, -50%);
     background: rgba(5, 5, 5, 0.75);
    }
-
+   
+  
    @media all and (max-width: 500px){
       .signupWrapper{
          width: 300px;

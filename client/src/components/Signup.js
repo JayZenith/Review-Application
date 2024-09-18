@@ -47,7 +47,8 @@ function Signup() {
  //const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
  const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{1,28}$/;
  //const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{1,28}$/;
- const PWD_REGEX= /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
+ //const PWD_REGEX= /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]*[!@#$%]{8,}$/
+ const PWD_REGEX=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[\w~@#$%^&*+=`|{}:;!.?\"()\[\]-]{8,25}$/;
  const EMAIL_REGEX = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
 
 
@@ -107,8 +108,8 @@ function Signup() {
 
 
    try{
-       await axios.post("http://localhost:3001/signupFour", {
-       //await axios.post("http://3.143.203.151:3001/signupFour", {
+       //await axios.post("http://localhost:3001/signupFour", {
+       await axios.post("http://3.15.215.98:3001/signupFour", {
         fname, lname, pwd, email
        })
        .then(res=>{
@@ -137,7 +138,7 @@ function Signup() {
                 SignupCSS.offscreen} aria-live="assertive">{errMsg}
             </p>
             <h1>Sign Up</h1>
-            <form action="#" onSubmit={handleSubmit}>
+            <form action="#" onSubmit={handleSubmit} autocomplete="off">
                 <p ref={userExistRef} className={userExists ? SignupCSS.errmsg :
                     SignupCSS.offscreen} aria-live="assertive">{userExists}
                 </p>
@@ -159,7 +160,7 @@ function Signup() {
                         required
                         aria-invalid={validFname ? "false" : "true"}
                         aria-describedby='uidnote'
-                        autoComplete = 'new-password'
+                        autocomplete="off"
                         onFocus={() => setFnameFocus(true)}
                         onBlur={() => setFnameFocus(false)}
                     />   
@@ -189,7 +190,7 @@ function Signup() {
                         required
                         aria-invalid={validFname ? "false" : "true"}
                         aria-describedby='uidnote'
-                        autoComplete = 'new-password'
+                        autocomplete="off"
                         onFocus={() => setLnameFocus(true)}
                         onBlur={() => setLnameFocus(false)}
                     />   
@@ -219,7 +220,7 @@ function Signup() {
                         required
                         aria-invalid={validEmail ? "false" : "true"}
                         aria-describedby='emailnote'
-                        autoComplete = 'new-password'
+                        autocomplete="off"
                         onFocus={() => setEmailFocus(true)}
                         onBlur={() => setEmailFocus(false)}
                     />
@@ -250,7 +251,7 @@ function Signup() {
                             required
                             aria-invalid={validPwd ? "false" : "true"}
                             aria-describedby='pwdnote'
-                            autoComplete = 'new-password'
+                            autocomplete="current-password"
                             onFocus={() => setPwdFocus(true)}
                             onBlur={() => setPwdFocus(false)}
                         />       
@@ -284,7 +285,7 @@ function Signup() {
                             required
                             aria-invalid={validMatch ? "false" : "true"}
                             aria-describedby='confirmnote'
-                            autoComplete = 'new-password'
+                            autocomplete="current-password"
                             onFocus={() => setMatchFocus(true)}
                             onBlur={() => setMatchFocus(false)}
                         />          
