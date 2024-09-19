@@ -65,6 +65,7 @@ db.connect((err) => {
       `CREATE TABLE IF NOT EXISTS posts (
           id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          createdAt VARCHAR(30),
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
           userID INT, 
           targetID INT,
@@ -163,10 +164,12 @@ db.connect((err) => {
 
   app.post("/posts", validateToken, (req, res) => {
     const post = req.body;
-    //var created = new Date().toLocaleString().replace(',','')
-
-    //console.log(created)
-    //console.log(post.rating)
+    var myDate = new Date()
+    var pstDate = myDate.toLocaleString("en-US", {
+      timeZone: "America/Los_Angeles"
+    })
+    var time =pstDate.replace(/(.*)\D\d+/, '$1');
+    //console.log(time);
     db.query(
       "INSERT INTO posts SET ?",
       {
@@ -177,6 +180,7 @@ db.connect((err) => {
         targetID: post.id,
         targetName: post.username,
         rating: post.rating,
+        createdAt: time,
         //created_at: created,
         
        // username: post.username,
@@ -704,7 +708,7 @@ app.put("/changepassword", validateToken, (req,res) => {
         else {
           bcrypt.hash(newPassword, 10).then((hash) => {
             db.query(
-              `UPDATE users SET password='${hash}' WHERE username='${req.user.username}'`,
+              `UPDATE users SET password='${hash}' WHERE email='${req.user.email}'`,
               //{
                 //username: user.user,
                 //password: hash,
@@ -712,6 +716,7 @@ app.put("/changepassword", validateToken, (req,res) => {
               //},
               (err) => {
                 if (err) throw new Error(err);
+                res.json("Password Updated!")
                 //console.log("password updated");
               }
             );

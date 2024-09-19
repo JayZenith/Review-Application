@@ -303,6 +303,9 @@
 
 
 
+
+
+
 @media all and (max-width: 500px){
   .innerSpotlight{
     width: 300px;
@@ -326,7 +329,7 @@
 }
 
 .bi{
-  color: white;
+  color: rgb(247, 247, 247);
   margin-left: 10px;
   font-size: 17px;
   cursor: pointer;

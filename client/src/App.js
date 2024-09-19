@@ -64,6 +64,8 @@ function App() {
  const [openSettings, setOpenSettings] = useState(false)
  let menuRef = useRef();
 
+ let spotlightRef = useRef();
+
  useEffect(()=>{ //Check for acccessToken
   if (!localStorage.getItem("accessToken")){
     if(!window.location.pathname==="/signup"){
@@ -85,13 +87,28 @@ function App() {
     document.removeEventListener("mousedown", handler);
   }
  })
+
+ useEffect(()=>{ 
+  let spotlightHandler = (e)=>{
+    //console.log(menuRef.current.contains(e.target))
+    if(!spotlightRef.current?.contains(e.target) && !menuRef.current?.contains(e.target)){ //? allows it to work in / and /signup
+        setStarMe(false);
+
+        
+    }
+  }
+  document.addEventListener("mousedown", spotlightHandler);
+  return()=>{
+    document.removeEventListener("mousedown", spotlightHandler);
+  }
+ })
   
  
 useEffect(() => { //renders on any page load
   isLoading(true);
   axios
-    //.get("http://localhost:3001/auth", {
-    .get("http://3.15.215.98:3001/auth", {
+    .get("http://localhost:3001/auth", {
+    //.get("http://3.15.215.98:3001/auth", {
       headers: {
         accessToken: localStorage.getItem("accessToken"), //validate the token
       },
@@ -119,8 +136,8 @@ useEffect(() => { //renders on any page load
   }, []);
 
   useEffect(()=>{
-    //axios.get("http://localhost:3001/topusers", {
-      axios.get("http://3.15.215.98:3001/topusers", {
+    axios.get("http://localhost:3001/topusers", {
+    //axios.get("http://3.15.215.98:3001/topusers", {
     }).then((response) => {
     setTimeout(()=>{
       setTopUsers(response.data.filter((item)=>{
@@ -185,7 +202,7 @@ useEffect(() => { //renders on any page load
               </li>
               <li key="2" className="starMeButton">
           
-                <div key="1.6" onClick={()=>setStarMe((prev)=>(!prev))} className='navicon staricon'><img src={starIcon} alt={"home"} width="40" height="40"/> </div>
+                <div key="1.6" onClick={()=>setStarMe(!starMe)} className='navicon staricon'><img src={starIcon} alt={"home"} width="40" height="40"/> </div>
               </li>
             </div>
             
@@ -206,21 +223,24 @@ useEffect(() => { //renders on any page load
         </nav>
 
         {starMe && (
-        <div className="starMeSpotlight">
-          <div className="innerSpotlight">
+        <div className="starMeSpotlight" >
+          <div className="innerSpotlight" ref={spotlightRef}>
             <h2>Most Reviews Today</h2>
             <div className="topUsers">
             
               {topusers.slice(0, 3).map((item, i) => {
                 return(
-                  <div className="topuserWrap" >
-                    <div className="avatar"
-                    onClick={()=> {
-                      location(`/profile/${item.id}`);
-                      window.location.reload()
+                  <div className="topuserWrap" 
+                  onClick={()=> {
+                    location(`/profile/${item.id}`);
+                    window.location.reload()
                   }}
+                  >
+                    <div className="avatar"
+                    
                     >
-                      <img className="imgAvatar" src={`http://3.15.215.98:3001/images/`+item.ImageData} alt="img" />
+                      {/*<img className="imgAvatar" src={`http://3.15.215.98:3001/images/`+item.ImageData} alt="img" />*/}
+                      <img className="imgAvatar" src={`http://localhost:3001/images/`+item.ImageData} alt="img" />
                     </div>
                     <p>{item.fullname}</p>
                     {/*<StarRating>{item.theavg}</StarRating>*/}
@@ -281,8 +301,8 @@ function SearchBar(){
  
   useEffect(()=>{ //Load the Users for searching 
     const loadUsers = async () => {
-      //const response = await axios.get("http://localhost:3001/users2");
-      const response = await axios.get("http://3.15.215.98:3001/users2");
+      const response = await axios.get("http://localhost:3001/users2");
+      //const response = await axios.get("http://3.15.215.98:3001/users2");
       setUsers(response.data)
     }
     loadUsers();
@@ -353,8 +373,8 @@ function SearchBar(){
             >
               <div key={idx} className="avatar">
                 {userData.ImageData ?
-                  //<img className='imgAvatar' src={`http://localhost:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
-                  <img key={idx} className='imgAvatar' src={`http://3.15.215.98:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
+                  <img className='imgAvatar' src={`http://localhost:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
+                  //<img key={idx} className='imgAvatar' src={`http://3.15.215.98:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
                   : <></>
                 }
               </div>
@@ -375,8 +395,8 @@ function SearchBar(){
 
 
   useEffect(()=>{ //authState.id to show self 
-    //axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
-    axios.get(`http://3.15.215.98:3001/getAvatar/${authState.id}`)
+    axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
+    //axios.get(`http://3.15.215.98:3001/getAvatar/${authState.id}`)
     .then(res=>setImgData(res.data[0]))
     .catch(err=>console.log(err))
   },[imageState]) //need to render image instantly
@@ -385,8 +405,8 @@ function SearchBar(){
     <AuthContext.Provider value={{ authState, setAuthState }}>
     <ImageContext.Provider value={{ imageState, setImageState }}>
       {imgData?
-      //<img className='imgAvatar' src={`http://localhost:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
-      <img className='imgAvatar' src={`http://3.15.215.98:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
+      <img className='imgAvatar' src={`http://localhost:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
+      //<img className='imgAvatar' src={`http://3.15.215.98:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
       //<></>
       :
       <></>

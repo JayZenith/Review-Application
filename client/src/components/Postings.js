@@ -36,8 +36,8 @@ function Postings() {
 
    useEffect(()=>{ //Load the Users
      const loadUsers = async () => {
-       //const response = await axios.get("http://localhost:3001/users");
-       const response = await axios.get("http://3.15.215.98:3001/users");
+       const response = await axios.get("http://localhost:3001/users");
+       //const response = await axios.get("http://3.15.215.98:3001/users");
        //console.log(response.data);
        setUsers(response.data)
      }
@@ -51,11 +51,11 @@ function Postings() {
   
 
   useEffect(()=>{
-    //axios.get("http://localhost:3001/posts4", {
-    axios.get("http://3.15.215.98:3001/posts4", {
+    axios.get("http://localhost:3001/posts4", {
+    //axios.get("http://3.15.215.98:3001/posts4", {
       headers: {accessToken: localStorage.getItem("accessToken")}
     }).then((res) => {
-     //console.log(res.data)
+    console.log(res.data)
     setTheTargets(res.data.array2);
     setListOfPosts(res.data.array1);
     /*
@@ -70,8 +70,8 @@ function Postings() {
   }, [posted])
 
    const likePost = (postId) => {
-       //axios.post("http://localhost:3001/likes", {
-       axios.post("http://3.15.215.98:3001/likes", {
+       axios.post("http://localhost:3001/likes", {
+       //axios.post("http://3.15.215.98:3001/likes", {
            postID: postId
        }, {
            headers: {accessToken: localStorage.getItem("accessToken")}
@@ -100,8 +100,8 @@ function Postings() {
   
    const onSubmit = (event) => {
      event.preventDefault(); //without will redirect incorreclty
-     //axios.post("http://localhost:3001/posts", {
-     axios.post("http://3.15.215.98:3001/posts", {
+     axios.post("http://localhost:3001/posts", {
+     //axios.post("http://3.15.215.98:3001/posts", {
        postText, 
      }, {
        headers: {accessToken: localStorage.getItem("accessToken")},
@@ -114,8 +114,8 @@ function Postings() {
    } 
   
    const deletePost = (id) => {
-      //axios.delete(`http://localhost:3001/deletePost/${id}`, {
-      axios.delete(`http://3.15.215.98:3001/deletePost/${id}`, {
+      axios.delete(`http://localhost:3001/deletePost/${id}`, {
+      //axios.delete(`http://3.15.215.98:3001/deletePost/${id}`, {
        headers: {
          accessToken: localStorage.getItem("accessToken"),
        },
@@ -219,7 +219,8 @@ function Postings() {
                     <div className={PostingsCSS.avatar}>
                       {val.ImageData?
                       <>
-                        <img className={PostingsCSS.imgAvatar} src={`http://3.15.215.98:3001/images/`+val.ImageData} alt="img" />
+                        {/*<img className={PostingsCSS.imgAvatar} src={`http://3.15.215.98:3001/images/`+val.ImageData} alt="img" />*/}
+                        <img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} alt="img" />
                         <div className={PostingsCSS.profileDropDown}>
                           {/*Store the avg in database for user, grab it and display with stars */}
                         </div>
@@ -256,7 +257,7 @@ function Postings() {
                          </i>
                        ):(<i></i>)} {/*Need the latter icon to move like button to right*/}
                       
-                       <p className={PostingsCSS.createdAt}>{val.created_at}</p>
+                       <p className={PostingsCSS.createdAt}>{val.createdAt}</p>
                        <div className={PostingsCSS.likebtn}>
                         
                          <i class="bi bi-hand-thumbs-up"
@@ -284,8 +285,8 @@ function Postings() {
         
                   <div className={PostingsCSS.avatar}>
                       {aTarget.ImageData ?
-                      //<img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
-                      <img className={PostingsCSS.imgAvatar} src={`http://3.15.215.98:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
+                      <img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
+                      //<img className={PostingsCSS.imgAvatar} src={`http://3.15.215.98:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
                       : <></>
                       }
                   </div>

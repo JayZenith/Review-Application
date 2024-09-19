@@ -56,13 +56,6 @@ function Signup() {
    userRef.current.focus(); //obtained off first render of signup page
  }, [])
 
-/*
- useEffect(() => {
-   const result = USER_REGEX.test(user);
-   setValidName(result); //element now true
- }, [user]) //only run this when user state changed
- */
-
  useEffect(() => {
     const result = USER_REGEX.test(fname);
     setValidFname(result); //element now true
@@ -108,8 +101,8 @@ function Signup() {
 
 
    try{
-       //await axios.post("http://localhost:3001/signupFour", {
-       await axios.post("http://3.15.215.98:3001/signupFour", {
+       await axios.post("http://localhost:3001/signupFour", {
+       //await axios.post("http://3.15.215.98:3001/signupFour", {
         fname, lname, pwd, email
        })
        .then(res=>{

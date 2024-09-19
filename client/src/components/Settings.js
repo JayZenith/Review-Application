@@ -3,8 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import SettingsCSS from '../styles/Settings.module.css'; 
 
-
-
 function Settings() {
 let location = useNavigate()
  const [oldPassword, setOldPassword] = useState("");
@@ -13,13 +11,13 @@ let location = useNavigate()
  const [dialog, setDialog] = useState({
   message:'',
   isLoading: false,
+  isLoading2: false, 
 })
 
-
  const changePassword = () => {
-  setDialog({message:'Are you sure you want to change password?', isLoading:true})
-   //axios.put("http://localhost:3001/changepassword", {
-  axios.put("http://3.15.215.98:3001/changepassword", {
+  setDialog({message:'', isLoading: false, isLoading2:false})
+  axios.put("http://localhost:3001/changepassword", {
+  //axios.put("http://3.15.215.98:3001/changepassword", {
        oldPassword: oldPassword,
        newPassword: newPassword,
      }, {
@@ -31,13 +29,14 @@ let location = useNavigate()
      if(response.data.error){
        alert(response.data.error);
      }
+      alert(response.data)
+    
+     
 
    })
  };
 
  const deleteAccount = () => {
-  
-  /*
     axios.delete("http://localhost:3001/deleteAccount", {
     //axios.delete("http://3.143.203.151:3001/deleteAccount", {
       headers: {
@@ -51,21 +50,33 @@ let location = useNavigate()
     localStorage.removeItem("accessToken");
     //setAuthState({ username: "", id: 0, status: false });
     location("/"); //login page
-  
-
   })
-
-  */
 };
+
+
 
 const deleteDialog = () => {
   setDialog({message:'Are you sure you want to delete account?', isLoading:true})
 
 }
 
+const passwordDialog = () => {
+  setDialog({message:'Are you sure you want to change password?', isLoading2:true})
+}
+
+
+const confirmChangePassword = (decision)=>{
+  if(decision){
+    changePassword()
+  }else{
+    setDialog({message:'', isLoading2:false})
+  }
+
+}
+
 const confirmDeleteAccount = (choose) => {
   if(choose){
-    setDialog({message:'', isLoading:true})
+    deleteAccount()
   }else{
     setDialog({message:'', isLoading:false})
   }
@@ -90,15 +101,17 @@ const confirmDeleteAccount = (choose) => {
          setNewPassword(event.target.value);
        }}
      />
-     <button onClick={changePassword}>Save Changes</button>
+     <button onClick={passwordDialog}>Save Changes</button>
 
 
      <div className="deleteAccount">
        <h1>Delete Account</h1>
-       <button onClick={deleteAccount}>Delete Account</button>
+       {/*<button onClick={deleteAccount}>Delete Account</button>*/}
+       <button onClick={deleteDialog}>Delete Account</button>
 
      </div>
      { dialog.isLoading && <Dialog onDialog={confirmDeleteAccount} message={dialog.message}/> }
+     { dialog.isLoading2 && <Dialog onDialog={confirmChangePassword} message={dialog.message}/> }
    </div>
  );
 }
