@@ -105,10 +105,10 @@ function App() {
   
  
 useEffect(() => { //renders on any page load
-  isLoading(true);
+  isLoading(true); 
   axios
     .get("http://localhost:3001/auth", {
-    //.get("http://3.15.215.98:3001/auth", {
+    //.get("http://3.21.53.40:3001/auth", {
       headers: {
         accessToken: localStorage.getItem("accessToken"), //validate the token
       },
@@ -137,7 +137,7 @@ useEffect(() => { //renders on any page load
 
   useEffect(()=>{
     axios.get("http://localhost:3001/topusers", {
-    //axios.get("http://3.15.215.98:3001/topusers", {
+    //axios.get("http://3.21.53.40:3001/topusers", {
     }).then((response) => {
     setTimeout(()=>{
       setTopUsers(response.data.filter((item)=>{
@@ -239,8 +239,8 @@ useEffect(() => { //renders on any page load
                     <div className="avatar"
                     
                     >
-                      {/*<img className="imgAvatar" src={`http://3.15.215.98:3001/images/`+item.ImageData} alt="img" />*/}
                       <img className="imgAvatar" src={`http://localhost:3001/images/`+item.ImageData} alt="img" />
+                      {/*<img className="imgAvatar" src={`http://3.21.53.40:3001/images/`+item.ImageData} alt="img" />*/}
                     </div>
                     <p>{item.fullname}</p>
                     {/*<StarRating>{item.theavg}</StarRating>*/}
@@ -301,8 +301,8 @@ function SearchBar(){
  
   useEffect(()=>{ //Load the Users for searching 
     const loadUsers = async () => {
+      //const response = await axios.get("http://3.21.53.40:3001/users2");
       const response = await axios.get("http://localhost:3001/users2");
-      //const response = await axios.get("http://3.15.215.98:3001/users2");
       setUsers(response.data)
     }
     loadUsers();
@@ -373,8 +373,8 @@ function SearchBar(){
             >
               <div key={idx} className="avatar">
                 {userData.ImageData ?
-                  <img className='imgAvatar' src={`http://localhost:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
-                  //<img key={idx} className='imgAvatar' src={`http://3.15.215.98:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
+                  //<img className='imgAvatar' src={`http://3.21.53.40:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
+                  <img key={idx} className='imgAvatar' src={`http://localhost:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
                   : <></>
                 }
               </div>
@@ -396,7 +396,7 @@ function SearchBar(){
 
   useEffect(()=>{ //authState.id to show self 
     axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
-    //axios.get(`http://3.15.215.98:3001/getAvatar/${authState.id}`)
+    //axios.get(`http://3.21.53.40:3001/getAvatar/${authState.id}`)
     .then(res=>setImgData(res.data[0]))
     .catch(err=>console.log(err))
   },[imageState]) //need to render image instantly
@@ -406,7 +406,7 @@ function SearchBar(){
     <ImageContext.Provider value={{ imageState, setImageState }}>
       {imgData?
       <img className='imgAvatar' src={`http://localhost:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
-      //<img className='imgAvatar' src={`http://3.15.215.98:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
+      //<img className='imgAvatar' src={`http://3.21.53.40:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
       //<></>
       :
       <></>

@@ -102,7 +102,7 @@ function Signup() {
 
    try{
        await axios.post("http://localhost:3001/signupFour", {
-       //await axios.post("http://3.15.215.98:3001/signupFour", {
+       //await axios.post("http://3.21.53.40:3001/signupFour", {
         fname, lname, pwd, email
        })
        .then(res=>{

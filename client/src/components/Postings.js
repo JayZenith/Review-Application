@@ -7,6 +7,7 @@ import { AuthContext } from "../helpers/AuthContext";
 import { SuggestionsContext } from "../helpers/SuggestionsContext";
 import { FaStar } from 'react-icons/fa'
 import PostingsCSS from '../styles/Postings.module.css'; 
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 function Postings() {
@@ -27,6 +28,13 @@ function Postings() {
    const [hover, setHover] = useState(null)
    const [topusers, setTopUsers] = useState([])
    const [starMe, setStarMe] = useState(true);
+   const [toPost, setToPost] = useState(false);
+   const [profilePosts, setProfilePosts] = useState({
+    isFeed: true,
+    isProfile: false, 
+  })
+
+
   
    useEffect(()=>{ //Check for acccessToken
      if (!localStorage.getItem("accessToken")){
@@ -34,30 +42,81 @@ function Postings() {
      }
    }, []);
 
-   useEffect(()=>{ //Load the Users
-     const loadUsers = async () => {
-       const response = await axios.get("http://localhost:3001/users");
-       //const response = await axios.get("http://3.15.215.98:3001/users");
-       //console.log(response.data);
-       setUsers(response.data)
-     }
-     loadUsers();
-   }, [])
+   
+
+   
 
 
+   
+
+
+
+    useEffect(()=>{ //Load the Users
+      const loadUsers = async () => {
+        const response = await axios.get("http://localhost:3001/users");
+        //const response = await axios.get("http://3.21.53.40:3001/users");
+        //console.log(response.data);
+     
+        setUsers(response.data)
+      }
+      
+      loadUsers();
+    }, [])
+
+
+    useEffect(()=>{
+      //avgRating.current=0;
+      const loadProfilePosts = async () => {
+        const response = await axios.get(`http://localhost:3001/profilePosts/${authState.id}`)
+        //axios.get(`http://3.21.53.40:3001/profilePosts/${authState.id}`)
+            //.then((response)=>{
+                //console.log(response.data)
+                //response.data.forEach(function(fruit){
+                    //console.log(fruit.rating);
+                    //avgRating.current = avgRating.current + fruit.rating;
+                //});
+                //console.log(avgRating.current)
+                //avgRating.current = avgRating.current/(5*response.data.length);
+                //avgRating.current = (5*(avgRating.current*100)) / 100;
+                //avgRating.current = Math.ceil(avgRating.current)
+                //console.log("Average: ", avgRating);
+                console.log(response.data)
+                setListOfPosts(response.data)
+                
+                //setNumOfReviews(response.data.length);
+                setPosted(false)
+           // })
+      }
+
+      if(profilePosts.isProfile && !profilePosts.isFeed){
+        loadProfilePosts();
+      }
+      },[posted, profilePosts])
+    
+
+    useEffect(()=>{
+      //axios.get("http://localhost:3001/posts4", {
+      const loadPosts = async () => {
+          //const response = await axios.get("http://3.21.53.40:3001/posts4", {
+          const response = await axios.get("http://localhost:3001/posts4", { 
+            headers: {accessToken: localStorage.getItem("accessToken")}
+          });
+          console.log(response);
+          setTheTargets(response.data.array2);
+          setListOfPosts(response.data.array1);
+          
+    
+
+          setPosted(false); //to reset call to render created post
+        }
+        if(profilePosts.isFeed && !profilePosts.isProfile){ //if not loading profile posts 
+          loadPosts();
+
+        }
+        
+    }, [posted, profilePosts])
 
   
-
-  
-
-  useEffect(()=>{
-    axios.get("http://localhost:3001/posts4", {
-    //axios.get("http://3.15.215.98:3001/posts4", {
-      headers: {accessToken: localStorage.getItem("accessToken")}
-    }).then((res) => {
-    console.log(res.data)
-    setTheTargets(res.data.array2);
-    setListOfPosts(res.data.array1);
     /*
     setLikedPosts(
       res.data.userLikes.map((like) => {
@@ -65,13 +124,26 @@ function Postings() {
       })
     );
     */
+   /*
+  useEffect(()=>{
+    axios.get("http://localhost:3001/posts4", {
+    //axios.get("http://3.21.53.40:3001/posts4", {
+      headers: {accessToken: localStorage.getItem("accessToken")}
+    }).then((res) => {
+    console.log(res.data)
+    setTheTargets(res.data.array2);
+    setListOfPosts(res.data.array1);
+    
     setPosted(false); //to reset call to render created post
     });
   }, [posted])
+  */
+
+  
 
    const likePost = (postId) => {
        axios.post("http://localhost:3001/likes", {
-       //axios.post("http://3.15.215.98:3001/likes", {
+       //axios.post("http://3.21.53.40:3001/likes", {
            postID: postId
        }, {
            headers: {accessToken: localStorage.getItem("accessToken")}
@@ -101,7 +173,7 @@ function Postings() {
    const onSubmit = (event) => {
      event.preventDefault(); //without will redirect incorreclty
      axios.post("http://localhost:3001/posts", {
-     //axios.post("http://3.15.215.98:3001/posts", {
+     //axios.post("http://3.21.53.40:3001/posts", {
        postText, 
      }, {
        headers: {accessToken: localStorage.getItem("accessToken")},
@@ -115,7 +187,7 @@ function Postings() {
   
    const deletePost = (id) => {
       axios.delete(`http://localhost:3001/deletePost/${id}`, {
-      //axios.delete(`http://3.15.215.98:3001/deletePost/${id}`, {
+      //axios.delete(`http://3.21.53.40:3001/deletePost/${id}`, {
        headers: {
          accessToken: localStorage.getItem("accessToken"),
        },
@@ -130,6 +202,9 @@ function Postings() {
      //console.log("signalState ",signalState);
      navigate(`/userSearch`);
    }
+
+
+
 
     /*
     const onChangeHandler = (text) => {
@@ -184,19 +259,45 @@ function Postings() {
     */
 
 
+    const showFeed = ()=>{
+      setProfilePosts({isFeed:true, isProfile:false})
+    }
+    
+    const showProfileFeed = () => {
+      setProfilePosts({isFeed:false, isProfile:true})
+    
+    }
 
 
 
-
+  
 
  return (
+  <>
+  
+    <div className={PostingsCSS.postingFeed}
+      onClick={()=>setToPost(!toPost)}
+    >+
+  </div>
    <div className={PostingsCSS.postings}>
+   
+    <div className={PostingsCSS.feedButtons}>
+      <div className={PostingsCSS.feedOne} onClick={showFeed}><h2>Feed</h2></div>
+      <div className={PostingsCSS.feedTwo} onClick={showProfileFeed}> <h2>Profile</h2></div>
+      
+    </div>
+
+    
+    
     
       <div className={PostingsCSS.listOfPostsWrapper}>
+      {toPost && (
         <div className={PostingsCSS.createPostSection}>
-          {inputSize == 500 ? <p className={PostingsCSS.redInputSize}>Character Limit Reached</p> : ""}
+          
               <form className={PostingsCSS.postForm} onSubmit={onSubmit}>
-                
+
+                <button onClick={()=>setToPost(!toPost)}>X</button>
+                {inputSize == 500 ? <p className={PostingsCSS.redInputSize}>Character Limit Reached</p> : <p className={PostingsCSS.blackInputSize}>set me same color as background</p>}
                 <textarea
                   placeholder="Write Here"
                   id = "posting"
@@ -208,7 +309,8 @@ function Postings() {
                 <p className={inputSize>=450 ? PostingsCSS.redInputSize : ""}>{inputSize}/500</p>
                 <button type="submit">Post</button>
               </form>
-        </div> {/*END createPostSection*/}
+        </div>
+      )}
         {listOfPosts.slice(0).reverse().map((val, key) => {
           const aTarget = theTargets[listOfPosts.length -(key+1)];
           //console.log(listOfPosts.length -(key+1));
@@ -219,7 +321,7 @@ function Postings() {
                     <div className={PostingsCSS.avatar}>
                       {val.ImageData?
                       <>
-                        {/*<img className={PostingsCSS.imgAvatar} src={`http://3.15.215.98:3001/images/`+val.ImageData} alt="img" />*/}
+                        {/*<img className={PostingsCSS.imgAvatar} src={`http://3.21.53.40:3001/images/`+val.ImageData} alt="img"/>*/}
                         <img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} alt="img" />
                         <div className={PostingsCSS.profileDropDown}>
                           {/*Store the avg in database for user, grab it and display with stars */}
@@ -286,7 +388,7 @@ function Postings() {
                   <div className={PostingsCSS.avatar}>
                       {aTarget.ImageData ?
                       <img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
-                      //<img className={PostingsCSS.imgAvatar} src={`http://3.15.215.98:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
+                      //<img className={PostingsCSS.imgAvatar} src={`http://3.21.53.40:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
                       : <></>
                       }
                   </div>
@@ -301,6 +403,8 @@ function Postings() {
       </div>
 
    </div>
+   </>
+  
  );
 }
 
