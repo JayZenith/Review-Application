@@ -27,8 +27,8 @@ function Login() {
  async function submit(e){
    e.preventDefault();
    try{
-       await axios.post("http://localhost:3001/login", {
-       //await axios.post("http://3.21.53.40:3001/login", {
+       //await axios.post("http://localhost:3001/login", {
+       await axios.post("http://3.20.232.190:3001/login", {
            email,password
        })
        .then(res=>{ 

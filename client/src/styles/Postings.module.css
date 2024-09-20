@@ -1,53 +1,66 @@
 
- 
+@import url('https://fonts.cdnfonts.com/css/pink-rocket');
+@import url('https://fonts.cdnfonts.com/css/days-sans-black');
+
    .postings{
-    padding-top: 140px;
+    padding-top: 80px;
     display: flex;
     width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     /*align-items: center;*/
+    font-family: 'Days Sans Black', sans-serif;
  
    }
 
    .feedButtons{
-      width: 500px;
+      width: 710px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      
       color: white;
-   
+      
+      height: 100px;
+      font-family: 'Days Sans Black', sans-serif;
    }
 
    .feedOne{
-      width: 130px;
+      width: 50%;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       border: 1px solid white;
-      height: 40px;
+      height: 100%;
    }
 
+   .feedOne:hover, .feedTwo:hover{
+      background-color: rgb(56, 54, 54);
+      transition: ease-in .4s;
+   }
+
+  
    .feedTwo{
-      width: 130px;
-      height: 40px;
+      
+      width: 50%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-left: 20px;
+   
       cursor: pointer;
       border: 1px solid white;
    }
 
    .postingFeed{
-   
+      font-family: 'Days Sans Black', sans-serif;
       margin-top: 100px;
+      margin-right: 20%;
       right: 0;
       width: 50px;
       height: 50px;
-      background-color: rgb(179, 15, 15);
+      background-color: rgb(175, 22, 22);
       position: absolute;
      
       border-radius: 50%;
@@ -81,10 +94,10 @@
    
    .postings .createPostSection form{
       position: absolute; 
-      
+     
       width: 100%;
       height: 100%;
-      margin-top: 10%;
+      margin-top: 5%;
       color: white;
       display: flex;
       flex-direction: column;
@@ -128,15 +141,33 @@
       color: red;
    }
 
-   .postings .createPostSection form button{
-    width: 8%; /*fills container*/
-    height: 60px;
-    background-color: rgb(255, 0, 0);
-    border: 1px solid black;
+   .postings .createPostSection form .xButton{
+      font-family: 'Days Sans Black', sans-serif;
+    width: 45px; /*fills container*/
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(0, 0, 0);
+    border: 1px solid rgb(255, 255, 255);
     color: white;
-    border-radius: 40px;
+    border-radius: 50%;
+    font-weight: 400;
+    font-size: 20px;
     font-family: monospace, monospace;
    }
+
+   .postings .createPostSection form .postButton{
+      font-family: 'Days Sans Black', sans-serif;
+      width: 90px; /*fills container*/
+      height: 60px;
+      background-color: rgb(0, 0, 0);
+      border: 1px solid rgb(255, 255, 255);
+      color: white;
+      border-radius: 40px;
+      
+      font-family: monospace, monospace;
+     }
    
    
    .postings .createPostSection form button:hover{
@@ -147,6 +178,7 @@
    
    
    .post{
+   font-family: 'Monomod', sans-serif;
     width: 700px;
     border: 1px solid white;
     height: auto; /*Need to stretch container */
@@ -233,6 +265,7 @@
       justify-content: space-between;
       width: 600px;
       flex-grow: 0;
+      
    }
 
    .bodyAndFooter2{
@@ -250,6 +283,7 @@
       align-items: center;
       /*background-color: green;*/
       width: 100%;
+      font-family: 'Days Sans Black', sans-serif;
       
    }
 
@@ -259,6 +293,7 @@
       align-items: center;
       /*background-color: green;*/
       width: 100%;
+      font-family: 'Days Sans Black', sans-serif;
    }
 
    .bodyAndFooter2 .nameAndRating .username a:hover{
@@ -281,6 +316,7 @@
     color: rgb(252, 252, 252);
     font-weight: 800;
     margin-left: 10px;
+    
     
    }
 
@@ -415,7 +451,7 @@
          display: flex;
          flex-direction: column;
          padding: 0px;
-         height: 300px;
+         height: 80%;
          width: 100%; /*takes width of above*/
         }
 
@@ -480,7 +516,7 @@
       }
 
       .bodyAndFooter .footer{
-         position: sticky;
+         
          bottom: 0;
          display: flex;
          align-items: center;
@@ -492,7 +528,7 @@
 
       
       .bodyAndFooter2 .footer2{
-         position: sticky;
+        
          bottom: 0;
          display: flex;
          padding: 1px;
@@ -527,29 +563,64 @@
    @media all and (max-width: 500px){
       .postings{
          /*background-color: rgb(182, 197, 45);*/
-         padding-top: 100px;
+         padding-top: 70px;
          display: flex;
          flex-direction: column;
          justify-content: center;
          align-items: center;
         }
-     
+
+        .feedButtons{
+         width: 361px;
+         display: flex;
+         align-items: center;
+         
+         color: white;
+         
+         height: 100px;
+         font-family: 'Pink Rocket', sans-serif;
+      }
+
+      .postingFeed{
+       
+         margin-top: 150px;
+         margin-right: 10%;
+         right: 0;
+         width: 50px;
+         height: 50px;
+         background-color: rgb(197, 27, 27);
+         position: absolute;
         
-        .postings .createPostSection{
-         width: 350px;
-         height: 250px;
+         border-radius: 50%;
+         font-size: 30px;
+         color: white;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         border: 1px solid white;
+      }
+     
+     
+
+        .postings .createPostSection form{
+         position: absolute; 
+      
+        
+         width: 100%;
+         height: 100%;
+         margin-top: 5%;
          color: white;
          display: flex;
          flex-direction: column;
-         justify-content: flex-end;
-        }
+         margin-bottom: 70px;
+      }
         
         
         .postings .createPostSection form{
          display: flex;
          flex-direction: column;
          padding: 0px;
-         height: 300px;
+         height: 80%;
          width: 100%; /*takes width of above*/
         }
 
@@ -613,7 +684,7 @@
       }
 
       .bodyAndFooter .footer{
-         position: sticky;
+         
          bottom: 0;
          display: flex;
          align-items: center;
@@ -624,7 +695,7 @@
         }
    
       .bodyAndFooter2 .footer2{
-         position: sticky;
+         
          bottom: 0;
          display: flex;
          align-items: center;

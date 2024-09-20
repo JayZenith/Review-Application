@@ -50,8 +50,8 @@ function Profile() {
    useEffect(()=>{
         //setPosted(true);
        //setSuggestionsContext([]);
-       axios.get(`http://localhost:3001/getBio/${id}`)
-       //axios.get(`http://3.21.53.40:3001/getBio/${id}`)
+       //axios.get(`http://localhost:3001/getBio/${id}`)
+       axios.get(`http://3.20.232.190:3001/getBio/${id}`)
         .then((response)=>{
             //console.log(response)
             if(response.data[0])
@@ -61,8 +61,8 @@ function Profile() {
 
    useEffect(()=>{
         avgRating.current=0;
-        axios.get(`http://localhost:3001/profilePosts/${id}`)
-        //axios.get(`http://3.21.53.40:3001/profilePosts/${id}`)
+        //axios.get(`http://localhost:3001/profilePosts/${id}`)
+        axios.get(`http://3.20.232.190:3001/profilePosts/${id}`)
             .then((response)=>{
                 //console.log(response.data)
                 response.data.forEach(function(fruit){
@@ -85,8 +85,8 @@ function Profile() {
    useEffect(()=>{
         //console.log(render);
         isLoading(true);
-        axios.get(`http://localhost:3001/basicInfo/${id}`)
-        //axios.get(`http://3.21.53.40:3001/basicInfo/${id}`)
+        //axios.get(`http://localhost:3001/basicInfo/${id}`)
+        axios.get(`http://3.20.232.190:3001/basicInfo/${id}`)
         .then((response) => {
                console.log(response.data[0])
                //setUsername(response.data[0].username)
@@ -100,8 +100,8 @@ function Profile() {
 
 
    const likePost = (postId) => {
-       axios.post("http://localhost:3001/likes", {
-       //axios.post("http://3.21.53.40:3001/likes", {
+       //axios.post("http://localhost:3001/likes", {
+       axios.post("http://3.20.232.190:3001/likes", {
            postID: postId
            //console.log(response.data.listOfPosts)
            //console.log(response.data.userLikes)
@@ -137,8 +137,8 @@ function Profile() {
    const onSubmit = (event) => {
        //console.log(rating)
        event.preventDefault(); //dosent work without
-       axios.post("http://localhost:3001/posts", {
-       //axios.post("http://3.21.53.40:3001/posts", {
+       //axios.post("http://localhost:3001/posts", {
+       axios.post("http://3.20.232.190:3001/posts", {
          postText, id, rating, username //username?
        }, {
          headers: {accessToken: localStorage.getItem("accessToken")},
@@ -161,8 +161,8 @@ function Profile() {
 
 
       const deletePost = (id) => {
-        axios.delete(`http://localhost:3001/deletePost/${id}`, {
-        //axios.delete(`http://3.21.53.40:3001/deletePost/${id}`, {
+        //axios.delete(`http://localhost:3001/deletePost/${id}`, {
+        axios.delete(`http://3.20.232.190:3001/deletePost/${id}`, {
           headers: {
             accessToken: localStorage.getItem("accessToken"),
           },
@@ -187,8 +187,8 @@ function Profile() {
  return (
     <div className={ProfileCSS.profileApp}> {/*postings*/}
         <h1 className={ProfileCSS.profileUsername}> {username} </h1>
-        {/*<img className={ProfileCSS.profileAvatar} src={`http://3.21.53.40:3001/images/`+profilePic} width="100" height="100" alt="" />*/}
-        <img className={ProfileCSS.profileAvatar} src={`http://localhost:3001/images/`+profilePic} width="100" height="100" alt="" />
+        <img className={ProfileCSS.profileAvatar} src={`http://3.20.232.190:3001/images/`+profilePic} width="100" height="100" alt="" />
+        {/*<img className={ProfileCSS.profileAvatar} src={`http://localhost:3001/images/`+profilePic} width="100" height="100" alt="" />*/}
         
         {!isNaN(avgRating.current) ? <p className={ProfileCSS.userRating}>Rating: {avgRating.current}/5</p> : <p className={ProfileCSS.userRating}>No Ratings</p> }
 
@@ -281,8 +281,8 @@ function Profile() {
                             <div className={ProfileCSS.avatar}>
                             {val.ImageData? 
                             //http://3.143.203.151:3001
-                                //<img className={ProfileCSS.imgAvatar} src={`http://3.21.53.40:3001/images/`+val.ImageData} width="200" height="100" alt="" />
-                                <img className={ProfileCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} width="200" height="100" alt="" />
+                                <img className={ProfileCSS.imgAvatar} src={`http://3.20.232.190:3001/images/`+val.ImageData} width="200" height="100" alt="" />
+                                //<img className={ProfileCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} width="200" height="100" alt="" />
                                 //<></>
                                 :
                                 <></>

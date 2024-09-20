@@ -16,8 +16,8 @@ let location = useNavigate()
 
  const changePassword = () => {
   setDialog({message:'', isLoading: false, isLoading2:false})
-  axios.put("http://localhost:3001/changepassword", {
-  //axios.put("http://3.21.53.40:3001/changepassword", {
+  //axios.put("http://localhost:3001/changepassword", {
+  axios.put("http://3.20.232.190:3001/changepassword", {
        oldPassword: oldPassword,
        newPassword: newPassword,
      }, {
@@ -37,8 +37,8 @@ let location = useNavigate()
  };
 
  const deleteAccount = () => {
-    axios.delete("http://localhost:3001/deleteAccount", {
-    //axios.delete("http://3.21.53.40:3001/deleteAccount", {
+    //axios.delete("http://localhost:3001/deleteAccount", {
+    axios.delete("http://3.20.232.190:3001/deleteAccount", {
       headers: {
         accessToken: localStorage.getItem("accessToken"),
       },

@@ -53,8 +53,8 @@ function Postings() {
 
     useEffect(()=>{ //Load the Users
       const loadUsers = async () => {
-        const response = await axios.get("http://localhost:3001/users");
-        //const response = await axios.get("http://3.21.53.40:3001/users");
+        //const response = await axios.get("http://localhost:3001/users");
+        const response = await axios.get("http://3.20.232.190:3001/users");
         //console.log(response.data);
      
         setUsers(response.data)
@@ -67,8 +67,9 @@ function Postings() {
     useEffect(()=>{
       //avgRating.current=0;
       const loadProfilePosts = async () => {
-        const response = await axios.get(`http://localhost:3001/profilePosts/${authState.id}`)
-        //axios.get(`http://3.21.53.40:3001/profilePosts/${authState.id}`)
+        //const response = await axios.get(`http://localhost:3001/profilePosts/${authState.id}`)
+        const response = await axios.get(`http://3.20.232.190:3001/profilePosts/${authState.id}`)
+        //axios.get(`http://3.20.232.190:3001/profilePosts/${authState.id}`)
             //.then((response)=>{
                 //console.log(response.data)
                 //response.data.forEach(function(fruit){
@@ -97,8 +98,8 @@ function Postings() {
     useEffect(()=>{
       //axios.get("http://localhost:3001/posts4", {
       const loadPosts = async () => {
-          //const response = await axios.get("http://3.21.53.40:3001/posts4", {
-          const response = await axios.get("http://localhost:3001/posts4", { 
+          const response = await axios.get("http://3.20.232.190:3001/posts4", {
+          //const response = await axios.get("http://localhost:3001/posts4", { 
             headers: {accessToken: localStorage.getItem("accessToken")}
           });
           console.log(response);
@@ -142,8 +143,8 @@ function Postings() {
   
 
    const likePost = (postId) => {
-       axios.post("http://localhost:3001/likes", {
-       //axios.post("http://3.21.53.40:3001/likes", {
+       //axios.post("http://localhost:3001/likes", {
+       axios.post("http://3.20.232.190:3001/likes", {
            postID: postId
        }, {
            headers: {accessToken: localStorage.getItem("accessToken")}
@@ -172,8 +173,9 @@ function Postings() {
   
    const onSubmit = (event) => {
      event.preventDefault(); //without will redirect incorreclty
-     axios.post("http://localhost:3001/posts", {
-     //axios.post("http://3.21.53.40:3001/posts", {
+     setToPost(false);
+     //axios.post("http://localhost:3001/posts", {
+     axios.post("http://3.20.232.190:3001/posts", {
        postText, 
      }, {
        headers: {accessToken: localStorage.getItem("accessToken")},
@@ -182,12 +184,13 @@ function Postings() {
            alert(res.data.error);
          }
          setPosted(true); //to render for new post
+
      });
    } 
   
    const deletePost = (id) => {
-      axios.delete(`http://localhost:3001/deletePost/${id}`, {
-      //axios.delete(`http://3.21.53.40:3001/deletePost/${id}`, {
+      //axios.delete(`http://localhost:3001/deletePost/${id}`, {
+      axios.delete(`http://3.20.232.190:3001/deletePost/${id}`, {
        headers: {
          accessToken: localStorage.getItem("accessToken"),
        },
@@ -282,8 +285,8 @@ function Postings() {
    <div className={PostingsCSS.postings}>
    
     <div className={PostingsCSS.feedButtons}>
-      <div className={PostingsCSS.feedOne} onClick={showFeed}><h2>Feed</h2></div>
-      <div className={PostingsCSS.feedTwo} onClick={showProfileFeed}> <h2>Profile</h2></div>
+      <div className={PostingsCSS.feedOne} onClick={showFeed}><h1>Main</h1></div>
+      <div className={PostingsCSS.feedTwo} onClick={showProfileFeed}> <h1>Profile</h1></div>
       
     </div>
 
@@ -296,8 +299,8 @@ function Postings() {
           
               <form className={PostingsCSS.postForm} onSubmit={onSubmit}>
 
-                <button onClick={()=>setToPost(!toPost)}>X</button>
-                {inputSize == 500 ? <p className={PostingsCSS.redInputSize}>Character Limit Reached</p> : <p className={PostingsCSS.blackInputSize}>set me same color as background</p>}
+                <button className={PostingsCSS.xButton} onClick={()=>setToPost(!toPost)}>X</button>
+                {inputSize == 500 ? <p className={PostingsCSS.redInputSize}>Character Limit Reached</p> : <p className={PostingsCSS.blackInputSize}></p>}
                 <textarea
                   placeholder="Write Here"
                   id = "posting"
@@ -307,7 +310,7 @@ function Postings() {
                 >
                 </textarea>
                 <p className={inputSize>=450 ? PostingsCSS.redInputSize : ""}>{inputSize}/500</p>
-                <button type="submit">Post</button>
+                <button className={PostingsCSS.postButton} type="submit">Post</button>
               </form>
         </div>
       )}
@@ -321,8 +324,8 @@ function Postings() {
                     <div className={PostingsCSS.avatar}>
                       {val.ImageData?
                       <>
-                        {/*<img className={PostingsCSS.imgAvatar} src={`http://3.21.53.40:3001/images/`+val.ImageData} alt="img"/>*/}
-                        <img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} alt="img" />
+                        <img className={PostingsCSS.imgAvatar} src={`http://3.20.232.190:3001/images/`+val.ImageData} alt="img"/>
+                        {/*<img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} alt="img" />*/}
                         <div className={PostingsCSS.profileDropDown}>
                           {/*Store the avg in database for user, grab it and display with stars */}
                         </div>
@@ -387,8 +390,8 @@ function Postings() {
         
                   <div className={PostingsCSS.avatar}>
                       {aTarget.ImageData ?
-                      <img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
-                      //<img className={PostingsCSS.imgAvatar} src={`http://3.21.53.40:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
+                      //<img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
+                      <img className={PostingsCSS.imgAvatar} src={`http://3.20.232.190:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
                       : <></>
                       }
                   </div>

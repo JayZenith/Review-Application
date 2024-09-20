@@ -1,3 +1,8 @@
+@import url('https://fonts.cdnfonts.com/css/pink-rocket');
+@import url('https://fonts.cdnfonts.com/css/days-sans-black');
+@import url('https://fonts.cdnfonts.com/css/monomod');
+
+
 *{
   margin: 0;
   padding: 0;
@@ -185,12 +190,14 @@
   height: 25px;
   padding: 5px;
   font-size: 20px;
+  border-radius: 20px;
 
 }
 
 .searchBar input::placeholder{
-  color: black;
-  font-family: monospace, monospace;
+  color: rgb(0, 0, 0);
+  font-size: 18px;
+  font-family: 'Days Sans Black', sans-serif;
 }
 
 
@@ -217,6 +224,7 @@
  
  
  .userSearchDivs{
+  font-family: 'Days Sans Black', sans-serif;
   display: flex;
   align-items: center;
   text-align: center;
@@ -284,6 +292,7 @@
 }
 
 .innerSpotlight{
+  font-family: 'Days Sans Black', sans-serif;
   position: absolute; 
   left: 0; 
   right: 0; 
@@ -570,14 +579,20 @@
 
    }
 
+   .searchBar input::placeholder{
+    color: rgb(0, 0, 0);
+    font-size: 13px;
+    font-family: 'Days Sans Black', sans-serif;
+  }
+
    .userSearchDivs{
     font-size: 16px;
     height: 40px;
    }
 
    .imgAvatar{
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
    }
 
    .dropDownSettings{
