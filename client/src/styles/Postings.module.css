@@ -43,7 +43,7 @@
   
    .feedTwo{
       
-      width: 50%;
+      width: 100%;
       height: 100%;
       display: flex;
       align-items: center;
@@ -54,6 +54,7 @@
    }
 
    .postingFeed{
+      display: none;
       font-family: 'Days Sans Black', sans-serif;
       margin-top: 100px;
       margin-right: 20%;
@@ -66,7 +67,7 @@
       border-radius: 50%;
       font-size: 30px;
       color: white;
-      display: flex;
+      /*display: flex;*/
       align-items: center;
       justify-content: center;
       border: 1px solid white;
@@ -406,12 +407,21 @@
 
    .post .theTarget{
       /*background-color: gold;*/
+      cursor: pointer;
+      border: 1px solid white;
+      color: white;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: flex-start;
+     
       flex-grow: 0;
-      width: 70px;
+      width: 100%;
+      margin-bottom: 10px;
+   }
+
+   .post .theTarget .targetUsername{
+      margin-left: 10px;
    }
 
    
@@ -582,7 +592,7 @@
       }
 
       .postingFeed{
-       
+         display: none;
          margin-top: 150px;
          margin-right: 10%;
          right: 0;
@@ -594,7 +604,7 @@
          border-radius: 50%;
          font-size: 30px;
          color: white;
-         display: flex;
+         /*display: flex;*/
          align-items: center;
          justify-content: center;
          border: 1px solid white;
@@ -722,12 +732,14 @@
       .post .theTarget{
          /*background-color: gold;*/
          display: flex;
-         flex-direction: column;
+         flex-direction: row;
          align-items: center;
-         justify-content: flex-end;
+         justify-content: flex-start;
          flex-grow: 0;
-         width: 50px;
+         width: 250px;
       }
+
+
 
      
 

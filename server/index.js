@@ -86,7 +86,8 @@ db.connect((err) => {
       `CREATE TABLE IF NOT EXISTS bio (
           id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
           userID INT, 
-          bioText VARCHAR(500)
+          bioText VARCHAR(500),
+          profileLink VARCHAR(50)
       )`,
       (err) => {
         if (err) throw new Error(err);
@@ -437,6 +438,57 @@ db.connect((err) => {
     })
   })
 
+  app.get("/reviewPosts6",(req,res)=>{
+   
+    db.query("SELECT posts.*, COUNT(distinct likes.id) as dt, avatars.ImageData, users.firstname, users.email "+
+       "FROM posts LEFT OUTER JOIN avatars ON posts.userID=avatars.userID "+
+       "LEFT JOIN likes ON posts.id=likes.postID LEFT OUTER JOIN users ON posts.userID=users.id "+
+       "WHERE targetID IS NOT NULL GROUP BY posts.id, avatars.id, users.id",(err, result)=>{
+      if(err) throw new Error(err);
+      res.json(result)
+    })
+  })
+
+  app.get("/justPosts6",(req,res)=>{
+   
+    db.query("SELECT posts.*, COUNT(distinct likes.id) as dt, avatars.ImageData, users.firstname, users.email "+
+       "FROM posts LEFT OUTER JOIN avatars ON posts.userID=avatars.userID "+
+       "LEFT JOIN likes ON posts.id=likes.postID LEFT OUTER JOIN users ON posts.userID=users.id "+
+       "WHERE targetID IS NULL GROUP BY posts.id, avatars.id, users.id",(err, result)=>{
+      if(err) throw new Error(err);
+      res.json(result)
+    })
+  })
+
+
+  app.get("/justReviews4", (req, res) => {
+    //console.log(req.user.id)
+    db.query(   
+      "SELECT posts.*, count(distinct likes.id) as dt, avatars.ImageData, users.firstname, " +
+      "users.lastname, users.email " +
+      "FROM posts LEFT OUTER JOIN avatars ON posts.userID=avatars.userID " +
+      "LEFT OUTER JOIN likes ON posts.id=likes.postID " +
+      "LEFT OUTER JOIN users ON posts.userID=users.id "+
+      "WHERE targetID is NOT NULL GROUP BY posts.id, avatars.id, users.id",
+      (err, result) => {
+        if (err) throw new Error(err);
+        db.query("SELECT posts.*, avatars.*, users.*"+
+          "FROM posts LEFT OUTER JOIN avatars "+
+          "ON posts.targetID=avatars.userID LEFT OUTER JOIN "+
+          "users ON posts.targetID=users.id "+
+          " WHERE targetID is NOT NULL GROUP BY "+
+          "posts.id, avatars.id, users.id",(err,result2)=>{
+            if(err) throw new Error(err);
+            //console.log(result)
+            res.json({array1: result, array2:result2});
+          })
+        //res.json(result);
+        
+      }
+    );
+  
+  });
+
 
 
   app.get("/comments3/:postId", (req, res) => {
@@ -487,6 +539,8 @@ db.connect((err) => {
     });
     res.json("deleted comment");
   });
+
+  
   
   app.delete("/deletePost/:deleteId", validateToken, (req,res)=>{
     const deleteId = req.params.deleteId;
@@ -627,6 +681,51 @@ app.post("/addBio", validateToken, (req,res)=>{
     })
     
 })
+
+app.post("/deleteUrlLink/:id", validateToken, (req, res) => {
+  const id = req.params.id;
+  db.query(`UPDATE bio SET profileLink=null WHERE id='${id}'`,(err, result) => {
+    if (err) throw new Error(err);
+    //res.json(result)
+  });
+  res.json("deleted url");
+});
+
+
+app.post("/addUrlLink", validateToken, (req,res)=>{
+  const {urlLink} = req.body;
+  const userID = req.user.id;
+  db.query(`SELECT * FROM bio WHERE userID='${userID}'`, (err,result)=>{
+    if (!result[0]) {
+      db.query(`INSERT INTO bio SET ?`,
+        {
+          profileLink: urlLink,
+          userID: userID,
+        },
+        (err)=>{
+          if (err) throw new Error(err);
+          res.json("Link Created!")
+          
+        }
+      )
+    }
+    else{
+      //console.log(userID)
+      db.query(`UPDATE bio 
+        SET profileLink='${urlLink}' 
+        WHERE userID='${userID}'`,
+        (err)=>{
+          if (err) throw new Error(err);
+          res.json("Link Updated!")
+          //res.json("Bio Updated!")
+        }
+      )
+    }
+   
+  })
+  
+})
+
 
 app.get("/getBio/:id", (req,res)=>{
   const id = req.params.id;

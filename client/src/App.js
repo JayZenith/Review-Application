@@ -107,8 +107,8 @@ function App() {
 useEffect(() => { //renders on any page load
   isLoading(true); 
   axios
-    //.get("http://localhost:3001/auth", {
-    .get("http://3.20.232.190:3001/auth", {
+    .get(process.env.REACT_APP_HTTP_REQ+"/auth", {
+    //.get("http://3.20.232.190:3001/auth", {
       headers: {
         accessToken: localStorage.getItem("accessToken"), //validate the token
       },
@@ -136,8 +136,8 @@ useEffect(() => { //renders on any page load
   }, []);
 
   useEffect(()=>{
-    //axios.get("http://localhost:3001/topusers", {
-    axios.get("http://3.20.232.190:3001/topusers", {
+    axios.get(process.env.REACT_APP_HTTP_REQ+"/topusers", {
+    //axios.get("http://3.20.232.190:3001/topusers", {
     }).then((response) => {
     setTimeout(()=>{
       setTopUsers(response.data.filter((item)=>{
@@ -214,7 +214,7 @@ useEffect(() => { //renders on any page load
             <SearchBar key="3.4" />
             <div key="3.5" className={openSettings ? 'dropDownSettings' : 'dropDownHidden'} >
                 <ul key="3.6" className='theUL'>
-                  <li key="4" onClick={()=>arrowClicked("Edit")}>Edit Profile</li>
+                  {/*<li key="4" onClick={()=>arrowClicked("Edit")}>Edit Profile</li>*/}
                   <li key="5" onClick={()=>arrowClicked("Settings")}>Settings</li>
                   <li key="6" onClick={()=>arrowClicked("Logout")}>Logout</li>
                 </ul>
@@ -239,8 +239,8 @@ useEffect(() => { //renders on any page load
                     <div className="avatar"
                     
                     >
-                      {/*<img className="imgAvatar" src={`http://localhost:3001/images/`+item.ImageData} alt="img" />*/}
-                      <img className="imgAvatar" src={`http://3.20.232.190:3001/images/`+item.ImageData} alt="img" />
+                      <img className="imgAvatar" src={process.env.REACT_APP_HTTP_REQ+`/images/`+item.ImageData} alt="img" />
+                      {/*<img className="imgAvatar" src={`http://3.20.232.190:3001/images/`+item.ImageData} alt="img" />*/}
                     </div>
                     <p>{item.fullname}</p>
                     {/*<StarRating>{item.theavg}</StarRating>*/}
@@ -301,8 +301,8 @@ function SearchBar(){
  
   useEffect(()=>{ //Load the Users for searching 
     const loadUsers = async () => {
-      const response = await axios.get("http://3.20.232.190:3001/users2");
-      //const response = await axios.get("http://localhost:3001/users2");
+      //const response = await axios.get("http://3.20.232.190:3001/users2");
+      const response = await axios.get(process.env.REACT_APP_HTTP_REQ+"/users2");
       setUsers(response.data)
     }
     loadUsers();
@@ -373,8 +373,8 @@ function SearchBar(){
             >
               <div key={idx} className="avatar">
                 {userData.ImageData ?
-                  <img className='imgAvatar' src={`http://3.20.232.190:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
-                  //<img key={idx} className='imgAvatar' src={`http://localhost:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
+                  //<img className='imgAvatar' src={`http://3.20.232.190:3001/images/`+userData.ImageData} width="200" height="100" alt="" />
+                  <img key={idx} className='imgAvatar' src={process.env.REACT_APP_HTTP_REQ+`/images/`+userData.ImageData} width="200" height="100" alt="" />
                   : <></>
                 }
               </div>
@@ -395,8 +395,8 @@ function SearchBar(){
 
 
   useEffect(()=>{ //authState.id to show self 
-    //axios.get(`http://localhost:3001/getAvatar/${authState.id}`)
-    axios.get(`http://3.20.232.190:3001/getAvatar/${authState.id}`)
+    axios.get(process.env.REACT_APP_HTTP_REQ+`/getAvatar/${authState.id}`)
+    //axios.get(`http://3.20.232.190:3001/getAvatar/${authState.id}`)
     .then(res=>setImgData(res.data[0]))
     .catch(err=>console.log(err))
   },[imageState]) //need to render image instantly
@@ -405,8 +405,8 @@ function SearchBar(){
     <AuthContext.Provider value={{ authState, setAuthState }}>
     <ImageContext.Provider value={{ imageState, setImageState }}>
       {imgData?
-      //<img className='imgAvatar' src={`http://localhost:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
-      <img className='imgAvatar' src={`http://3.20.232.190:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
+      <img className='imgAvatar' src={process.env.REACT_APP_HTTP_REQ+`/images/`+imgData.ImageData} width="200" height="100" alt="" />
+      //<img className='imgAvatar' src={`http://3.20.232.190:3001/images/`+imgData.ImageData} width="200" height="100" alt="" />
       //<></>
       :
       <></>

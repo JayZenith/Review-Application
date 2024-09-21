@@ -17,6 +17,57 @@
     margin-top: 10px;
   }
 
+  .profileTitleWrap{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+
+  .profileTitleWrap .profileEdit{
+    height: 40px;
+    width: 100px;
+   
+    border-radius: 10px;
+    position: absolute;
+    right: 0;
+    margin-right: 20px;
+  
+    color: white;
+    font-size: 15px;
+    background-color: rgb(0, 0, 0);
+    border: 1px solid white;;
+    cursor: pointer;
+
+  }
+
+  .profileLinks{
+    margin-top: 10px;
+   
+    display: flex;
+    width: 300px;
+    height: 40px;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  .profileLinks li a{
+    text-decoration: underline;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  
+  .profileLinks li a img{
+    margin-right: 5px;
+    height: 20px;
+    width: 20px;
+    color: white;
+   
+  }
+
 
 
   .profileApp .profileBio{
@@ -98,6 +149,10 @@
   margin-bottom: 5px;
  }
 
+ .errorMessage{
+  color: rgb(255, 0, 0);
+ }
+
 
 
    .profileReview form textarea{
@@ -175,8 +230,8 @@
    }
 
    .profileAvatar{
-    width: 100px;
-    height:100px;
+    width: 200px;
+    height:200px;
     border-radius: 50%;
     background-color: grey;
    }
@@ -289,9 +344,26 @@
   }
   
   @media all and (max-width: 500px){
+
+    .profileTitleWrap .profileEdit{
+      height: 30px;
+      width: 80px;
+      border-radius: 10px;
+      position: absolute;
+      right: 0;
+      z-index: -1;
+      margin-top: 160px;
+      margin-right: 20px;
+      color: white;
+      font-size: 12px;
+      background-color: rgb(0, 0, 0);
+      border: 1px solid white;;
+      cursor: pointer;
+  
+    }
     .profileApp .profileUsername{
       /*background-color: rgb(134, 32, 112);*/
-      font-size: 40px;
+      font-size: 30px;
     }
   
     .profileApp .profileBio{
@@ -319,6 +391,13 @@
       height: auto;
       /*background-color: aqua;*/
     }
+
+    .profileAvatar{
+      width: 100px;
+      height:100px;
+      border-radius: 50%;
+      background-color: grey;
+     }
 
   }
   

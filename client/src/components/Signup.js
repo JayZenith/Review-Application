@@ -9,6 +9,7 @@ function Signup() {
  const history=useNavigate();
  const {setAuthState} = useContext(AuthContext)//contains user details
 
+
  const userRef = useRef(); //to focus in on username
  const errRef = useRef();
  const userExistRef = useRef(); //set if user exists 
@@ -37,11 +38,17 @@ function Signup() {
 
  const [fname, setFname] = useState('');
  const [validFname, setValidFname] = useState(false);
- const [fnameFocus, setFnameFocus] = useState(false);
+ const [fnameFocus, setFnameFocus] = useState(false)
 
  const [lname, setLname] = useState('');
  const [validLname, setValidLname] = useState(false);
  const [lnameFocus, setLnameFocus] = useState(false);
+
+ const [FNErrMsg, setFNErrMsg] = useState('')
+ const [LNErrMsg, setLSErrMsg] = useState('')
+ const [EmailErrMsg, setTheEmailErrMsg] = useState('')
+ const [PwdErrMsg, setPwdErrMsg] = useState('')
+ const [PwdMatchErrMsg, setPwdMatchErrMsg] = useState('')
 
 
  //const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
@@ -61,10 +68,18 @@ function Signup() {
     setValidFname(result); //element now true
   }, [fname]) //only run this when user state changed
 
+  const setFirstName = (e) => {
+    setFname(e.target.value);
+  }
+
   useEffect(() => {
     const result = USER_REGEX.test(lname);
     setValidLname(result); //element now true
   }, [lname]) //only run this when user state changed
+
+  const setLastName = (e) => {
+    setLname(e.target.value);
+  }
 
 
  useEffect(() => {
@@ -74,12 +89,26 @@ function Signup() {
    setValidMatch(match); //passwords match
  }, [pwd, matchPwd])
 
+ const setThePwd = (e) => {
+    setPwd(e.target.value);
+  }
+
 
  useEffect(() => {
    const result = EMAIL_REGEX.test(email);
    setValidEmail(result); //password is true
  }, [email])
 
+ const setTheEmail = (e) => {
+    setEmail(e.target.value);
+  }
+
+const setTheMatchPwd = (e) => {
+    const match = pwd === e.target.value;
+    console.log("pwd", pwd);
+    console.log("target", e.target.value)
+    setValidMatch(match);
+}
 
  useEffect(() => {
    setErrMsg('');
@@ -89,20 +118,34 @@ function Signup() {
 
  const handleSubmit = async (e) => {
    e.preventDefault();
+   
    //something to do with preventing attack
    const v1 = USER_REGEX.test(fname);
+   if(!v1){
+    setFNErrMsg('2-29 characters. Start with a letter. At least one number. _, - allowed.')
+   }
    const v2 = USER_REGEX.test(lname);
+   if(!v2){
+    setLSErrMsg('2-29 characters. Start with a letter. At least one number. _, - allowed.')
+   }
    const v3 = EMAIL_REGEX.test(email);
+   if(!v3){
+    setTheEmailErrMsg('Enter a valid email');
+   }
    const v4 = PWD_REGEX.test(pwd);
-   if(!v1 || !v2 | !v3 | !v4){
-    setErrMsg("Invalid Entry");
+   if(!v4){
+    setPwdErrMsg('At least 8 characters. Must include uppercase and lowercase letters, and a number.')
+   }
+   if(!validMatch){
+    setPwdMatchErrMsg('Must match password above.')
+
+   }
+   if(!v1 || !v2 | !v3 | !v4 | !validMatch){
     return;
    }
-
-
    try{
-       //await axios.post("http://localhost:3001/signupFour", {
-       await axios.post("http://3.20.232.190:3001/signupFour", {
+       await axios.post(process.env.REACT_APP_HTTP_REQ+"/signupFour", {
+       //await axios.post("http://3.20.232.190:3001/signupFour", {
         fname, lname, pwd, email
        })
        .then(res=>{
@@ -149,8 +192,9 @@ function Signup() {
                         id="firstname"
                         placeholder='First Name'
                         ref={userRef} //used to obtain this element upon 1st render
-                        onChange={(e) => setFname(e.target.value)}
-                        required
+                        //onChange={(e) => setFname(e.target.value)}
+                        onChange={(e) => setFirstName(e)}
+                        require
                         aria-invalid={validFname ? "false" : "true"}
                         aria-describedby='uidnote'
                         autocomplete="off"
@@ -158,12 +202,13 @@ function Signup() {
                         onBlur={() => setFnameFocus(false)}
                     />   
                 </div>
-                <p id="uidnote" className={fnameFocus && fname &&
+                {/*<p id="uidnote" className={fnameFocus && fname &&
                     !validFname ? SignupCSS.instructions : SignupCSS.offscreen}>
                     <i class="bi bi-x-circle"></i>
-                        2 to 29 characters.
-                        Must begin wtih a letter.
-                        Letters, numbers, underscores, hyphens allowed.
+                */}
+                <p className={SignupCSS.theErrors}>
+                    
+                        {FNErrMsg}
                 </p>
                 <div className={SignupCSS.signupField}>
                     <label htmlFor='username'>
@@ -188,12 +233,14 @@ function Signup() {
                         onBlur={() => setLnameFocus(false)}
                     />   
                 </div>
-                <p id="uidnote" className={lnameFocus && lname &&
+                {/*<p id="uidnote" className={lnameFocus && lname &&
                     !validLname ? SignupCSS.instructions : SignupCSS.offscreen}>
                     <i class="bi bi-x-circle"></i>
                     2 to 29 characters.
                     Must begin wtih a letter.
                     Letters, numbers, underscores, hyphens allowed.
+                */}
+                <p className={SignupCSS.theErrors}>{LNErrMsg}
                 </p>
                 <div className={SignupCSS.signupField}>
                     <label htmlFor='email'>
@@ -209,7 +256,8 @@ function Signup() {
                         type="email"
                         id="email"
                         placeholder='Email'
-                        onChange={(e) => setEmail(e.target.value)}
+                        //onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setTheEmail(e)}
                         required
                         aria-invalid={validEmail ? "false" : "true"}
                         aria-describedby='emailnote'
@@ -219,6 +267,8 @@ function Signup() {
                     />
                               
                 </div>
+                <p className={SignupCSS.theErrors}>{EmailErrMsg}
+                </p>
                     {/*
                     <p id="emailnote" className={emailFocus && !validEmail ? SignupCSS.instructions :
                         SignupCSS.offscreen}>
@@ -240,7 +290,8 @@ function Signup() {
                             type="password"
                             id="password"
                             placeholder='Password'
-                            onChange={(e) => setPwd(e.target.value)}
+                            //onChange={(e) => setPwd(e.target.value)}
+                            onChange={(e) => setThePwd(e)}
                             required
                             aria-invalid={validPwd ? "false" : "true"}
                             aria-describedby='pwdnote'
@@ -249,24 +300,27 @@ function Signup() {
                             onBlur={() => setPwdFocus(false)}
                         />       
                     </div>
+                    {/*
                     <p id="pwdnote" className={pwdFocus && !validPwd ? SignupCSS.instructions :
                         SignupCSS.offscreen}>
                         <i class="bi bi-x-circle"></i>
                         At least 8 characters. Must include uppercase and 
                         lowercase letters, and a number.
+                    */}
                         {/*
                          and one of: <span aria-label="exclamation mark">!</span>
                         <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span>
                         <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
                         */}
+                    <p className={SignupCSS.theErrors}>{PwdErrMsg}
                     </p>
                     <div className={SignupCSS.signupField}>
                         <label htmlFor='confirm_pwd'>
-                            <span className={validMatch && matchPwd ? SignupCSS.valid : SignupCSS.hide}>
+                            <span className={validMatch ? SignupCSS.valid : SignupCSS.hide}>
                                 <i className="bi bi-check"></i>
                             </span>
-                            <span className={validMatch || !matchPwd ?  SignupCSS.hide :
-                                SignupCSS.invalid}>
+                            <span className={!validMatch ?  SignupCSS.invalid :
+                                SignupCSS.hide}>
                                 <i className="bi bi-x"></i>
                             </span>
                         </label>
@@ -274,7 +328,8 @@ function Signup() {
                             type="password"
                             id="confirm_pwd"
                             placeholder='Confirm Password'
-                            onChange={(e) => setMatchPwd(e.target.value)}
+                            //onChange={(e) => setMatchPwd(e.target.value)}
+                            onChange={(e) => setTheMatchPwd(e)}
                             required
                             aria-invalid={validMatch ? "false" : "true"}
                             aria-describedby='confirmnote'
@@ -283,15 +338,18 @@ function Signup() {
                             onBlur={() => setMatchFocus(false)}
                         />          
                     </div>
+                    {/*
                     <p id="confirmnote" className={matchFocus && !validMatch ? SignupCSS.instructions :
                         SignupCSS.offscreen}>
                         <i class="bi bi-x-circle"></i>
                         Must match the first password.
+                    */}
+                    <p className={SignupCSS.theErrors}>{PwdMatchErrMsg}
                     </p>
                     <div className={SignupCSS.signupField}>
                         <input
                             className={SignupCSS.signupButton}
-                            disabled={!validFname || !validLname || !validEmail || !validPwd || !validMatch ? true : false}
+                            //disabled={!validFname || !validLname || !validEmail || !validPwd || !validMatch ? true : false}
                             type="submit"
                             value="Submit" 
                         />

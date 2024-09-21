@@ -18,33 +18,77 @@ function EditProfile() {
     const { imageState, setImageState } = useContext(ImageContext);
     const [ bioSize, setBioSize] = useState(0);
     const [ imgData, setImgData ] = useState([])
+    const [errMsg, setErrMsg] = useState('');
+    const [urlLink, setUrlLink] = useState(null);
+    const [validUrlLink, setValidUrlLink] = useState(false);
+
+
+    const URL_REGEX= /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
     useEffect(()=>{
         if (!localStorage.getItem("accessToken"))
             navigate("/");
     },[])
 
+    const checkUrl = (e) => {
+        setUrlLink(e.target.value)
+        setErrMsg('')
+        
+    } 
+    
+
 
     useEffect(()=>{
-        axios.get(`http://3.20.232.190:3001/getAvatar/${authState.id}`)
-        //axios.get(`http://3.21.53.40:3001/getAvatar/${authState.id}`)
+        //axios.get(`http://3.20.232.190:3001/getAvatar/${authState.id}`)
+        axios.get(process.env.REACT_APP_HTTP_REQ+`/getAvatar/${authState.id}`)
         .then(res=>setImgData(res.data[0]))
         .catch(err=>console.log(err))
     },[])
 
 
     const addBio = () => {
-        axios.post("http://3.20.232.190:3001/addBio",{
-        //axios.post("http://3.21.53.40:3001/addBio",{
+        
+        //axios.post("http://3.20.232.190:3001/addBio",{
+        axios.post(process.env.REACT_APP_HTTP_REQ+"/addBio",{
             bioText
+        },{
+            headers: {accessToken: localStorage.getItem("accessToken")}
+        }).then((res)=>{
+            alert(res.data);
+            setBioText('')
+        })
+        .catch(err=>console.log(err));
+       
+    }
+
+    const deleteLink = () => {
+        axios.post(process.env.REACT_APP_HTTP_REQ+`/deleteUrlLink/${authState.id}`,{
         },{
             headers: {accessToken: localStorage.getItem("accessToken")}
         }).then((res)=>{
             alert(res.data);
         })
         .catch(err=>console.log(err));
-        
-       
+
+    }
+    
+    const addLink = (event) => {
+        event.preventDefault();
+        if(!URL_REGEX.test(urlLink)){
+            
+            setErrMsg("invalid url")
+            return;
+        }
+        axios.post(process.env.REACT_APP_HTTP_REQ+"/addUrlLink",{
+            urlLink
+        },{
+            headers: {accessToken: localStorage.getItem("accessToken")}
+        }).then((res)=>{
+            alert(res.data);
+            setUrlLink('')
+        })
+        .catch(err=>console.log(err));
+
     }
 
     const handleBioChange = (e) => {
@@ -65,14 +109,23 @@ function EditProfile() {
                     placeholder="..."
                     id = "bio"
                     name = "bio"
+                    value={bioText}
                     onChange={(e)=>handleBioChange(e)}
                     maxLength={150}
                 >
                 </textarea>
                 <p className={bioSize >= 130 ? EditProfileCSS.charLimit : ""}>{bioSize}/150</p>
+                <input placeholder='the url' 
+                    value={urlLink}
+                    onChange={(e) => checkUrl(e)}
+                />
+                <p className={EditProfileCSS.urlError}>{errMsg}</p>
+                <button onClick={addLink}>Submit Link</button>
+                <button onClick={deleteLink}>Delete Link</button>
             </form>
             <button onClick={addBio}>Submit</button>
             <SetImage></SetImage>
+
         </div>
         
     </div>
@@ -96,8 +149,8 @@ function SetImage(){
         const formData = new FormData()
         formData.append('image', file)
         //console.log(formData);
-        //axios.post('http://localhost:3001/upload', formData, {
-        axios.post('http://3.20.232.190:3001/upload', formData, {
+        axios.post(process.env.REACT_APP_HTTP_REQ+'/upload', formData, {
+        //axios.post('http://3.20.232.190:3001/upload', formData, {
             headers: {
                 accessToken: localStorage.getItem("accessToken"),
               },

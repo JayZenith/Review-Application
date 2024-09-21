@@ -93,7 +93,7 @@
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background-color: rgb(68, 68, 68);
+  background-color: rgb(192, 192, 192);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,9 +105,13 @@
 
 }
 
+.staricon{
+  background-color: rgb(255, 0, 0);
+}
+
 
 .staricon:hover{
-  background-color: red;
+  background-color: rgb(134, 19, 19);
 }
 
 .profilePic{
@@ -447,7 +451,7 @@
   color: white;
   top: 4.4rem;
   right: 0;
-  height: 120px;
+  height: 90px;
   width: 167x;
   padding: 10px;
   border-radius: 5px;
@@ -598,8 +602,8 @@
    .dropDownSettings{
     position: absolute;
     right: 31px;
-    top: -140px;
-    height: 120px;
+    top: -110px;
+    height: 90px;
     width: 167x;
     padding: 10px;
     border-radius: 5px;

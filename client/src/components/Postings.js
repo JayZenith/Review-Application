@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -30,8 +30,8 @@ function Postings() {
    const [starMe, setStarMe] = useState(true);
    const [toPost, setToPost] = useState(false);
    const [profilePosts, setProfilePosts] = useState({
-    isFeed: true,
-    isProfile: false, 
+    isFeed: false,
+    isProfile: true, 
   })
 
 
@@ -53,8 +53,8 @@ function Postings() {
 
     useEffect(()=>{ //Load the Users
       const loadUsers = async () => {
-        //const response = await axios.get("http://localhost:3001/users");
-        const response = await axios.get("http://3.20.232.190:3001/users");
+        const response = await axios.get(process.env.REACT_APP_HTTP_REQ+"/users");
+        //const response = await axios.get("http://3.20.232.190:3001/users");
         //console.log(response.data);
      
         setUsers(response.data)
@@ -67,8 +67,9 @@ function Postings() {
     useEffect(()=>{
       //avgRating.current=0;
       const loadProfilePosts = async () => {
-        //const response = await axios.get(`http://localhost:3001/profilePosts/${authState.id}`)
-        const response = await axios.get(`http://3.20.232.190:3001/profilePosts/${authState.id}`)
+        //const response = await axios.get(process.env.REACT_APP_HTTP_REQ+"/reviewPosts6")
+        const response = await axios.get(process.env.REACT_APP_HTTP_REQ+"/justReviews4");
+        //const response = await axios.get(`http://3.20.232.190:3001/profilePosts/${authState.id}`)
         //axios.get(`http://3.20.232.190:3001/profilePosts/${authState.id}`)
             //.then((response)=>{
                 //console.log(response.data)
@@ -81,8 +82,9 @@ function Postings() {
                 //avgRating.current = (5*(avgRating.current*100)) / 100;
                 //avgRating.current = Math.ceil(avgRating.current)
                 //console.log("Average: ", avgRating);
-                console.log(response.data)
-                setListOfPosts(response.data)
+                setTheTargets(response.data.array2);
+                setListOfPosts(response.data.array1);
+                console.log(response);
                 
                 //setNumOfReviews(response.data.length);
                 setPosted(false)
@@ -94,17 +96,38 @@ function Postings() {
       }
       },[posted, profilePosts])
     
-
+/*
     useEffect(()=>{
       //axios.get("http://localhost:3001/posts4", {
       const loadPosts = async () => {
-          const response = await axios.get("http://3.20.232.190:3001/posts4", {
-          //const response = await axios.get("http://localhost:3001/posts4", { 
+          //const response = await axios.get("http://3.20.232.190:3001/posts4", {
+          const response = await axios.get(process.env.REACT_APP_HTTP_REQ+"/posts4", { 
             headers: {accessToken: localStorage.getItem("accessToken")}
           });
           console.log(response);
           setTheTargets(response.data.array2);
           setListOfPosts(response.data.array1);
+          
+    
+
+          setPosted(false); //to reset call to render created post
+        }
+        if(profilePosts.isFeed && !profilePosts.isProfile){ //if not loading profile posts 
+          loadPosts();
+
+        }
+        
+    }, [posted, profilePosts])
+*/
+
+    useEffect(()=>{
+      //axios.get("http://localhost:3001/posts4", {
+      const loadPosts = async () => {
+          //const response = await axios.get("http://3.20.232.190:3001/posts4", {
+          const response = await axios.get(process.env.REACT_APP_HTTP_REQ+"/justPosts6")
+          //console.log(response);
+          //setTheTargets(response.data.array2);
+          setListOfPosts(response.data);
           
     
 
@@ -143,8 +166,8 @@ function Postings() {
   
 
    const likePost = (postId) => {
-       //axios.post("http://localhost:3001/likes", {
-       axios.post("http://3.20.232.190:3001/likes", {
+       axios.post(process.env.REACT_APP_HTTP_REQ+"/likes", {
+       //axios.post("http://3.20.232.190:3001/likes", {
            postID: postId
        }, {
            headers: {accessToken: localStorage.getItem("accessToken")}
@@ -174,8 +197,8 @@ function Postings() {
    const onSubmit = (event) => {
      event.preventDefault(); //without will redirect incorreclty
      setToPost(false);
-     //axios.post("http://localhost:3001/posts", {
-     axios.post("http://3.20.232.190:3001/posts", {
+     axios.post(process.env.REACT_APP_HTTP_REQ+"/posts", {
+     //axios.post("http://3.20.232.190:3001/posts", {
        postText, 
      }, {
        headers: {accessToken: localStorage.getItem("accessToken")},
@@ -183,14 +206,15 @@ function Postings() {
          if(res.data.error){
            alert(res.data.error);
          }
+        
          setPosted(true); //to render for new post
 
      });
    } 
   
    const deletePost = (id) => {
-      //axios.delete(`http://localhost:3001/deletePost/${id}`, {
-      axios.delete(`http://3.20.232.190:3001/deletePost/${id}`, {
+      axios.delete(process.env.REACT_APP_HTTP_REQ+`/deletePost/${id}`, {
+      //axios.delete(`http://3.20.232.190:3001/deletePost/${id}`, {
        headers: {
          accessToken: localStorage.getItem("accessToken"),
        },
@@ -271,7 +295,7 @@ function Postings() {
     
     }
 
-
+    
 
   
 
@@ -285,8 +309,8 @@ function Postings() {
    <div className={PostingsCSS.postings}>
    
     <div className={PostingsCSS.feedButtons}>
-      <div className={PostingsCSS.feedOne} onClick={showFeed}><h1>Main</h1></div>
-      <div className={PostingsCSS.feedTwo} onClick={showProfileFeed}> <h1>Profile</h1></div>
+      {/*<div className={PostingsCSS.feedOne} onClick={showFeed}><h1>Posts</h1></div>*/}
+      <div className={PostingsCSS.feedTwo} onClick={showProfileFeed}> <h1>Recent Reviews</h1></div>
       
     </div>
 
@@ -303,8 +327,10 @@ function Postings() {
                 {inputSize == 500 ? <p className={PostingsCSS.redInputSize}>Character Limit Reached</p> : <p className={PostingsCSS.blackInputSize}></p>}
                 <textarea
                   placeholder="Write Here"
+                  
                   id = "posting"
                   name = "posting"
+                  value={postText}
                   onChange={(e)=>handleInputChange(e)}
                   maxLength={500}
                 >
@@ -324,8 +350,8 @@ function Postings() {
                     <div className={PostingsCSS.avatar}>
                       {val.ImageData?
                       <>
-                        <img className={PostingsCSS.imgAvatar} src={`http://3.20.232.190:3001/images/`+val.ImageData} alt="img"/>
-                        {/*<img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} alt="img" />*/}
+                        {/*<img className={PostingsCSS.imgAvatar} src={`http://3.20.232.190:3001/images/`+val.ImageData} alt="img"/>*/}
+                        <img className={PostingsCSS.imgAvatar} src={process.env.REACT_APP_HTTP_REQ+`/images/`+val.ImageData} alt="img" />
                         <div className={PostingsCSS.profileDropDown}>
                           {/*Store the avg in database for user, grab it and display with stars */}
                         </div>
@@ -356,6 +382,32 @@ function Postings() {
                   >
                     <p className={PostingsCSS.bodyText}>{val.postText}</p>
                  </div> {/*END BODY*/}
+                
+                 {val.targetID ? (
+               <div className={PostingsCSS.theTarget}
+                  onClick={()=> {
+                      navigate(`/profile/${val.targetID}`);
+                      window.location.reload()
+                  }}
+                >
+        
+                  <div className={PostingsCSS.avatar}>
+                      {/* {aTarget.ImageData ? */}
+                      {aTarget? 
+                      <img className={PostingsCSS.imgAvatar} src={process.env.REACT_APP_HTTP_REQ+`/images/`+aTarget.ImageData} width="200" height="100" alt="" />
+                      //<img className={PostingsCSS.imgAvatar} src={`http://3.20.232.190:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
+                      : <img className={PostingsCSS.imgAvatar} src={""} width="200" height="100" alt="" />
+                      }
+                  </div>
+                  <div className={PostingsCSS.targetUsername}>{aTarget.firstname}</div>
+                  {/*aTarget.firstname*/}
+                </div>
+                ) : (
+                  ""
+                )}
+
+
+
                  <div className={!val.targetID ? PostingsCSS.footer : PostingsCSS.footer2}>
                        {authState.id === val.userID ? (
                          <i className="bi bi-trash" onClick={()=>{deletePost(val.id)}}>
@@ -380,26 +432,7 @@ function Postings() {
                      
                    </div> {/*END FOOTER*/}
                </div>
-               {val.targetID ? (
-               <div className={PostingsCSS.theTarget}
-                  onClick={()=> {
-                      navigate(`/profile/${val.targetID}`);
-                      window.location.reload()
-                  }}
-                >
-        
-                  <div className={PostingsCSS.avatar}>
-                      {aTarget.ImageData ?
-                      //<img className={PostingsCSS.imgAvatar} src={`http://localhost:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
-                      <img className={PostingsCSS.imgAvatar} src={`http://3.20.232.190:3001/images/`+aTarget.ImageData} width="200" height="100" alt="" />
-                      : <></>
-                      }
-                  </div>
-                  {/*aTarget.firstname*/}
-                </div>
-                ) : (
-                  ""
-                )}
+               
             </div>
            );
          })}

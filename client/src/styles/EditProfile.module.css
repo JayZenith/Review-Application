@@ -12,13 +12,16 @@
     justify-content: center;
     align-items: center;
     color: white;
-    /*background-color: red;*/
+        /*background-color: red;*/
    }
 
    .editProfile h1{
     font-size: 40px;
 
    }
+
+   
+   
 
    .editBio{
     width: 500px;
@@ -91,6 +94,9 @@
         color: black;
     }
  
+    .urlError{
+        color: red;
+    }
 
   
   
@@ -119,6 +125,9 @@
             flex-direction: column;
            
            }
+
+
+           
 
         .upload{
           

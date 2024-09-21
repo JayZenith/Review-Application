@@ -9,6 +9,7 @@ import { RenderContext } from "../helpers/RenderContext";
 import { FaStar } from 'react-icons/fa' 
 import ClipLoader from "react-spinners/ClipLoader";
 import ProfileCSS from '../styles/Profile.module.css';
+import linkIcon from '../icons/link.svg'
 
 function Profile() {
    let { id } = useParams();
@@ -35,10 +36,12 @@ function Profile() {
 
    const [numOfReviews, setNumOfReviews] = useState(0);
    const [theBio, setTheBio] = useState('');
+   const [theProfileLink, setTheProfileLink] = useState(null);
 
    const [loading, isLoading]=useState(false)
    const avgRating = useRef(0)
 
+   
    
 
    useEffect(()=>{
@@ -50,19 +53,21 @@ function Profile() {
    useEffect(()=>{
         //setPosted(true);
        //setSuggestionsContext([]);
-       //axios.get(`http://localhost:3001/getBio/${id}`)
-       axios.get(`http://3.20.232.190:3001/getBio/${id}`)
+       axios.get(process.env.REACT_APP_HTTP_REQ+`/getBio/${id}`)
+       //axios.get(`http://3.20.232.190:3001/getBio/${id}`)
         .then((response)=>{
             //console.log(response)
-            if(response.data[0])
+            if(response.data[0]){
                 setTheBio(response.data[0].bioText)
+                setTheProfileLink(response.data[0].profileLink)
+            }
         })
     },[])
 
    useEffect(()=>{
         avgRating.current=0;
-        //axios.get(`http://localhost:3001/profilePosts/${id}`)
-        axios.get(`http://3.20.232.190:3001/profilePosts/${id}`)
+        axios.get(process.env.REACT_APP_HTTP_REQ+`/profilePosts/${id}`)
+        //axios.get(`http://3.20.232.190:3001/profilePosts/${id}`)
             .then((response)=>{
                 //console.log(response.data)
                 response.data.forEach(function(fruit){
@@ -74,7 +79,7 @@ function Profile() {
                 avgRating.current = (5*(avgRating.current*100)) / 100;
                 avgRating.current = Math.ceil(avgRating.current)
                 //console.log("Average: ", avgRating);
-                console.log("check", response.data)
+                //console.log("check", response.data)
                 setListOfPosts(response.data)
                 setNumOfReviews(response.data.length);
                 setPosted(false)
@@ -85,8 +90,8 @@ function Profile() {
    useEffect(()=>{
         //console.log(render);
         isLoading(true);
-        //axios.get(`http://localhost:3001/basicInfo/${id}`)
-        axios.get(`http://3.20.232.190:3001/basicInfo/${id}`)
+        axios.get(process.env.REACT_APP_HTTP_REQ+`/basicInfo/${id}`)
+        //axios.get(`http://3.20.232.190:3001/basicInfo/${id}`)
         .then((response) => {
                console.log(response.data[0])
                //setUsername(response.data[0].username)
@@ -100,8 +105,8 @@ function Profile() {
 
 
    const likePost = (postId) => {
-       //axios.post("http://localhost:3001/likes", {
-       axios.post("http://3.20.232.190:3001/likes", {
+       axios.post(process.env.REACT_APP_HTTP_REQ+"/likes", {
+       //axios.post("http://3.20.232.190:3001/likes", {
            postID: postId
            //console.log(response.data.listOfPosts)
            //console.log(response.data.userLikes)
@@ -133,12 +138,31 @@ function Profile() {
 
    }
 
+   const [errMsg, setErrMsg] = useState('');
+   const [reviewErrMsg, setReviewErrMsg] = useState('');
+
 
    const onSubmit = (event) => {
+       
        //console.log(rating)
        event.preventDefault(); //dosent work without
-       //axios.post("http://localhost:3001/posts", {
-       axios.post("http://3.20.232.190:3001/posts", {
+       if(postText.length === 0 && rating === null){
+        setReviewErrMsg('*Must include review*')
+        setErrMsg('*Must include rating*')
+        return;
+       }
+       if(postText.length === 0){
+        setReviewErrMsg('*Must include review*')
+        return;
+       }
+       if(rating === null){
+        setErrMsg('*Must include rating*')
+        return;
+        
+       }
+       
+       axios.post(process.env.REACT_APP_HTTP_REQ+"/posts", {
+       //axios.post("http://3.20.232.190:3001/posts", {
          postText, id, rating, username //username?
        }, {
          headers: {accessToken: localStorage.getItem("accessToken")},
@@ -146,6 +170,9 @@ function Profile() {
            if(res.data.error){
              alert(res.data.error);
            }
+           setPost(''); //to clear text field
+           setErrMsg('') //to reset error if theres not rating 
+           setReviewErrMsg('');
            setPosted(true);
            setRenderState(true);
            //navigate("/postings");
@@ -155,14 +182,16 @@ function Profile() {
 
      const handleReviewChange = (e)=>{
         //console.log(e.target.value.length)
+        setReviewErrMsg('')
         setReviewSize(e.target.value.length)
         setPost(e.target.value);
+        
       }
 
 
       const deletePost = (id) => {
-        //axios.delete(`http://localhost:3001/deletePost/${id}`, {
-        axios.delete(`http://3.20.232.190:3001/deletePost/${id}`, {
+        axios.delete(process.env.REACT_APP_HTTP_REQ+`/deletePost/${id}`, {
+        //axios.delete(`http://3.20.232.190:3001/deletePost/${id}`, {
           headers: {
             accessToken: localStorage.getItem("accessToken"),
           },
@@ -178,22 +207,32 @@ function Profile() {
 
 
     const checkRating = (check) => {
+        setReviewErrMsg('')
+        setErrMsg('')
         //console.log(check);
         setRating(check);
     }
 
+    const out = () =>{
+        navigate(`/profile/editProfile/`);
+    }
 
+   
 
  return (
     <div className={ProfileCSS.profileApp}> {/*postings*/}
-        <h1 className={ProfileCSS.profileUsername}> {username} </h1>
-        <img className={ProfileCSS.profileAvatar} src={`http://3.20.232.190:3001/images/`+profilePic} width="100" height="100" alt="" />
-        {/*<img className={ProfileCSS.profileAvatar} src={`http://localhost:3001/images/`+profilePic} width="100" height="100" alt="" />*/}
+        <div className={ProfileCSS.profileTitleWrap}>
+            
+            <h1 className={ProfileCSS.profileUsername}> {username} </h1>
+            {authState.id == id ? <button className={ProfileCSS.profileEdit} onClick={out}>Edit Profile</button>: ""}
+        </div>
+        {/*<img className={ProfileCSS.profileAvatar} src={`http://3.20.232.190:3001/images/`+profilePic} width="100" height="100" alt="" />*/}
+        <img className={ProfileCSS.profileAvatar} src={process.env.REACT_APP_HTTP_REQ+`/images/`+profilePic} width="100" height="100" alt="" />
         
         {!isNaN(avgRating.current) ? <p className={ProfileCSS.userRating}>Rating: {avgRating.current}/5</p> : <p className={ProfileCSS.userRating}>No Ratings</p> }
 
 
-
+        
         <div className={ProfileCSS.ratingStars} >
                                     {[...Array(5)].map((star, idx)=>{
                                         //console.log(props.children)
@@ -223,23 +262,31 @@ function Profile() {
         {theBio ? 
         <div className={ProfileCSS.profileBio}>{theBio}</div>
         : <></>}
+        <ul className={ProfileCSS.profileLinks}>
+            {theProfileLink ? <TheLink item={linkIcon} theHref={theProfileLink}>{theProfileLink}</TheLink> : <></>}
+        </ul>
+        
         {authState.id != id ?  ( //if user then hide review option
             <div className={ProfileCSS.profileReview}> 
                 <h2 className={ProfileCSS.writeReview}>WRITE A REVIEW</h2>
                 <form  onSubmit={onSubmit}> 
                     {reviewSize == 500 ? <p className={ProfileCSS.charLimit}>Character Limit Reached</p> : <p className={ProfileCSS.hidden}>""</p>}
                     <textarea
-                       placeholder="..."
+                       placeholder="Write Here"
                        id = "posting"
                        name = "posting"
+                       value={postText}
                        onChange={(e)=>handleReviewChange(e)}
                        maxLength={500}
                     >
                     </textarea>
+                    <p className={ProfileCSS.errorMessage}>{reviewErrMsg}</p>
                     <p className={reviewSize >= 450 ? ProfileCSS.redInputSize: ""}>{reviewSize}/500</p>
+                    
                     <div className={ProfileCSS.rating}>
                         {[...Array(5)].map((star, idx)=>{
                             const currentRate = idx + 1
+                        
                             return(
                                 <>
                                     <label>
@@ -260,6 +307,7 @@ function Profile() {
                             )
                         })}
                      </div> {/*rating*/}
+                     <p className={ProfileCSS.errorMessage}>{errMsg}</p>
                     <button type="submit">Post</button>
                </form>
             </div>
@@ -281,8 +329,8 @@ function Profile() {
                             <div className={ProfileCSS.avatar}>
                             {val.ImageData? 
                             //http://3.143.203.151:3001
-                                <img className={ProfileCSS.imgAvatar} src={`http://3.20.232.190:3001/images/`+val.ImageData} width="200" height="100" alt="" />
-                                //<img className={ProfileCSS.imgAvatar} src={`http://localhost:3001/images/`+val.ImageData} width="200" height="100" alt="" />
+                                //<img className={ProfileCSS.imgAvatar} src={`http://3.20.232.190:3001/images/`+val.ImageData} width="200" height="100" alt="" />
+                                <img className={ProfileCSS.imgAvatar} src={process.env.REACT_APP_HTTP_REQ+`/images/`+val.ImageData} width="200" height="100" alt="" />
                                 //<></>
                                 :
                                 <></>
@@ -358,6 +406,14 @@ function Profile() {
        </div>
    </div>
  );
+}
+
+function TheLink(props){
+    return(
+        <li>
+            <a className={ProfileCSS.profileLink} href={props.theHref}><img src={props.item} alt={"home"} width="10" height="10"/>{props.children}</a>
+        </li>
+    );
 }
 
 function Star(props){
