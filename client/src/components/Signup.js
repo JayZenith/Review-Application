@@ -105,8 +105,6 @@ function Signup() {
 
 const setTheMatchPwd = (e) => {
     const match = pwd === e.target.value;
-    console.log("pwd", pwd);
-    console.log("target", e.target.value)
     setValidMatch(match);
 }
 
@@ -174,7 +172,7 @@ const setTheMatchPwd = (e) => {
                 SignupCSS.offscreen} aria-live="assertive">{errMsg}
             </p>
             <h1>Sign Up</h1>
-            <form action="#" onSubmit={handleSubmit} autocomplete="off">
+            <form action="#" onSubmit={handleSubmit} autoComplete="off">
                 <p ref={userExistRef} className={userExists ? SignupCSS.errmsg :
                     SignupCSS.offscreen} aria-live="assertive">{userExists}
                 </p>
@@ -197,7 +195,7 @@ const setTheMatchPwd = (e) => {
                         require
                         aria-invalid={validFname ? "false" : "true"}
                         aria-describedby='uidnote'
-                        autocomplete="off"
+                        autoComplete="off"
                         onFocus={() => setFnameFocus(true)}
                         onBlur={() => setFnameFocus(false)}
                     />   
@@ -228,7 +226,7 @@ const setTheMatchPwd = (e) => {
                         required
                         aria-invalid={validFname ? "false" : "true"}
                         aria-describedby='uidnote'
-                        autocomplete="off"
+                        autoComplete="off"
                         onFocus={() => setLnameFocus(true)}
                         onBlur={() => setLnameFocus(false)}
                     />   
@@ -261,7 +259,7 @@ const setTheMatchPwd = (e) => {
                         required
                         aria-invalid={validEmail ? "false" : "true"}
                         aria-describedby='emailnote'
-                        autocomplete="off"
+                        autoComplete="off"
                         onFocus={() => setEmailFocus(true)}
                         onBlur={() => setEmailFocus(false)}
                     />
@@ -295,7 +293,7 @@ const setTheMatchPwd = (e) => {
                             required
                             aria-invalid={validPwd ? "false" : "true"}
                             aria-describedby='pwdnote'
-                            autocomplete="current-password"
+                            autoComplete="current-password"
                             onFocus={() => setPwdFocus(true)}
                             onBlur={() => setPwdFocus(false)}
                         />       
@@ -333,7 +331,7 @@ const setTheMatchPwd = (e) => {
                             required
                             aria-invalid={validMatch ? "false" : "true"}
                             aria-describedby='confirmnote'
-                            autocomplete="current-password"
+                            autoComplete="current-password"
                             onFocus={() => setMatchFocus(true)}
                             onBlur={() => setMatchFocus(false)}
                         />          

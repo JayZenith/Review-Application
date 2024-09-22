@@ -312,8 +312,8 @@
   justify-content: center;
   background-color: black;
   border: 1px solid white;
+ 
 }
-
 
 
 
@@ -498,6 +498,7 @@
     top: -9px;
     margin-inline: auto; 
     width: fit-content;
+    
    
   }
 
@@ -585,7 +586,7 @@
 
    .searchBar input::placeholder{
     color: rgb(0, 0, 0);
-    font-size: 13px;
+    font-size: 11px;
     font-family: 'Days Sans Black', sans-serif;
   }
 

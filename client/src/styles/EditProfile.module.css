@@ -6,83 +6,188 @@
  ***********************************/
 
  .editProfile{
-    padding-top: 120px;
+    padding-top: 90px;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     color: white;
-        /*background-color: red;*/
+      
    }
 
-   .editProfile h1{
-    font-size: 40px;
+   .editProfileBackground{
+    position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0,0,0,0.8);
+      width: 100vw;
+      height: 100vh;
 
    }
 
-   
-   
+   .editProfile .editBioTitle{
+    
+    font-size: 20px;
 
-   .editBio{
+   }
+
+   .editProfile .editBio{
     width: 500px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    /*background-color: blue;*/
+    justify-content: flex-start;
    }
 
    .editProfile form{
+  
     width: 100%;
-    height: 170px;
+    height: 200px;
+  
    }
+
+   .makeAbsolute{
+    position: absolute;
+   }
+
+   .editProfile form p{
+    font-size: 15px;
+    margin-bottom: 2px;
+
+   }
+
+   .charLimit{
+    color: red;
+}
+
 
    .editProfile form textarea{
       width: 100%;
-      height: 70px;
-      padding: 12px 20px;
+      height: 60px;
+      padding: 5px;
       box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background-color: #f8f8f8;
-      font-size: 16px;
+      color: white;
+      border: 1px solid white;
+      border-radius: 10px;
+      background-color: #000000;
+      font-size: 14px;
       resize: none;
    }
 
-   .editBio button{ 
-        margin-top:15px;
-        height: 40px;
+   .editBio .buttonWrap{
+    display: flex;
+    justify-content: space-between;
+   }
+
+   .editBio .submitBioWrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+   }
+
+   .editProfile .editBio .submitBio{
+    width: 100px;
+    height: 5px;
+    background-color: rgb(0, 0, 0);
+    border: 1px solid white;
+    display: flex;
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    cursor: pointer;
+
+   }
+
+   .addLinkButton, .deleteLinkButton{
+    width: 100px;
+    height: 5px;
+    background-color: rgb(0, 0, 0);
+    border: 1px solid white;
+    display: flex;
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    cursor: pointer;
+
+   }
+
+   .editProfile .editBio .submitBio:hover{
+    width: 100px;
+    height: 5px;
+    background-color: rgb(0, 0, 0);
+    border: 1px solid rgb(255, 0, 0);
+    
+
+   }
+
+   .editLinkTitle{
+    text-align: center;
+    font-size: 20px;
+   }
+
+    .editBio .editInput{
+        margin-top: 5px;
         width: 100%;
-        background-color: rgb(204, 47, 47);
+        background-color: black;
+        border: 1px solid white;
         border-radius: 10px;
-        border: 1px solid black;
         color: white;
-        cursor: pointer;
+        box-sizing: border-box;
+        padding: 5px;
+        font-size: 14px;
+        height: 30px;
     }
 
-    .upload{
-        /*background-color: purple;*/
-        margin-top: 40px;
+    .editProfile .imageUploadTitle{
+        font-size: 20px;
+        
+    }
+   
+
+    .uploadWrapper{
+      
+        position: absolute;
+        width: 500px;
+        height: 40px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 500px;
-        height: 200px;
     }
 
-    .upload input[name=file]{
-        height: 40px;
-        margin-top: 10px;
-        margin-left: 80px;
+    .upload{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        
+        margin-top: 0px;
+        width: 100%;
+        height: 30px;
     }
 
-    .upload button{
+
+    .upload input{
+        height: 30px;
+    }
+
+    .upload input button{
+      
+    }
+
+    .uploadWrapper .uploadButton{
         height: 30px;
         width: 120px;
-        border-radius: 10px;
-        background-color: rgb(204, 47, 47);
-        color: white;
+        border-radius: 20px;
+        background-color: rgb(8, 8, 8);
+        color: rgb(255, 255, 255);
+        border: 1px solid white;
         cursor: pointer;
     }
 
@@ -105,39 +210,34 @@
             padding-top: 60px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             color: white;
             /*background-color: red;*/
            }
 
-          
-
         .editProfile h2{
-            font-size: 22px;
+            font-size: 16px;
         
         }
 
         .editBio{
             width: 300px;
-            height: 296px;
+            height: 280px;
             display: flex;
             flex-direction: column;
-           
-           }
+        }
 
-
-           
 
         .upload{
-          
+            background-color: red;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
            
             width: 340px;
-            height: 100px;
+            height: 40px;
         }
 
     }

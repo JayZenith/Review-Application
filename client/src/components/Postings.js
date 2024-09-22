@@ -84,8 +84,7 @@ function Postings() {
                 //console.log("Average: ", avgRating);
                 setTheTargets(response.data.array2);
                 setListOfPosts(response.data.array1);
-                console.log(response);
-                
+               
                 //setNumOfReviews(response.data.length);
                 setPosted(false)
            // })

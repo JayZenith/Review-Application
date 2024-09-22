@@ -83,10 +83,22 @@ const confirmDeleteAccount = (choose) => {
 
 }
 
+const [thePwdBox, setThePwdBox] = useState(false);
+const [theDeleteBox, setTheDeleteBox] = useState(false);
+
 
  return (
    <div className={SettingsCSS.settings}>
+    {thePwdBox || theDeleteBox ? (
+        <div
+            className={SettingsCSS.editProfileBackground}
+            >
+        </div>
+    ) : <></> }
      <h1>Change Your Password</h1>
+     <div onClick={()=>setThePwdBox(!thePwdBox)}>+</div>
+     {thePwdBox && (<div className={SettingsCSS.makeAbsolute}>
+      <div onClick={()=>setThePwdBox(!thePwdBox)}>X</div>
      <input
        type="text"
        placeholder="Old Password..."
@@ -102,13 +114,16 @@ const confirmDeleteAccount = (choose) => {
        }}
      />
      <button onClick={passwordDialog}>Save Changes</button>
-
+     </div>
+    )}
 
      <div className="deleteAccount">
        <h1>Delete Account</h1>
-       {/*<button onClick={deleteAccount}>Delete Account</button>*/}
+       <div onClick={()=>setTheDeleteBox(!theDeleteBox)}>+</div>
+        {theDeleteBox && ( <div className={SettingsCSS.makeAbsolute}>
+          <div onClick={()=>setTheDeleteBox(!theDeleteBox)}>X</div>
        <button onClick={deleteDialog}>Delete Account</button>
-
+       </div>)}
      </div>
      { dialog.isLoading && <Dialog onDialog={confirmDeleteAccount} message={dialog.message}/> }
      { dialog.isLoading2 && <Dialog onDialog={confirmChangePassword} message={dialog.message}/> }

@@ -684,7 +684,7 @@ app.post("/addBio", validateToken, (req,res)=>{
 
 app.post("/deleteUrlLink/:id", validateToken, (req, res) => {
   const id = req.params.id;
-  db.query(`UPDATE bio SET profileLink=null WHERE id='${id}'`,(err, result) => {
+  db.query(`UPDATE bio SET profileLink=null WHERE userID='${id}'`,(err, result) => {
     if (err) throw new Error(err);
     //res.json(result)
   });

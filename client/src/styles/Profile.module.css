@@ -11,6 +11,8 @@
   .profileApp .profileUsername{
     /*background-color: blue;*/
     font-size: 100px;
+    
+    
   }
 
   .profileApp .userRating{
@@ -19,20 +21,22 @@
 
   .profileTitleWrap{
     width: 100%;
+   
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     
   }
 
   .profileTitleWrap .profileEdit{
-    height: 40px;
-    width: 100px;
-   
+    height: 30px;
+    width: 90px;
+    margin-top: 5px;
+    margin-bottom: 10px;
     border-radius: 10px;
-    position: absolute;
-    right: 0;
-    margin-right: 20px;
+    
+ 
   
     color: white;
     font-size: 15px;
@@ -344,18 +348,27 @@
   }
   
   @media all and (max-width: 500px){
+    .profileTitleWrap{
+      width: 100%;
+    
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      
+    }
 
     .profileTitleWrap .profileEdit{
-      height: 30px;
-      width: 80px;
+      height: 25px;
+      width: 70px;
       border-radius: 10px;
-      position: absolute;
+      
       right: 0;
-      z-index: -1;
-      margin-top: 160px;
-      margin-right: 20px;
+  
+      margin-top: 5px;
+      
       color: white;
-      font-size: 12px;
+      font-size: 10px;
       background-color: rgb(0, 0, 0);
       border: 1px solid white;;
       cursor: pointer;

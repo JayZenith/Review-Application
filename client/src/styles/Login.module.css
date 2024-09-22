@@ -37,10 +37,10 @@
       }
      
       form .loginField input{
-         height: 50px;
+     
          width: 300px;
-         background: #333;
-         border: none;
+         
+        
          outline: none;
          border-radius: 4px;
          color: #fff;
@@ -53,7 +53,7 @@
          width: 309px;
          padding: 16px 0;
          font-size: 1rem;
-         background: #c53232;
+         background-color:#d60e0e;
          color: #fff;
          font-weight: 500;
          border-radius: 4px;
@@ -139,7 +139,7 @@
     width: 409px;
     padding: 16px 0;
     font-size: 1rem;
-    background: #c53232;
+    background: #d60e0e;
     color: #fff;
     font-weight: 500;
     border-radius: 4px;

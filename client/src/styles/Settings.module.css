@@ -8,6 +8,23 @@
     color: white;
 }
 
+.editProfileBackground{
+    position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0,0,0,0.8);
+      width: 100vw;
+      height: 100vh;
+
+   }
+
+.makeAbsolute{
+position: absolute;
+}
+
+
 .settings input{
     height: 20px;
     width: 300px;

@@ -1,3 +1,5 @@
+@import url('https://fonts.cdnfonts.com/css/santa-cruze');
+ 
  .backgroundImg{
     background: #ffffff;
     height: 100vh;
@@ -38,7 +40,7 @@
    }
 
    .signupWrapper h1{
-      
+    
       color: #fff;
       font-size: 2rem;
      }
@@ -87,9 +89,10 @@
 
    form .signupButton{
       width: 409px;
+      height: 50px;
       padding: 16px 0;
       font-size: 1rem;
-      background: #c53232;
+      background: #d60e0e;
       color: #fff;
       font-weight: 500;
       border-radius: 4px;

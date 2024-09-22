@@ -151,7 +151,7 @@ useEffect(() => { //renders on any page load
     });
   }, [render])
 
-  console.log(topusers)
+ 
   /*
   const logout = () => {
     localStorage.removeItem("accessToken");

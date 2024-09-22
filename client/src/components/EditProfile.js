@@ -96,17 +96,31 @@ function EditProfile() {
         setBioText(e.target.value);
     }
 
+    const [theBio, setTheBio] = useState(false)
+    const [theLink, setTheLink] = useState(false)
+    const [theImageUpload, setTheImageUpload] = useState(false)
+
     
 
   return (
-    <ImageContext.Provider value={{ imageState, setImageState }}>
+    <ImageContext.Provider value={{ imageState, setImageState, theImageUpload, setTheImageUpload }}>
+        
     <div className={EditProfileCSS.editProfile}>
-        <h2>Edit Bio</h2>
+        {theBio || theLink || theImageUpload? (
+        <div
+            className={EditProfileCSS.editProfileBackground}
+            >
+        </div>
+        ) : <></>}
+        <h2 className={EditProfileCSS.editBioTitle}>Edit Bio</h2>
         <div className={EditProfileCSS.editBio}>
             <form>
-                {bioSize == 150 ? <p className={EditProfileCSS.charLimit}>Character Limit Reached</p> : <p className={EditProfileCSS.hidden}>""</p>}
+            <div onClick={()=>setTheBio(!theBio)}>+</div>
+                {theBio && (<div className={EditProfileCSS.makeAbsolute}>
+                    <div onClick={()=>setTheBio(!theBio)}>x</div>
+                {bioSize == 150 ? <p className={EditProfileCSS.charLimit}>Character Limit Reached</p> : <p className={EditProfileCSS.hidden}></p>}
                 <textarea
-                    placeholder="..."
+                    placeholder="Enter the bio..."
                     id = "bio"
                     name = "bio"
                     value={bioText}
@@ -114,20 +128,40 @@ function EditProfile() {
                     maxLength={150}
                 >
                 </textarea>
-                <p className={bioSize >= 130 ? EditProfileCSS.charLimit : ""}>{bioSize}/150</p>
-                <input placeholder='the url' 
+
+                <div className={EditProfileCSS.submitBioWrap}>
+                    <p className={bioSize >= 130 ? EditProfileCSS.charLimit : ""}>{bioSize}/150</p>
+                    <button className={EditProfileCSS.submitBio} onClick={addBio}>Submit</button>
+                    
+                </div>
+                </div>
+                )}
+                <h2 className={EditProfileCSS.editLinkTitle}>Edit Link</h2>
+                <div onClick={()=>setTheLink(!theLink)}>+</div>
+                {theLink && (<div className={EditProfileCSS.makeAbsolute}>
+                    <div onClick={()=>setTheLink(!theLink)}>x</div>
+                <input 
+                    className={EditProfileCSS.editInput}
+                    placeholder='Enter the url. . . ' 
                     value={urlLink}
                     onChange={(e) => checkUrl(e)}
                 />
                 <p className={EditProfileCSS.urlError}>{errMsg}</p>
-                <button onClick={addLink}>Submit Link</button>
-                <button onClick={deleteLink}>Delete Link</button>
-            </form>
-            <button onClick={addBio}>Submit</button>
-            <SetImage></SetImage>
+                <div className={EditProfileCSS.buttonWrap}>
+                    <button className={EditProfileCSS.addLinkButton} onClick={addLink}>Submit Link</button>
+                    <button className={EditProfileCSS.deleteLinkButton} onClick={deleteLink}>Delete Link</button>
+                </div>
+                </div>
+                )}
 
+            </form>
+
+            <h2 className={EditProfileCSS.imageUploadTitle}>Image Upload</h2>
+            <div onClick={()=>setTheImageUpload(!theImageUpload)}>+</div>
+            {theImageUpload && (
+            <SetImage></SetImage>
+            )}
         </div>
-        
     </div>
     </ImageContext.Provider>
   )
@@ -136,6 +170,7 @@ function EditProfile() {
 function SetImage(){
     const [file, setFile] = useState('')
     const { imageState, setImageState } = useContext(ImageContext)
+    const { theImageUpload, setTheImageUpload } = useContext(ImageContext)
    
 
     const handleImage = (e) =>{
@@ -167,12 +202,16 @@ function SetImage(){
     }
 
     return(
-        <div className={EditProfileCSS.upload}>
-            <h2>Image Upload</h2>
-            <input type="file" name="file"
-                onChange={handleImage}
-            ></input>
-            <button onClick={handleApi}>Submit File</button>
+        <div className={EditProfileCSS.uploadWrapper}>
+            <div onClick={()=>setTheImageUpload(!theImageUpload)}>-</div>
+            <div className={EditProfileCSS.upload}>
+                
+                <input type="file" name="file"
+                    onChange={handleImage}
+                ></input>
+                
+            </div>
+            <button className={EditProfileCSS.uploadButton} onClick={handleApi}>Submit File</button>
         </div>
     )
 }
