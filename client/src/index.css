@@ -18,8 +18,8 @@
  }
  
  code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+
  }
  
  .App{
@@ -66,7 +66,7 @@
   background-color: var(--bg);
   padding: 10px 1rem; 
   border-bottom: 1px solid white;
-  color: white;
+  color: rgb(255, 255, 255);
  }
 
  
@@ -93,25 +93,25 @@
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(214, 214, 214);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .navicon:hover{
-    background-color: rgb(202, 26, 26);
+    background-color: #d60000;
     transition: all .9s ease;
 
 }
 
 .staricon{
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(214, 214, 214);
 }
 
 
 .staricon:hover{
-  background-color: rgb(202, 26, 26);
+  background-color: #d60000;
 }
 
 .profilePic{
@@ -131,11 +131,6 @@
   cursor: pointer;
 }
 
-.profilePic:hover{
-  background-color: rgb(75, 73, 73);
-  transition: ease-in .4s;
-}
-
 
 .imgAvatar{
   width: 45px;
@@ -146,7 +141,6 @@
   justify-content: center;
 
  }
-
 
 
 .arrow{
@@ -160,7 +154,7 @@
 }
 
 .arrow:hover{
-  background-color: rgb(204, 12, 12);
+  background-color:  #d60000;
   transition: all .9s ease;
 
 }
@@ -200,8 +194,8 @@
 
 .searchBar input::placeholder{
   color: rgb(0, 0, 0);
-  font-size: 16px;
-  font-family: 'Days Sans Black', sans-serif;
+  font-size: 1rem;
+
 }
 
 

@@ -85,8 +85,12 @@ function Signup() {
  useEffect(() => {
    const result = PWD_REGEX.test(pwd);
    setValidPwd(result); //password is true
-   const match = pwd === matchPwd;
-   setValidMatch(match); //passwords match
+   if (matchPwd != ''){
+        if(pwd === matchPwd){
+            setValidMatch(true)
+        }
+   }
+  
  }, [pwd, matchPwd])
 
  const setThePwd = (e) => {
@@ -104,6 +108,7 @@ function Signup() {
   }
 
 const setTheMatchPwd = (e) => {
+    setMatchPwd(e.target.value)
     const match = pwd === e.target.value;
     setValidMatch(match);
 }
@@ -178,10 +183,10 @@ const setTheMatchPwd = (e) => {
                 </p>
                 <div className={SignupCSS.signupField}>
                     <label htmlFor='firstname'>
-                        <span className={validFname ? SignupCSS.valid : SignupCSS.hide}>
+                        <span className={validFname ? SignupCSS.valid : SignupCSS.offscreen}>
                             <i className="bi bi-check"></i>
                         </span>
-                        <span className={validFname || !fname ? SignupCSS.hide:SignupCSS.invalid}>
+                        <span className={validFname || !fname ? SignupCSS.hide:SignupCSS.invalid }>
                             <i className="bi bi-x"></i>
                         </span>
                     </label>
@@ -192,22 +197,23 @@ const setTheMatchPwd = (e) => {
                         ref={userRef} //used to obtain this element upon 1st render
                         //onChange={(e) => setFname(e.target.value)}
                         onChange={(e) => setFirstName(e)}
-                        require
+                        required
                         aria-invalid={validFname ? "false" : "true"}
                         aria-describedby='uidnote'
                         autoComplete="off"
                         onFocus={() => setFnameFocus(true)}
                         onBlur={() => setFnameFocus(false)}
                     />   
+                    <p className={SignupCSS.theErrors}>
+                    
+                    {FNErrMsg}
+                    </p>
                 </div>
                 {/*<p id="uidnote" className={fnameFocus && fname &&
                     !validFname ? SignupCSS.instructions : SignupCSS.offscreen}>
                     <i class="bi bi-x-circle"></i>
                 */}
-                <p className={SignupCSS.theErrors}>
-                    
-                        {FNErrMsg}
-                </p>
+                
                 <div className={SignupCSS.signupField}>
                     <label htmlFor='username'>
                         <span className={validLname ? SignupCSS.valid : SignupCSS.hide}>
@@ -230,16 +236,9 @@ const setTheMatchPwd = (e) => {
                         onFocus={() => setLnameFocus(true)}
                         onBlur={() => setLnameFocus(false)}
                     />   
+                    <p className={SignupCSS.theErrors}>{LNErrMsg}
+                    </p>
                 </div>
-                {/*<p id="uidnote" className={lnameFocus && lname &&
-                    !validLname ? SignupCSS.instructions : SignupCSS.offscreen}>
-                    <i class="bi bi-x-circle"></i>
-                    2 to 29 characters.
-                    Must begin wtih a letter.
-                    Letters, numbers, underscores, hyphens allowed.
-                */}
-                <p className={SignupCSS.theErrors}>{LNErrMsg}
-                </p>
                 <div className={SignupCSS.signupField}>
                     <label htmlFor='email'>
                         <span className={validEmail ? SignupCSS.valid : SignupCSS.hide}>
@@ -263,17 +262,10 @@ const setTheMatchPwd = (e) => {
                         onFocus={() => setEmailFocus(true)}
                         onBlur={() => setEmailFocus(false)}
                     />
+                    <p className={SignupCSS.theErrors}>{EmailErrMsg}
+                    </p>
                               
                 </div>
-                <p className={SignupCSS.theErrors}>{EmailErrMsg}
-                </p>
-                    {/*
-                    <p id="emailnote" className={emailFocus && !validEmail ? SignupCSS.instructions :
-                        SignupCSS.offscreen}>
-                        <i class="bi bi-x-circle"></i>
-                            Enter your e-mail. 
-                    </p>
-                    */}
                     <div className={SignupCSS.signupField}>
                         <label htmlFor='password'>
                             <span className={validPwd ? SignupCSS.valid : SignupCSS.hide}>
@@ -296,28 +288,18 @@ const setTheMatchPwd = (e) => {
                             autoComplete="current-password"
                             onFocus={() => setPwdFocus(true)}
                             onBlur={() => setPwdFocus(false)}
-                        />       
+                        />  
+                         <p className={SignupCSS.theErrors}>{PwdErrMsg}
+                         </p>     
                     </div>
-                    {/*
-                    <p id="pwdnote" className={pwdFocus && !validPwd ? SignupCSS.instructions :
-                        SignupCSS.offscreen}>
-                        <i class="bi bi-x-circle"></i>
-                        At least 8 characters. Must include uppercase and 
-                        lowercase letters, and a number.
-                    */}
-                        {/*
-                         and one of: <span aria-label="exclamation mark">!</span>
-                        <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span>
-                        <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
-                        */}
-                    <p className={SignupCSS.theErrors}>{PwdErrMsg}
-                    </p>
+
+                   
                     <div className={SignupCSS.signupField}>
                         <label htmlFor='confirm_pwd'>
-                            <span className={validMatch ? SignupCSS.valid : SignupCSS.hide}>
+                            <span className={validMatch && pwd.length > 0 && matchPwd.length > 0 ? SignupCSS.valid : SignupCSS.hide}>
                                 <i className="bi bi-check"></i>
                             </span>
-                            <span className={!validMatch ?  SignupCSS.invalid :
+                            <span className={!validMatch && pwd.length > 0 && matchPwd.length > 0 ?  SignupCSS.invalid:
                                 SignupCSS.hide}>
                                 <i className="bi bi-x"></i>
                             </span>
@@ -334,16 +316,12 @@ const setTheMatchPwd = (e) => {
                             autoComplete="current-password"
                             onFocus={() => setMatchFocus(true)}
                             onBlur={() => setMatchFocus(false)}
-                        />          
+                        />  
+                        <p className={SignupCSS.theErrors}>{PwdMatchErrMsg}
+                        </p>        
                     </div>
-                    {/*
-                    <p id="confirmnote" className={matchFocus && !validMatch ? SignupCSS.instructions :
-                        SignupCSS.offscreen}>
-                        <i class="bi bi-x-circle"></i>
-                        Must match the first password.
-                    */}
-                    <p className={SignupCSS.theErrors}>{PwdMatchErrMsg}
-                    </p>
+   
+                    
                     <div className={SignupCSS.signupField}>
                         <input
                             className={SignupCSS.signupButton}

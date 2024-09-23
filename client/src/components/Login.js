@@ -14,6 +14,8 @@ function Login() {
  const {setAuthState} = useContext(AuthContext)
  const userExistsRef = useRef(); //set if user exists 
  const [userExists, setUserExists] = useState('');
+ const [EmailErrMsg, setEmailErrMsg] = useState('');
+ const [PwdErrMsg, setPwdErrMsg] = useState('');
 
  useEffect(() => {
     userRef.current.focus(); //obtained off first render of signup page
@@ -22,10 +24,32 @@ function Login() {
   useEffect(() => {
     setUserExists(''); //do this to reinitiliaze after new render
   }, [email, password])
+  
+
+  const setTheEmail = (e) => {
+    setEmail(e.target.value);
+    setEmailErrMsg('')
+  }
+
+  const setThePassword = (e) => {
+    setPassword(e.target.value);
+    setPwdErrMsg('')
+  }
  
 
  async function submit(e){
+   
    e.preventDefault();
+
+   if(email.length === 0){
+    setEmailErrMsg('Enter the email')
+    return;
+   }
+   else if(password.length === 0){
+    setPwdErrMsg('Enter the password')
+    return;
+   }
+
    try{
        await axios.post(process.env.REACT_APP_HTTP_REQ+"/login", {
        //await axios.post("http://3.20.232.190:3001/login", {
@@ -63,10 +87,14 @@ function Login() {
             </p>
            <form action="#">
                <div className={LoginCSS.loginField}>
-                   <input ref={userRef} type="email" onChange={(e)=>{setEmail(e.target.value)}} placeholder="Email" required/>  
+                   <input ref={userRef} type="email" onChange={(e)=>{setTheEmail(e)}} placeholder="Email" required/>  
+                   <p className={LoginCSS.theErrors}>{EmailErrMsg}
+                    </p>
                </div>
                <div className={LoginCSS.loginField}>
-                   <input type="password" onChange={(e)=>{setPassword(e.target.value)}} placeholder="Password" required/> 
+                   <input type="password" onChange={(e)=>{setThePassword(e)}} placeholder="Password" required/> 
+                   <p className={LoginCSS.theErrors}>{PwdErrMsg}
+                    </p>
                </div>
                <button type="submit"onClick={submit}>Sign In</button>
                <p>No Account? <Link to="/signup">Sign Up Now</Link></p>   

@@ -1,14 +1,19 @@
 
 @import url('https://fonts.cdnfonts.com/css/pink-rocket');
 @import url('https://fonts.cdnfonts.com/css/days-sans-black');
+@import url('https://fonts.cdnfonts.com/css/chivo-mono');
+
 
    .postings{
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
     padding-top: 70px;
     display: flex;
     width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: 'Chivo Mono', sans-serif;
+
     /*align-items: center;*/
   
  
@@ -17,11 +22,10 @@
    .feedButtons{
       width: 712px;
       display: flex;
+      font-size: 1rem;
       align-items: center;
-      
       color: white;
-      
-      height: 60px;
+      height: 50px;
 
    }
 
@@ -57,26 +61,24 @@
    }
 
    .feedTwo .reviewsUnderline, .feedOne .postsUnderline{
-      margin-top: 15px;
-      margin-bottom: 15px;
+      margin-top: 12px;
+      margin-bottom: 12px;
    }
    
    .feedTwo .reviewsUnderline2, .feedOne .postsUnderline2{
-      margin-top: 15px;
-      margin-bottom: 15px;
+      margin-top: 12px;
+      margin-bottom: 12px;
       color: rgb(100, 100, 100);
    }
 
    .justRevs{
-      background-color: rgb(202, 18, 18);
+      background-color:  #d60000;
       width: 19%;
       height: 4px;
-      
-     
    }
 
    .justPosts{
-      background-color: rgb(202, 18, 18);
+      background-color:  #d60000;
       width: 15%;
       height: 4px;
       
@@ -87,9 +89,9 @@
       margin-top: 100px;
       margin-right: 20%;
       right: 0;
-      width: 50px;
-      height: 50px;
-      background-color: rgb(182, 23, 23);
+      width: 35px;
+      height: 35px;
+      background-color:  #d60000;
       position: absolute;
       cursor: pointer;
       border-radius: 50%;
@@ -98,7 +100,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid white;
+      
+
+     
    }
    
    .postings .listOfPostsWrapper .createPostSection{
@@ -123,19 +127,20 @@
    
    .postings .createPostSection form{
       position: absolute; 
-     
       width: 100%;
-      height: 100%;
-      margin-top: 5%;
+      height: 50%;
+      margin-top: 10%;
+      margin-left: 2%;
       color: white;
       display: flex;
       flex-direction: column;
-      margin-bottom: 30px;
+     
    }
 
   
    .postings .createPostSection form textarea{
-    width: 100%; /*takes width of container*/
+    width: 96%; /*takes width of container*/
+   
     height: 60%; /*w/o it breaks*/
     padding: 12px 20px;
     box-sizing: border-box;
@@ -144,7 +149,6 @@
     color: rgb(255, 255, 255);
     background-color: #000000;
     font-size: 16px;
-    font-family: monospace, monospace;
     resize: none;
    }
 
@@ -200,14 +204,13 @@
    
    
    .postings .createPostSection form button:hover{
-    background-color: rgb(201, 20, 20);
+    background-color:  #d60000;
     transition: all .7s ease;
    }
    
    
    
    .post{
-   font-family: 'Monomod', sans-serif;
     width: 700px;
     border: 1px solid white;
     height: auto; /*Need to stretch container */
@@ -293,7 +296,7 @@
       flex-direction: column;
       justify-content: space-between;
       width: 600px;
-      flex-grow: 0;
+
       
    }
 
@@ -309,25 +312,23 @@
 
    .bodyAndFooter .nameAndRating{
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      /*background-color: green;*/
       width: 100%;
-      font-family: 'Days Sans Black', sans-serif;
+    
       
    }
 
    .bodyAndFooter2 .nameAndRating{
+
       display: flex;
       justify-content: space-between;
       align-items: center;
       /*background-color: green;*/
       width: 100%;
-      font-family: 'Days Sans Black', sans-serif;
+    
    }
 
    .bodyAndFooter2 .nameAndRating .username a:hover{
-      color: rgb(129, 114, 114);
+      color:  #d60000;
       transition: ease-in .4s;
    }
 
@@ -345,13 +346,13 @@
    .bodyAndFooter .username a{
     color: rgb(252, 252, 252);
     font-weight: 800;
-    margin-left: 10px;
+ 
     
     
    }
 
    .bodyAndFooter .username a:hover{
-      color: rgb(153, 123, 123);
+      color:  #d60000;
       transition: ease-in .4s;
       
      }
@@ -359,7 +360,7 @@
    .bodyAndFooter2 .username a{
       color: rgb(252, 252, 252);
       font-weight: 800;
-      margin-left: 10px;
+
       
      }
    

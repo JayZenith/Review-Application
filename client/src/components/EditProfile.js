@@ -98,6 +98,7 @@ function EditProfile() {
 
     const [theBio, setTheBio] = useState(false)
     const [theLink, setTheLink] = useState(false)
+    const [theRemoveLink, setTheRemoveLink] = useState(false)
     const [theImageUpload, setTheImageUpload] = useState(false)
     let bioRef = useRef();
     let linkRef = useRef();
@@ -140,7 +141,7 @@ function EditProfile() {
     <ImageContext.Provider value={{ imageState, setImageState, theImageUpload, setTheImageUpload }}>
         
     <div className={EditProfileCSS.editProfile}>
-        {theBio || theLink || theImageUpload? (
+        {theBio || theLink || theImageUpload || theRemoveLink? (
         <div
             className={EditProfileCSS.editProfileBackground}
             >
@@ -153,30 +154,35 @@ function EditProfile() {
             
                 {theBio && (<div ref={bioRef} className={EditProfileCSS.makeAbsolute}>
                     <div className={EditProfileCSS.exit} onClick={()=>setTheBio(!theBio)}>x</div>
-                {bioSize == 150 ? <p className={EditProfileCSS.charLimit}>Character Limit Reached</p> : <p className={EditProfileCSS.hidden}></p>}
-                <textarea
-                    placeholder="Enter the bio..."
-                    id = "bio"
-                    name = "bio"
-                    value={bioText}
-                    onChange={(e)=>handleBioChange(e)}
-                    maxLength={150}
-                >
-                </textarea>
+                    {bioSize == 150 ? <p className={EditProfileCSS.charLimit}>Character Limit Reached</p> : <p className={EditProfileCSS.hidden}></p>}
+                    <textarea
+                        placeholder="Enter the bio..."
+                        id = "bio"
+                        name = "bio"
+                        value={bioText}
+                        onChange={(e)=>handleBioChange(e)}
+                        maxLength={150}
+                    >
+                    </textarea>
 
-                <div className={EditProfileCSS.submitBioWrap}>
-                    <p className={bioSize >= 130 ? EditProfileCSS.charLimit : ""}>{bioSize}/150</p>
-                    <button className={EditProfileCSS.submitBio} onClick={addBio}>Submit</button>
-                    
-                </div>
+                    <div className={EditProfileCSS.submitBioWrap}>
+                        <p className={bioSize >= 130 ? EditProfileCSS.charLimit : ""}>{bioSize}/150</p>
+                        <button className={EditProfileCSS.submitBio} onClick={addBio}>Submit</button>
+                        
+                    </div>
                 </div>
                 )}
                 <div className={EditProfileCSS.linkButtonWrapper}>
                     <h2 className={EditProfileCSS.editLinkTitle}>Edit Link</h2>
-                    <div className={EditProfileCSS.clickButton} onClick={()=>setTheLink(!theLink)}>+</div>
+                    
+                    <div className={EditProfileCSS.anotherLinkButtonWrap}>
+                        <div className={EditProfileCSS.clickButton} onClick={()=>setTheLink(!theLink)}>+</div>
+                        <div className={EditProfileCSS.clickButton} onClick={()=>setTheRemoveLink(!theRemoveLink)}>-</div>
+                    </div>
                 </div>
                 {theLink && (<div ref={linkRef} className={EditProfileCSS.makeAbsolute2}>
                     <div className={EditProfileCSS.exit} onClick={()=>setTheLink(!theLink)}>x</div>
+                
                 <input 
                     className={EditProfileCSS.editInput}
                     placeholder='Enter the url. . . ' 
@@ -186,9 +192,19 @@ function EditProfile() {
                 <p className={EditProfileCSS.urlError}>{errMsg}</p>
                 <div className={EditProfileCSS.buttonWrap}>
                     <button className={EditProfileCSS.addLinkButton} onClick={addLink}>Submit Link</button>
-                    <button className={EditProfileCSS.deleteLinkButton} onClick={deleteLink}>Remove Link</button>
+                    
                 </div>
+                
                 </div>
+                )}
+                
+                {theRemoveLink && (
+                    <div ref={bioRef} className={EditProfileCSS.makeAbsolute}>
+                        <div className={EditProfileCSS.exit} onClick={()=>setTheRemoveLink(!theRemoveLink)}>x</div>
+                        <div ref={linkRef} className={EditProfileCSS.makeAbsolute2}>
+                        <button className={EditProfileCSS.deleteLinkButton} onClick={deleteLink}>Remove Link</button>
+                        </div>
+                    </div>
                 )}
 
             </form>

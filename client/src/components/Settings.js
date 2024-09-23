@@ -121,6 +121,7 @@ useEffect(()=>{
 
 
  return (
+  
    <div className={SettingsCSS.settings}>
     {thePwdBox || theDeleteBox ? (
         <div
@@ -161,8 +162,12 @@ useEffect(()=>{
      { dialog.isLoading && <Dialog onDialog={confirmDeleteAccount} message={dialog.message}/> }
      { dialog.isLoading2 && <Dialog onDialog={confirmChangePassword} message={dialog.message}/> }
    </div>
+
+   
  );
 }
+
+
 
 
 function Dialog({message, onDialog}){

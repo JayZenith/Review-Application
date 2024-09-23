@@ -28,7 +28,145 @@
     width: 450px;
     transform: translate(-50%, -50%);
     background: rgba(5, 5, 5, 0.75);
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
    }
+
+   .loginWrapper h1{
+      color: #fff;
+      font-size: 2rem;
+     }
+     
+     
+     .loginWrapper form{
+      color: white;
+      height: 450px;
+      margin-top: 10px;
+      margin-bottom: 0px;
+    
+     }
+  
+    
+     
+     
+     form .loginField{
+     
+      margin-bottom: 1.3rem;
+     }
+     
+     ::placeholder{
+      color:rgb(255, 255, 255);
+     }
+     
+     .loginField input{
+      height: 2rem;
+      width: 25rem;
+      background: #000000;
+      border: 1px solid white;
+      outline: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 1rem;
+      padding: 4px;
+     }
+     
+  
+     .loginField input:focus{
+        border: 1px solid red;
+     }
+
+
+   form button{
+      width: 26rem;
+      height: 3rem;
+      font-size: 1rem;
+      background: #d60000;
+      color: #fff;
+      font-weight: 500;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+     }
+     
+    
+     form button:hover {
+      transition: 0.5s ease-in;
+      background: #680000;
+     }
+
+
+     .loginWrapper a:hover{
+      text-decoration: underline;
+     }
+     
+     /*Already have an account?*/
+     .loginWrapper :where(label, p, a){
+      color: #b3b3b3;
+     }
+     
+    
+     
+     .loginWrapper p a{
+      color: #fff;
+     }
+    
+    
+     
+     .loginWrapper p {
+      margin-left: 0px;
+      margin-top: 15px;
+     
+     }
+
+     
+    
+     
+  
+     .hide {
+      display: none;
+     }
+     
+     .offscreen {
+      position: absolute;
+      left: -9999px;
+     }
+     
+     
+
+   .valid {
+      font-size: 24px;
+      color: green;
+      position: absolute;
+      margin-left: 370px;
+      margin-top: 10px;
+     }
+     
+     
+     .invalid {
+      font-size: 24px;
+      color: red;
+      position: absolute;
+      margin-left: 370px;
+      margin-top: 10px;
+     }
+
+     .errmsg{
+      background-color: rgb(0, 0, 0);
+      color: red;
+      font-size: 1rem;
+      
+     
+      width: 395px;
+   }
+
+   .theErrors{
+      color: red;
+      font-size: .9rem;
+      margin-bottom: 5px;
+      width: 95%;
+
+   }
+    
 
    @media all and (max-width: 500px){
 
@@ -38,177 +176,34 @@
      
       form .loginField input{
      
-         width: 300px;
-         
-        
-         outline: none;
-         border-radius: 4px;
-         color: #fff;
-         font-size: 1rem;
-         padding: 4px;
-         margin: 0px;
+         width: 19rem;
+      
         }
 
       .loginWrapper button{
-         width: 309px;
-         padding: 16px 0;
-         font-size: 1rem;
-         background-color:#d60e0e;
+         width: 19.5rem;
+      
+         background-color:#d60000;
          color: #fff;
          font-weight: 500;
-         border-radius: 4px;
+         border-radius: 5px;
          border: none;
          outline: none;
          cursor: pointer;
-         transition: 0.1s ease;
+     
         }
       
 
    }
    
    
-   .loginWrapper h1{
-    color: #fff;
-    font-size: 2rem;
-   }
-   
-   
-   .loginWrapper form{
-    color: white;
-    margin-top: 10px;
-    margin-bottom: 0px;
-  
-   }
-
-   form{
-      height: 450px;
-   }
-   
-   
-   form .loginField{
-    height: 50px;
-    position: relative;
-    margin-bottom: 20px;
-   }
-   
-   ::placeholder{
-    color: rgb(151, 142, 142);
-   }
-   
-   .loginField input{
-    height: 40px;
-    width: 400px;
-    background: #000000;
-    border: 1px solid white;
-   
-    outline: none;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 1rem;
-    padding: 4px;
-    margin: 0px;
-   }
-   
-
-   .loginField input:focus{
-      border: 1px solid red;
-   }
-   
-   /*
-   .loginField input:is(:focus, :valid){
-    position: absolute;
-    left: 0px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1rem;
-    pointer-events: none;
-    color: #8c8c8c;
-    transition: all 0.1s ease;
-   }
-   
-   
-   .loginField input:is(:focus, :valid)~label{
-    font-size: 0.75rem;
-    transform: translateY(-130%);
-   }
-   */
-   
   
 
-   form button{
-    width: 409px;
-    padding: 16px 0;
-    font-size: 1rem;
-    background: #d60e0e;
-    color: #fff;
-    font-weight: 500;
-    border-radius: 4px;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    transition: 0.1s ease;
-   }
    
-  
-   form button:hover {
-    transition: 0.5s ease-in;
-    background: #850909;
-   }
-   
-   
-   
-   .loginWrapper a:hover{
-    text-decoration: underline;
-   }
-   
-   /*Already have an account?*/
-   .loginWrapper :where(label, p, a){
-    color: #b3b3b3;
-   }
-   
+ 
   
    
-   .loginWrapper p a{
-    color: #fff;
-   }
-  
-  
-  
-   .loginWrapper p {
-    padding-left: 13px;
-    margin-top: 20px;
    
-   }
-  
-   
-
-   .hide {
-    display: none;
-   }
-   
-   .offscreen {
-    position: absolute;
-    left: -9999px;
-   }
-   
-   
-   .valid {
-    font-size: 24px;
-    color: green;
-    position: absolute;
-    margin-left: 370px;
-    margin-top: 10px;
-   }
-   
-   
-   .invalid {
-    font-size: 24px;
-    color: red;
-    position: absolute;
-    margin-left: 370px;
-    margin-top: 10px;
-   }
-  
    
    .instructions {
     margin-top: 0px;
@@ -233,11 +228,4 @@
     margin-top: 2px;
    }
 
-   .errmsg{
-      background-color: rgb(0, 0, 0);
-      color: red;
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      width: 395px;
-   }
+   

@@ -246,7 +246,7 @@ db.connect((err) => {
             );
           });
         } else {
-          res.json({ error: "User with Email already exists!"});
+          res.json({ error: "User with this email already exists!"});
         }
       }); //end of Select Query
       //res.json("success");

@@ -81,7 +81,8 @@
    }
 
    .clickButton{
-    margin-top:5px;
+    margin-left: 10px;
+    margin-top:10px;
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -184,7 +185,7 @@
 
    .editProfile .editBio .submitBio{
     width: 100px;
-    height: 5px;
+    height: 25px;
     background-color: rgb(187, 25, 25);
     border: 1px solid rgb(0, 0, 0);
     display: flex;
@@ -198,7 +199,7 @@
 
    .addLinkButton, .deleteLinkButton{
     width: 100px;
-    height: 5px;
+    height: 25px;
     background-color: rgb(187, 25, 25);
     border: 1px solid rgb(0, 0, 0);
     display: flex;
@@ -221,6 +222,12 @@
 
    }
 
+   .anotherLinkButtonWrap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   }
+
    .editLinkTitle{
     text-align: center;
     font-size: 20px;
@@ -241,7 +248,7 @@
 
     .editProfile .imageUploadTitle{
         font-size: 20px;
-        margin-top: 30px;
+        margin-top: 50px;
         
     }
    
