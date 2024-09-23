@@ -21,7 +21,22 @@
    }
 
 .makeAbsolute{
-position: absolute;
+    position: absolute;
+    left: 0; 
+  right: 0;
+  top: 0; 
+  margin-top: 10%;
+  margin-inline: auto; 
+  width: fit-content;
+  height: 250px;
+  width: 400px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  background-color: black;
+  border: 1px solid white;
 }
 
 

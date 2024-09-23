@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import SettingsCSS from '../styles/Settings.module.css'; 
@@ -85,6 +85,39 @@ const confirmDeleteAccount = (choose) => {
 
 const [thePwdBox, setThePwdBox] = useState(false);
 const [theDeleteBox, setTheDeleteBox] = useState(false);
+let pwdRef = useRef()
+let deleteRef = useRef()
+
+useEffect(()=>{ 
+  let thePwdHandler = (e)=>{
+    //console.log(menuRef.current.contains(e.target))
+    if(!pwdRef.current?.contains(e.target) ){ //? allows it to work in / and /signup
+        setThePwdBox(false);
+
+        
+    }
+  }
+  document.addEventListener("mousedown", thePwdHandler);
+  return()=>{
+    document.removeEventListener("mousedown", thePwdHandler);
+  }
+ })
+
+
+ useEffect(()=>{ 
+  let theDeleteHandler = (e)=>{
+    //console.log(menuRef.current.contains(e.target))
+    if(!deleteRef.current?.contains(e.target) ){ //? allows it to work in / and /signup
+        setTheDeleteBox(false);
+
+        
+    }
+  }
+  document.addEventListener("mousedown", theDeleteHandler);
+  return()=>{
+    document.removeEventListener("mousedown", theDeleteHandler);
+  }
+ })
 
 
  return (
@@ -96,7 +129,7 @@ const [theDeleteBox, setTheDeleteBox] = useState(false);
         </div>
     ) : <></> }
      <h1>Change Your Password</h1>
-     <div onClick={()=>setThePwdBox(!thePwdBox)}>+</div>
+     <div ref={pwdRef} onClick={()=>setThePwdBox(!thePwdBox)}>+</div>
      {thePwdBox && (<div className={SettingsCSS.makeAbsolute}>
       <div onClick={()=>setThePwdBox(!thePwdBox)}>X</div>
      <input
@@ -119,7 +152,7 @@ const [theDeleteBox, setTheDeleteBox] = useState(false);
 
      <div className="deleteAccount">
        <h1>Delete Account</h1>
-       <div onClick={()=>setTheDeleteBox(!theDeleteBox)}>+</div>
+       <div ref={deleteRef} onClick={()=>setTheDeleteBox(!theDeleteBox)}>+</div>
         {theDeleteBox && ( <div className={SettingsCSS.makeAbsolute}>
           <div onClick={()=>setTheDeleteBox(!theDeleteBox)}>X</div>
        <button onClick={deleteDialog}>Delete Account</button>

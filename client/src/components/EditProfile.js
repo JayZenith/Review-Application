@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import { AuthContext } from "../helpers/AuthContext";
@@ -99,7 +99,41 @@ function EditProfile() {
     const [theBio, setTheBio] = useState(false)
     const [theLink, setTheLink] = useState(false)
     const [theImageUpload, setTheImageUpload] = useState(false)
+    let bioRef = useRef();
+    let linkRef = useRef();
+   
 
+    useEffect(()=>{ 
+        let theBioHandler = (e)=>{
+          //console.log(menuRef.current.contains(e.target))
+          if(!bioRef.current?.contains(e.target) ){ //? allows it to work in / and /signup
+              setTheBio(false);
+      
+              
+          }
+        }
+        document.addEventListener("mousedown", theBioHandler);
+        return()=>{
+          document.removeEventListener("mousedown", theBioHandler);
+        }
+       })
+
+       useEffect(()=>{ 
+        let theLinkHandler = (e)=>{
+          //console.log(menuRef.current.contains(e.target))
+          if(!linkRef.current?.contains(e.target) ){ //? allows it to work in / and /signup
+              setTheLink(false);
+      
+              
+          }
+        }
+        document.addEventListener("mousedown", theLinkHandler);
+        return()=>{
+          document.removeEventListener("mousedown", theLinkHandler);
+        }
+       })
+
+       
     
 
   return (
@@ -113,11 +147,12 @@ function EditProfile() {
         </div>
         ) : <></>}
         <h2 className={EditProfileCSS.editBioTitle}>Edit Bio</h2>
+        <div className={EditProfileCSS.clickButton} onClick={()=>setTheBio(!theBio)}>+</div>
         <div className={EditProfileCSS.editBio}>
             <form>
-            <div onClick={()=>setTheBio(!theBio)}>+</div>
-                {theBio && (<div className={EditProfileCSS.makeAbsolute}>
-                    <div onClick={()=>setTheBio(!theBio)}>x</div>
+            
+                {theBio && (<div ref={bioRef} className={EditProfileCSS.makeAbsolute}>
+                    <div className={EditProfileCSS.exit} onClick={()=>setTheBio(!theBio)}>x</div>
                 {bioSize == 150 ? <p className={EditProfileCSS.charLimit}>Character Limit Reached</p> : <p className={EditProfileCSS.hidden}></p>}
                 <textarea
                     placeholder="Enter the bio..."
@@ -136,10 +171,12 @@ function EditProfile() {
                 </div>
                 </div>
                 )}
-                <h2 className={EditProfileCSS.editLinkTitle}>Edit Link</h2>
-                <div onClick={()=>setTheLink(!theLink)}>+</div>
-                {theLink && (<div className={EditProfileCSS.makeAbsolute}>
-                    <div onClick={()=>setTheLink(!theLink)}>x</div>
+                <div className={EditProfileCSS.linkButtonWrapper}>
+                    <h2 className={EditProfileCSS.editLinkTitle}>Edit Link</h2>
+                    <div className={EditProfileCSS.clickButton} onClick={()=>setTheLink(!theLink)}>+</div>
+                </div>
+                {theLink && (<div ref={linkRef} className={EditProfileCSS.makeAbsolute2}>
+                    <div className={EditProfileCSS.exit} onClick={()=>setTheLink(!theLink)}>x</div>
                 <input 
                     className={EditProfileCSS.editInput}
                     placeholder='Enter the url. . . ' 
@@ -149,7 +186,7 @@ function EditProfile() {
                 <p className={EditProfileCSS.urlError}>{errMsg}</p>
                 <div className={EditProfileCSS.buttonWrap}>
                     <button className={EditProfileCSS.addLinkButton} onClick={addLink}>Submit Link</button>
-                    <button className={EditProfileCSS.deleteLinkButton} onClick={deleteLink}>Delete Link</button>
+                    <button className={EditProfileCSS.deleteLinkButton} onClick={deleteLink}>Remove Link</button>
                 </div>
                 </div>
                 )}
@@ -157,10 +194,11 @@ function EditProfile() {
             </form>
 
             <h2 className={EditProfileCSS.imageUploadTitle}>Image Upload</h2>
-            <div onClick={()=>setTheImageUpload(!theImageUpload)}>+</div>
+            
             {theImageUpload && (
             <SetImage></SetImage>
             )}
+            <div className={EditProfileCSS.clickButton} onClick={()=>setTheImageUpload(!theImageUpload)}>+</div>
         </div>
     </div>
     </ImageContext.Provider>
@@ -171,7 +209,8 @@ function SetImage(){
     const [file, setFile] = useState('')
     const { imageState, setImageState } = useContext(ImageContext)
     const { theImageUpload, setTheImageUpload } = useContext(ImageContext)
-   
+    
+    let imageUploadRef = useRef();
 
     const handleImage = (e) =>{
         console.log(e.target.files[0])
@@ -201,9 +240,25 @@ function SetImage(){
         .catch(err=>console.log(err));
     }
 
+
+    useEffect(()=>{ 
+        let theImageHandler = (e)=>{
+          //console.log(menuRef.current.contains(e.target))
+          if(!imageUploadRef.current?.contains(e.target) ){ //? allows it to work in / and /signup
+              setTheImageUpload(false);
+      
+              
+          }
+        }
+        document.addEventListener("mousedown", theImageHandler);
+        return()=>{
+          document.removeEventListener("mousedown", theImageHandler);
+        }
+       })
+
     return(
-        <div className={EditProfileCSS.uploadWrapper}>
-            <div onClick={()=>setTheImageUpload(!theImageUpload)}>-</div>
+        <div ref={imageUploadRef} className={EditProfileCSS.uploadWrapper}>
+            <div className={EditProfileCSS.exit} onClick={()=>setTheImageUpload(!theImageUpload)}>x</div>
             <div className={EditProfileCSS.upload}>
                 
                 <input type="file" name="file"

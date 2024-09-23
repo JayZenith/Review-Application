@@ -6,6 +6,7 @@
  ***********************************/
 
  .editProfile{
+   
     padding-top: 90px;
     height: 100vh;
     display: flex;
@@ -22,7 +23,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(0,0,0,0.8);
+      background-color: rgba(31, 31, 31, 0.8);
       width: 100vw;
       height: 100vh;
 
@@ -35,6 +36,7 @@
    }
 
    .editProfile .editBio{
+    
     width: 500px;
     height: 100%;
     display: flex;
@@ -44,14 +46,98 @@
    }
 
    .editProfile form{
-  
+    
     width: 100%;
-    height: 200px;
+    height: 40px;
+    
+  
+   }
+
+
+   .linkButtonWrapper{
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+   }
+
+   .exit{
+    background-color: rgb(0, 0, 0);
+    width: 25px;
+    height: 25px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+   }
+
+   .exit:hover{
+    transition: ease-in .3s;
+    background-color: rgb(39, 39, 39);
+   }
+
+   .clickButton{
+    margin-top:5px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    cursor: pointer;
   
    }
 
    .makeAbsolute{
     position: absolute;
+    top: 0;
+    left: 0; 
+    right: 0; 
+    margin-top: 10%;
+    border-radius: 10px;
+    margin-inline: auto; 
+    width: fit-content;
+    height: 160px;
+    width: 420px;
+    padding: 10px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: flex-start;
+    background-color: black;
+ 
+
+   }
+
+   .makeAbsolute2{
+    position: absolute;
+    top: 0;
+    left: 0; 
+    right: 0; 
+    margin-top: 10%;
+    border-radius: 10px;
+    margin-inline: auto; 
+    width: fit-content;
+    height: 160px;
+    width: 420px;
+    padding: 10px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: flex-start;
+    background-color: black;
+ 
+
    }
 
    .editProfile form p{
@@ -67,7 +153,7 @@
 
    .editProfile form textarea{
       width: 100%;
-      height: 60px;
+      height: 80px;
       padding: 5px;
       box-sizing: border-box;
       color: white;
@@ -79,11 +165,17 @@
    }
 
    .editBio .buttonWrap{
+    margin-top: 5px;
+   
+    width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
    }
 
-   .editBio .submitBioWrap{
+   .submitBioWrap{
+    margin-top: 5px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -93,8 +185,8 @@
    .editProfile .editBio .submitBio{
     width: 100px;
     height: 5px;
-    background-color: rgb(0, 0, 0);
-    border: 1px solid white;
+    background-color: rgb(187, 25, 25);
+    border: 1px solid rgb(0, 0, 0);
     display: flex;
     font-size: 12px;
     align-items: center;
@@ -107,14 +199,16 @@
    .addLinkButton, .deleteLinkButton{
     width: 100px;
     height: 5px;
-    background-color: rgb(0, 0, 0);
-    border: 1px solid white;
+    background-color: rgb(187, 25, 25);
+    border: 1px solid rgb(0, 0, 0);
     display: flex;
     font-size: 12px;
     align-items: center;
     justify-content: center;
     border-radius: 50px;
     cursor: pointer;
+
+    margin-top: 5px;
 
    }
 
@@ -147,24 +241,41 @@
 
     .editProfile .imageUploadTitle{
         font-size: 20px;
+        margin-top: 30px;
         
     }
    
 
     .uploadWrapper{
-      
+
         position: absolute;
-        width: 500px;
-        height: 40px;
+        left: 0; 
+        right: 0; 
+        top: 0;
+        margin-top: 10%;
+        margin-inline: auto; 
+        width: fit-content;
+        height: 100px;
+        width: 400px;
+        color: white;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        text-align: center;
+        justify-content: flex-start;
+       
+        background-color: #000000;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    .uploadWrapper .exit{
+        margin-left: 47%;
     }
 
     .upload{
+       
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: flex-start;
         
         margin-top: 0px;
@@ -183,11 +294,11 @@
 
     .uploadWrapper .uploadButton{
         height: 30px;
-        width: 120px;
+        width: 100px;
         border-radius: 20px;
-        background-color: rgb(8, 8, 8);
+        background-color: rgb(209, 22, 22);
         color: rgb(255, 255, 255);
-        border: 1px solid white;
+        border: 1px solid rgb(0, 0, 0);
         cursor: pointer;
     }
 

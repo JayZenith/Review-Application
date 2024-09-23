@@ -68,7 +68,7 @@ function Postings() {
       //avgRating.current=0;
       const loadProfilePosts = async () => {
         //const response = await axios.get(process.env.REACT_APP_HTTP_REQ+"/reviewPosts6")
-        const response = await axios.get(process.env.REACT_APP_HTTP_REQ+"/justReviews4");
+        const response = await axios.get(process.env.REACT_APP_HTTP_REQ+"/justReviews777");
         //const response = await axios.get(`http://3.20.232.190:3001/profilePosts/${authState.id}`)
         //axios.get(`http://3.20.232.190:3001/profilePosts/${authState.id}`)
             //.then((response)=>{
@@ -123,7 +123,7 @@ function Postings() {
       //axios.get("http://localhost:3001/posts4", {
       const loadPosts = async () => {
           //const response = await axios.get("http://3.20.232.190:3001/posts4", {
-          const response = await axios.get(process.env.REACT_APP_HTTP_REQ+"/justPosts6")
+          const response = await axios.get(process.env.REACT_APP_HTTP_REQ+"/justPosts777")
           //console.log(response);
           //setTheTargets(response.data.array2);
           setListOfPosts(response.data);
@@ -300,16 +300,24 @@ function Postings() {
 
  return (
   <>
-  
+  {profilePosts.isFeed ? (
     <div className={PostingsCSS.postingFeed}
       onClick={()=>setToPost(!toPost)}
     >+
   </div>
+  ):<></>}
    <div className={PostingsCSS.postings}>
    
     <div className={PostingsCSS.feedButtons}>
-      {/*<div className={PostingsCSS.feedOne} onClick={showFeed}><h1>Posts</h1></div>*/}
-      <div className={PostingsCSS.feedTwo} onClick={showProfileFeed}> <h1>Recent Reviews</h1></div>
+    <div className={PostingsCSS.feedTwo} onClick={showProfileFeed}>
+       <p className={profilePosts.isProfile ? PostingsCSS.reviewsUnderline : PostingsCSS.reviewsUnderline2}>Reviews</p>
+       <p className={profilePosts.isProfile ? PostingsCSS.justRevs : ""}></p>
+    </div>
+    <div className={PostingsCSS.feedOne} onClick={showFeed}>
+        <p className={profilePosts.isFeed ? PostingsCSS.postsUnderline : PostingsCSS.postsUnderline2}>Posts</p>
+        <p className={profilePosts.isFeed ? PostingsCSS.justPosts : ""}></p>
+    </div>
+      
       
     </div>
 
@@ -411,8 +419,10 @@ function Postings() {
                        {authState.id === val.userID ? (
                          <i className="bi bi-trash" onClick={()=>{deletePost(val.id)}}>
                          </i>
-                       ):(<i></i>)} {/*Need the latter icon to move like button to right*/}
-                      
+                       ):(<></>)} {/*Need the latter icon to move like button to right*/}
+                       <p className={PostingsCSS.commentCount}><i onClick={() => {
+                        navigate(`/singlePost/${val.id}`);
+                    }} className="bi bi-chat"></i>{val.ct}</p>
                        <p className={PostingsCSS.createdAt}>{val.createdAt}</p>
                        <div className={PostingsCSS.likebtn}>
                         

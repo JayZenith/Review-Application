@@ -3,26 +3,26 @@
 @import url('https://fonts.cdnfonts.com/css/days-sans-black');
 
    .postings{
-    padding-top: 80px;
+    padding-top: 70px;
     display: flex;
     width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     /*align-items: center;*/
-    font-family: 'Days Sans Black', sans-serif;
+  
  
    }
 
    .feedButtons{
-      width: 710px;
+      width: 712px;
       display: flex;
       align-items: center;
       
       color: white;
       
-      height: 100px;
-      font-family: 'Days Sans Black', sans-serif;
+      height: 60px;
+
    }
 
    .feedOne{
@@ -31,8 +31,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid white;
+      flex-direction: column;
+      border: 1px solid rgb(255, 255, 255);
       height: 100%;
+      border-left: none;
+      
    }
 
    .feedOne:hover, .feedTwo:hover{
@@ -42,32 +45,57 @@
 
   
    .feedTwo{
-      
-      width: 100%;
+      width: 50%;
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-   
+      flex-direction: column;
       cursor: pointer;
-      border: 1px solid white;
+      border: 1px solid rgb(255, 255, 255);
+      border-right: none;
+   }
+
+   .feedTwo .reviewsUnderline, .feedOne .postsUnderline{
+      margin-top: 15px;
+      margin-bottom: 15px;
+   }
+   
+   .feedTwo .reviewsUnderline2, .feedOne .postsUnderline2{
+      margin-top: 15px;
+      margin-bottom: 15px;
+      color: rgb(100, 100, 100);
+   }
+
+   .justRevs{
+      background-color: rgb(202, 18, 18);
+      width: 19%;
+      height: 4px;
+      
+     
+   }
+
+   .justPosts{
+      background-color: rgb(202, 18, 18);
+      width: 15%;
+      height: 4px;
+      
    }
 
    .postingFeed{
-      display: none;
-      font-family: 'Days Sans Black', sans-serif;
+      /*display: none;*/
       margin-top: 100px;
       margin-right: 20%;
       right: 0;
       width: 50px;
       height: 50px;
-      background-color: rgb(175, 22, 22);
+      background-color: rgb(182, 23, 23);
       position: absolute;
-     
+      cursor: pointer;
       border-radius: 50%;
       font-size: 30px;
       color: white;
-      /*display: flex;*/
+      display: flex;
       align-items: center;
       justify-content: center;
       border: 1px solid white;
@@ -276,6 +304,7 @@
       justify-content: space-between;
       width: 550px;
       flex-grow: 0;
+      cursor: pointer;
    }
 
    .bodyAndFooter .nameAndRating{
@@ -374,6 +403,7 @@
 
    .bodyAndFooter .footer{
       /*position: sticky;*/
+    
       bottom: 0;
       display: flex;
       padding: 1px;
@@ -384,12 +414,14 @@
 
    .bodyAndFooter2 .footer2{
       /*position: sticky;*/
+      
       bottom: 0;
       display: flex;
       padding: 1px;
       /*background-color: aqua;*/
       margin: 0;
       width: 545px;
+      align-items: center;
       justify-content: space-between;
       color: rgb(255, 255, 255);
    
@@ -406,6 +438,7 @@
      
 
    .post .theTarget{
+      border-radius: 10px;
       /*background-color: gold;*/
       cursor: pointer;
       border: 1px solid white;

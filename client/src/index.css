@@ -93,25 +93,25 @@
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background-color: rgb(192, 192, 192);
+  background-color: rgb(255, 255, 255);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .navicon:hover{
-    background-color: rgb(129, 114, 114);
+    background-color: rgb(202, 26, 26);
     transition: all .9s ease;
 
 }
 
 .staricon{
-  background-color: rgb(255, 0, 0);
+  background-color: rgb(255, 255, 255);
 }
 
 
 .staricon:hover{
-  background-color: rgb(134, 19, 19);
+  background-color: rgb(202, 26, 26);
 }
 
 .profilePic{
@@ -200,7 +200,7 @@
 
 .searchBar input::placeholder{
   color: rgb(0, 0, 0);
-  font-size: 18px;
+  font-size: 16px;
   font-family: 'Days Sans Black', sans-serif;
 }
 
@@ -346,6 +346,10 @@
   margin-left: 10px;
   font-size: 17px;
   cursor: pointer;
+}
+
+.bi-chat{
+  margin-right: 2px;
 }
 
 .topuserWrap{
