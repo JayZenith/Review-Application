@@ -341,7 +341,7 @@ function Profile() {
                         <div className={ProfileCSS.profileBodyAndFooter}>
                             <div className={ProfileCSS.reviewStarRating}>
                                 <div className={ProfileCSS.username}>
-                                        {val.firstname} 
+                                        {val.firstname} {val.lastname}
                                 </div>
                                 <div className={ProfileCSS.ratingStars} >
                                     {[...Array(5)].map((star, idx)=>{

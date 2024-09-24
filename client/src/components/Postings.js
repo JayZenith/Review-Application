@@ -33,6 +33,7 @@ function Postings() {
     isFeed: false,
     isProfile: true, 
   })
+  let thePostRef = useRef()
 
 
   
@@ -124,7 +125,7 @@ function Postings() {
       const loadPosts = async () => {
           //const response = await axios.get("http://3.20.232.190:3001/posts4", {
           const response = await axios.get(process.env.REACT_APP_HTTP_REQ+"/justPosts777")
-          //console.log(response);
+          console.log(response);
           //setTheTargets(response.data.array2);
           setListOfPosts(response.data);
           
@@ -294,6 +295,22 @@ function Postings() {
     
     }
 
+
+    useEffect(()=>{ 
+      let thePostHandler = (e)=>{
+        //console.log(menuRef.current.contains(e.target))
+        if(!thePostRef.current?.contains(e.target) ){ //? allows it to work in / and /signup
+            setToPost(false);
+    
+            
+        }
+      }
+      document.addEventListener("mousedown", thePostHandler);
+      return()=>{
+        document.removeEventListener("mousedown", thePostHandler);
+      }
+     })
+
     
 
   
@@ -326,15 +343,15 @@ function Postings() {
     
       <div className={PostingsCSS.listOfPostsWrapper}>
       {toPost && (
-        <div className={PostingsCSS.createPostSection}>
+        <div className={PostingsCSS.createPostSection} >
           
-              <form className={PostingsCSS.postForm} onSubmit={onSubmit}>
+              <form className={PostingsCSS.postForm} onSubmit={onSubmit} >
 
                 <button className={PostingsCSS.xButton} onClick={()=>setToPost(!toPost)}>X</button>
                 {inputSize == 500 ? <p className={PostingsCSS.redInputSize}>Character Limit Reached</p> : <p className={PostingsCSS.blackInputSize}></p>}
-                <textarea
+                <textarea 
                   placeholder="Write Here"
-                  
+                  ref={thePostRef}
                   id = "posting"
                   name = "posting"
                   value={postText}
@@ -375,7 +392,7 @@ function Postings() {
                <div className={!val.targetID ? PostingsCSS.bodyAndFooter : PostingsCSS.bodyAndFooter2}>
                   <div className={PostingsCSS.nameAndRating}>
                     <div className={PostingsCSS.username}>
-                      <Link to={`/profile/${val.userID}`}>{val.firstname} </Link>
+                      <Link to={`/profile/${val.userID}`}>{val.firstname} {val.lastname}</Link>
                     </div>
                     {val.targetID ? //then show rating for them
                     <StarRating>{val.rating}</StarRating>
@@ -406,7 +423,7 @@ function Postings() {
                       : <img className={PostingsCSS.imgAvatar} src={""} width="200" height="100" alt="" />
                       }
                   </div>
-                  <div className={PostingsCSS.targetUsername}>{aTarget.firstname}</div>
+                  <div className={PostingsCSS.targetUsername}>{aTarget.firstname} {aTarget.lastname}</div>
                   {/*aTarget.firstname*/}
                 </div>
                 ) : (

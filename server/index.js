@@ -459,7 +459,7 @@ db.connect((err) => {
 
   app.get("/profilePosts/:id",(req,res)=>{
     id=req.params.id;
-    db.query(`SELECT posts.*, COUNT(distinct likes.id) as dt, avatars.ImageData, users.firstname, users.email `+
+    db.query(`SELECT posts.*, COUNT(distinct likes.id) as dt, avatars.ImageData, users.firstname, users.lastname, users.email `+
        `FROM posts LEFT OUTER JOIN avatars ON posts.userID=avatars.userID `+
        `LEFT JOIN likes ON posts.id=likes.postID LEFT OUTER JOIN users ON posts.userID=users.id `+
        `WHERE targetID=${id} GROUP BY posts.id, avatars.id, users.id`,(err, result)=>{
@@ -492,7 +492,7 @@ db.connect((err) => {
 
   app.get("/justPosts777",(req,res)=>{
    
-    db.query("SELECT posts.*, COUNT(distinct likes.id) as dt, count(distinct comments.id) as ct,avatars.ImageData, users.firstname, users.email "+
+    db.query("SELECT posts.*, COUNT(distinct likes.id) as dt, count(distinct comments.id) as ct,avatars.ImageData, users.firstname, users.lastname, users.email "+
        "FROM posts LEFT OUTER JOIN avatars ON posts.userID=avatars.userID "+
        "LEFT JOIN likes ON posts.id=likes.postID LEFT OUTER JOIN users ON posts.userID=users.id "+
        "LEFT OUTER JOIN comments ON posts.id=comments.postID "+
@@ -761,7 +761,7 @@ app.post("/deleteUrlLink/:id", validateToken, (req, res) => {
     if (err) throw new Error(err);
     //res.json(result)
   });
-  res.json("deleted url");
+  res.json("removed the link");
 });
 
 

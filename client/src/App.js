@@ -25,6 +25,7 @@ import { ReactComponent as UpIcon } from './icons/up.svg';
 import starIcon from './icons/starMe.svg'
 import home from './icons/newhome.svg';
 import downicon from './icons/down.svg';
+import settingsIcon from './icons/settings.svg';
 
 //Components
 import Login from './components/Login';
@@ -209,7 +210,7 @@ useEffect(() => { //renders on any page load
             
             <li key="3" className="arrow" onClick={()=>setOpenSettings(!openSettings) }     
               >
-               <div key="3.1" className='navicon'><img src={downicon} alt={"arrow"} width="30" height="30"/> </div>   
+               <div key="3.1" className='navicon'><img src={settingsIcon} alt={"arrow"} width="30" height="30"/> </div>   
             </li>
             <SearchBar key="3.4" />
             <div key="3.5" className={openSettings ? 'dropDownSettings' : 'dropDownHidden'} >

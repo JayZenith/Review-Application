@@ -347,15 +347,74 @@
         }
 
 
-        .upload{
-            background-color: red;
+       
+
+        .makeAbsolute{
+            position: absolute;
+            top: 0;
+            left: 0; 
+            right: 0; 
+            margin-top: 20%;
+            border-radius: 10px;
+            margin-inline: auto; 
+            width: fit-content;
+            height: 160px;
+            width: 300px;
+            padding: 10px;
+            color: white;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            text-align: center;
+            justify-content: flex-start;
+            background-color: black;
+         
+        
+           }
+
+           .makeAbsolute2{
+            position: absolute;
+            top: 0;
+            left: 0; 
+            right: 0; 
+            margin-top: 20%;
+            border-radius: 10px;
+            margin-inline: auto; 
+            width: fit-content;
+            height: 160px;
+            width: 300px;
+            padding: 10px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            justify-content: flex-start;
+            background-color: black;
+         
+        
+           }
+
+           .uploadWrapper{
+
+            position: absolute;
+            left: 0; 
+            right: 0; 
+            top: 0;
+            margin-top: 20%;
+            margin-inline: auto; 
+            width: fit-content;
+            height: 100px;
+            width: 300px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            justify-content: flex-start;
            
-            width: 340px;
-            height: 40px;
+            background-color: #000000;
+            border-radius: 10px;
+            padding: 10px;
         }
 
     }

@@ -102,6 +102,7 @@ function EditProfile() {
     const [theImageUpload, setTheImageUpload] = useState(false)
     let bioRef = useRef();
     let linkRef = useRef();
+    let removeLinkRef = useRef();
    
 
     useEffect(()=>{ 
@@ -131,6 +132,21 @@ function EditProfile() {
         document.addEventListener("mousedown", theLinkHandler);
         return()=>{
           document.removeEventListener("mousedown", theLinkHandler);
+        }
+       })
+
+       useEffect(()=>{ 
+        let theRemoveLinkHandler = (e)=>{
+          //console.log(menuRef.current.contains(e.target))
+          if(!removeLinkRef.current?.contains(e.target) ){ //? allows it to work in / and /signup
+              setTheRemoveLink(false);
+      
+              
+          }
+        }
+        document.addEventListener("mousedown", theRemoveLinkHandler);
+        return()=>{
+          document.removeEventListener("mousedown", theRemoveLinkHandler);
         }
        })
 
@@ -199,8 +215,8 @@ function EditProfile() {
                 )}
                 
                 {theRemoveLink && (
-                    <div ref={bioRef} className={EditProfileCSS.makeAbsolute}>
-                        <div className={EditProfileCSS.exit} onClick={()=>setTheRemoveLink(!theRemoveLink)}>x</div>
+                    <div ref={removeLinkRef} className={EditProfileCSS.makeAbsolute}>
+                        <div   className={EditProfileCSS.exit} onClick={()=>setTheRemoveLink(!theRemoveLink)}>x</div>
                         <div ref={linkRef} className={EditProfileCSS.makeAbsolute2}>
                         <button className={EditProfileCSS.deleteLinkButton} onClick={deleteLink}>Remove Link</button>
                         </div>

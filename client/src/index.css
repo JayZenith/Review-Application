@@ -290,6 +290,7 @@
 }
 
 .innerSpotlight{
+  
   font-family: 'Days Sans Black', sans-serif;
   position: absolute; 
   left: 0; 
@@ -325,6 +326,7 @@
 
 
 .innerSpotlight h2{
+  font-size: 20px;
   margin-top: 10px;
 }
 
@@ -483,7 +485,7 @@
 
 
 
-@media all and (max-width: 660px){
+@media all and (max-width: 1005px){
   .navbar{
     position: fixed;
     bottom: 0;
