@@ -141,7 +141,6 @@
   
    .postings .createPostSection form textarea{
     width: 96%; /*takes width of container*/
-   
     height: 60%; /*w/o it breaks*/
     padding: 12px 20px;
     box-sizing: border-box;
@@ -702,14 +701,16 @@
 
         .postings .createPostSection form{
          position: absolute; 
+   
         
-         width: 100%;
-         height:75%;
+         width: 100%;   
+         height:70%;
          margin-top: 5%;
          color: white;
          display: flex;
          flex-direction: column;
-         margin-bottom: 70px;
+         /*margin-bottom: 70px;*/
+         margin-bottom: 125px;
       }
         
         

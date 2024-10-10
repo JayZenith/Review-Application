@@ -201,6 +201,7 @@ const setTheMatchPwd = (e) => {
                         aria-invalid={validFname ? "false" : "true"}
                         aria-describedby='uidnote'
                         autoComplete="off"
+                        maxLength={15}
                         onFocus={() => setFnameFocus(true)}
                         onBlur={() => setFnameFocus(false)}
                     />   
@@ -233,6 +234,7 @@ const setTheMatchPwd = (e) => {
                         aria-invalid={validFname ? "false" : "true"}
                         aria-describedby='uidnote'
                         autoComplete="off"
+                        maxLength={15}
                         onFocus={() => setLnameFocus(true)}
                         onBlur={() => setLnameFocus(false)}
                     />   
@@ -259,6 +261,7 @@ const setTheMatchPwd = (e) => {
                         aria-invalid={validEmail ? "false" : "true"}
                         aria-describedby='emailnote'
                         autoComplete="off"
+                        maxLength={30}
                         onFocus={() => setEmailFocus(true)}
                         onBlur={() => setEmailFocus(false)}
                     />

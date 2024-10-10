@@ -204,6 +204,7 @@ function EditProfile() {
                     placeholder='Enter the url. . . ' 
                     value={urlLink}
                     onChange={(e) => checkUrl(e)}
+                    maxLength={50}
                 />
                 <p className={EditProfileCSS.urlError}>{errMsg}</p>
                 <div className={EditProfileCSS.buttonWrap}>

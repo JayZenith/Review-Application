@@ -345,13 +345,13 @@ function Postings() {
       {toPost && (
         <div className={PostingsCSS.createPostSection} >
           
-              <form className={PostingsCSS.postForm} onSubmit={onSubmit} >
+              <form className={PostingsCSS.postForm} ref={thePostRef} onSubmit={onSubmit} >
 
                 <button className={PostingsCSS.xButton} onClick={()=>setToPost(!toPost)}>X</button>
                 {inputSize == 500 ? <p className={PostingsCSS.redInputSize}>Character Limit Reached</p> : <p className={PostingsCSS.blackInputSize}></p>}
                 <textarea 
                   placeholder="Write Here"
-                  ref={thePostRef}
+                  
                   id = "posting"
                   name = "posting"
                   value={postText}
