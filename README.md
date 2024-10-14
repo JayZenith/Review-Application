@@ -21,9 +21,9 @@ Clone down this repository. You will need `node.js` and `git` installed globally
 
 1. Installation: `npm install` within client and server directories 
 
-2. In the server directory, you can run: `npm start` 
+2. In the server directory, you can run: `npm run start` 
 
-3. In the client directory, you can run: `npm start` 
+3. In the client directory, you can run: `npm run start` 
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
