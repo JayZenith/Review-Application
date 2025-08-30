@@ -1,9 +1,7 @@
 
----
 
 ## **4️⃣ Review Application (First Fullstack Project)**
 
-```markdown
 # Review Application
 
 A full-stack web application for submitting and viewing user reviews.  
