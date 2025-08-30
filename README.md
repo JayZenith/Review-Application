@@ -13,6 +13,14 @@ Demonstrates practical web development, database integration, authentication, an
 - React frontend with responsive UI
 - REST API built with Express.js
 
+> **Note:** This project works, but the server code is admittedly messy and not production-ready. There are multiple areas for improvement, including modularization, error handling, input validation, and overall structure. Consider this more of a proof-of-concept for learning rather than clean production code.
+
+
+![Login Page](screenshots/review-login.png)
+![Signup Page](screenshots/review-signup.png)
+![Home Page](screenshots/review-home.png)
+
+
 ## Tech Stack
 - Frontend: React.js
 - Backend: Node.js + Express.js
@@ -47,6 +55,7 @@ npm install
 DB_HOST=localhost
 DB_USER=your_mysql_user
 DB_PASSWORD=your_mysql_password
+REACT_APP_HTTP_REQ=http://localhost:3001
 DB_NAME=review_app
 ACCESS_TOKEN=your_jwt_secret
 ```
@@ -59,6 +68,10 @@ npm install
 npm start
 
 ```
+![Docker Container](screenshots/docker-ps.png)
+![Running Server](screenshots/running-server.png)
+![MySQL Database](screenshots/db.png)
+
 
 ## Run frontend
 ```bash
