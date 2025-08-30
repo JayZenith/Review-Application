@@ -15,11 +15,21 @@ Demonstrates practical web development, database integration, authentication, an
 
 > **Note:** This project works, but the server code is admittedly messy and not production-ready. There are multiple areas for improvement, including modularization, error handling, input validation, and overall structure. Consider this more of a proof-of-concept for learning rather than clean production code.
 
-
+## Login Page
 ![Login Page](screenshots/review-login.png)
+
+## Signup Page
 ![Signup Page](screenshots/review-signup.png)
+
+## Home Page with Posts
 ![Home Page](screenshots/review-home.png)
 
+## Running MySQL via Docker
+![Docker Container](screenshots/docker-ps.png)
+## Server Running
+![Running Server](screenshots/running-server.png)
+## Querying the Database 
+![MySQL Database](screenshots/db.png)
 
 ## Tech Stack
 - Frontend: React.js
@@ -68,9 +78,7 @@ npm install
 npm start
 
 ```
-![Docker Container](screenshots/docker-ps.png)
-![Running Server](screenshots/running-server.png)
-![MySQL Database](screenshots/db.png)
+
 
 
 ## Run frontend
